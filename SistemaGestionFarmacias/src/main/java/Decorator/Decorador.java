@@ -5,6 +5,7 @@
 package Decorator;
 
 import AbstractFactory.Medicamento;
+import Observer.Notificador;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,6 +45,37 @@ public abstract class Decorador implements Pedido{
     @Override
     public void setImporte(BigDecimal importe) {
         this.pedido.setImporte(importe);
+    }
+    
+    @Override
+    public String getId() {
+        return pedido.getId();
+    }
+    
+    @Override
+    public String getEstado() {
+        return pedido.getEstado();
+    }
+    
+    @Override
+    public void setEstado(String estado) {
+        this.pedido.setEstado(estado);
+    }
+    
+    @Override
+    public void marcarComoListo() {
+        setEstado("Listo");
+        pedido.getNotificador().actualizar();
+    }
+    
+    @Override
+    public Notificador getNotificador() {
+        return pedido.getNotificador();
+    }
+    
+    @Override
+    public void setNotificador(Notificador notificador) {
+        this.pedido.setNotificador(notificador);
     }
     
     public abstract void aplicarDescuento();

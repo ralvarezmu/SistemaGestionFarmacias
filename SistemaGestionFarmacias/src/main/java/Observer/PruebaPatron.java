@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package Decorator;
+package Observer;
 
 import AbstractFactory.FBAnalgesico;
 import AbstractFactory.Medicamento;
+import Decorator.Pedido;
+import Decorator.PedidoBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,11 +70,10 @@ public class PruebaPatron {
         // Crear el pedido
         Pedido pedido = new PedidoBase("1", "Juan Pérez", LocalDate.now(), medicamentosPedido);
         
-        System.out.println("Precio sin deccuento: " + pedido.getImporte());
+        Notificador N1 = new NotificadorCliente("Juan Pérez", pedido);
         
-        Decorador pedidoDescuento = new PedidoDescuentoClienteEspecial(pedido);
-        pedidoDescuento.aplicarDescuento();
-        System.out.println("Precio con deccuento: " + pedidoDescuento.getImporte());
+        pedido.setNotificador(N1);
+        pedido.marcarComoListo();
         
     }
     

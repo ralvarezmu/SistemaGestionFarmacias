@@ -6,6 +6,7 @@ package Decorator;
 
 import java.time.LocalDate;
 import AbstractFactory.Medicamento;
+import Observer.Notificador;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
  * @author Admin
  */
 public interface Pedido {
+    
+    public String getId();
     
     public String getUsuario();
     
@@ -24,4 +27,14 @@ public interface Pedido {
     public BigDecimal getImporte();
     
     public void setImporte(BigDecimal importe);
+    
+    public String getEstado();
+    
+    public void setEstado(String estado);
+    
+    public Notificador getNotificador();
+    
+    public void setNotificador(Notificador notificador);
+    
+    public void marcarComoListo();
 }
