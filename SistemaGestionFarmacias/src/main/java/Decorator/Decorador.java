@@ -6,6 +6,7 @@ package Decorator;
 
 import AbstractFactory.Medicamento;
 import Observer.Notificador;
+import State.EstadoPedido;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,18 +54,28 @@ public abstract class Decorador implements Pedido{
     }
     
     @Override
-    public String getEstado() {
+    public EstadoPedido getEstado() {
         return pedido.getEstado();
     }
     
     @Override
-    public void setEstado(String estado) {
+    public void setEstado(EstadoPedido estado) {
         this.pedido.setEstado(estado);
     }
     
     @Override
+    public String getMetodoPago() {
+        return pedido.getMetodoPago();
+    }
+    
+    @Override
+    public void setMetodoPago(String metodo) {
+        this.pedido.setMetodoPago(metodo);
+    }
+    
+    @Override
     public void marcarComoListo() {
-        setEstado("Listo");
+        //setEstado("Listo");
         pedido.getNotificador().actualizar();
     }
     
@@ -76,6 +87,41 @@ public abstract class Decorador implements Pedido{
     @Override
     public void setNotificador(Notificador notificador) {
         this.pedido.setNotificador(notificador);
+    }
+    
+    @Override
+    public void anadirMedicamento(Medicamento medicamento) {
+        this.pedido.getEstado().anadirMedicamento(medicamento, this);
+    }
+    
+    @Override
+    public void eliminarMedicamento(Medicamento medicamento) {
+        this.pedido.getEstado().eliminarMedicamento(medicamento, this);
+    }
+    
+    @Override
+    public void seleccionarMetodoPago(String metodo) {
+        this.pedido.getEstado().seleccionarMetodoPago(metodo, this);
+    }
+    
+    @Override
+    public void confirmarPedido() {
+        this.pedido.getEstado().confirmarPedido(this);
+    }
+    
+    @Override
+    public void verEstadoPedido() {
+        this.pedido.getEstado().verEstadoPedido(this);
+    }
+    
+    @Override
+    public void prepararPedido() {
+        this.pedido.prepararPedido();
+    }
+    
+    @Override
+    public void enviarPedido() {
+        this.pedido.enviarPedido();
     }
     
     public abstract void aplicarDescuento();

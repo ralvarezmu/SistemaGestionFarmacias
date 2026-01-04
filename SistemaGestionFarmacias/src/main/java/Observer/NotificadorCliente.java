@@ -22,9 +22,9 @@ public class NotificadorCliente implements Notificador{
     
     @Override
     public void actualizar() {
-        if(pedido.getEstado().equals("Listo")) {
+        //if(pedido.getEstado().equals("Listo")) {
             System.out.println(cliente + ", tu pedido esta listo");
-        } 
+        //} 
     }
     
 }

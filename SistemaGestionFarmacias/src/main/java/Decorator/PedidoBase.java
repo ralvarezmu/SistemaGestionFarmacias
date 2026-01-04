@@ -6,9 +6,15 @@ package Decorator;
 
 import AbstractFactory.Medicamento;
 import Observer.Notificador;
+import State.EstadoEntregado;
+import State.EstadoEnvio;
+import State.EstadoPedido;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -21,8 +27,10 @@ public class PedidoBase implements Pedido{
     private LocalDate fecha;
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
     private BigDecimal importe;
-    private String estado;
+    private String metodoPago;
+    private EstadoPedido estado;
     private Notificador notificador;
+    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     
     public PedidoBase(String id, String usuario, LocalDate fecha, ArrayList<Medicamento> medicamentos) {
         this.id = id;
@@ -72,18 +80,28 @@ public class PedidoBase implements Pedido{
     }
     
     @Override
-    public String getEstado() {
+    public EstadoPedido getEstado() {
         return estado;
     }
     
     @Override
-    public void setEstado(String estado) {
+    public void setEstado(EstadoPedido estado) {
         this.estado = estado;
     }
     
     @Override
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+    
+    @Override
+    public void setMetodoPago(String metodo) {
+        this.metodoPago = metodo;
+    }
+    
+    @Override
     public void marcarComoListo() {
-        setEstado("Listo");
+        //setEstado("Listo");
         notificador.actualizar();
     }
     
@@ -95,6 +113,51 @@ public class PedidoBase implements Pedido{
     @Override
     public void setNotificador(Notificador notificador) {
         this.notificador = notificador;
+    }
+    
+    @Override
+    public void anadirMedicamento(Medicamento medicamento) {
+        estado.anadirMedicamento(medicamento, this);
+    }
+    
+    @Override
+    public void eliminarMedicamento(Medicamento medicamento) {
+        estado.eliminarMedicamento(medicamento, this);
+    }
+    
+    @Override
+    public void seleccionarMetodoPago(String metodo) {
+        estado.seleccionarMetodoPago(metodo, this);
+    }
+    
+    @Override
+    public void confirmarPedido() {
+        estado.confirmarPedido(this);
+    }
+    
+    @Override
+    public void verEstadoPedido() {
+        estado.verEstadoPedido(this);
+    }
+    
+    @Override
+    public void prepararPedido() {
+        EstadoPedido envio = new EstadoEnvio();
+        scheduler.schedule(() -> {
+            this.setEstado(envio);
+            this.marcarComoListo();
+            estado.enviarPedido(this);
+        }, 1, TimeUnit.MINUTES);
+    }
+    
+    @Override
+    public void enviarPedido() {
+        EstadoPedido entregado = new EstadoEntregado();
+        scheduler.schedule(() -> {
+            this.setEstado(entregado);
+            this.verEstadoPedido();
+            scheduler.shutdown();
+        }, 1, TimeUnit.MINUTES);
     }
     
 }
