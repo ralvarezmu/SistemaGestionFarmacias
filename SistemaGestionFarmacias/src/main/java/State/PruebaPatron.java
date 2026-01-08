@@ -74,21 +74,21 @@ public class PruebaPatron {
         pedido.anadirMedicamento(metamizol);
         pedido.anadirMedicamento(naproxeno);
         pedido.eliminarMedicamento(metamizol);
-        pedido.seleccionarMetodoPago("Tarjeta");
+        pedido.seleccionarMetodoPago(0);
         
         EstadoPedido estado2 = new EstadoEleccionMetodoPago();
         pedido.setEstado(estado2);
         pedido.anadirMedicamento(metamizol);
         pedido.anadirMedicamento(naproxeno);
         pedido.eliminarMedicamento(metamizol);
-        pedido.seleccionarMetodoPago("Tarjeta");
+        pedido.seleccionarMetodoPago(1);
         
         EstadoPedido estado3 = new EstadoFinalizarPedido();
         pedido.setEstado(estado3);
         pedido.anadirMedicamento(metamizol);
         pedido.anadirMedicamento(naproxeno);
         pedido.eliminarMedicamento(metamizol);
-        pedido.seleccionarMetodoPago("Tarjeta");
+        pedido.seleccionarMetodoPago(0);
         pedido.confirmarPedido();
         pedido.verEstadoPedido();
         

@@ -6,6 +6,7 @@ package Decorator;
 
 import java.time.LocalDate;
 import AbstractFactory.Medicamento;
+import FactoryMethod.MetodoPago;
 import Observer.Notificador;
 import State.EstadoPedido;
 import java.math.BigDecimal;
@@ -33,9 +34,9 @@ public interface Pedido {
     
     public void setEstado(EstadoPedido estado);
     
-    public String getMetodoPago();
+    public MetodoPago getMetodoPago();
     
-    public void setMetodoPago(String metodo);
+    public void setMetodoPago(MetodoPago metodo);
     
     public Notificador getNotificador();
     
@@ -47,7 +48,7 @@ public interface Pedido {
     
     public void eliminarMedicamento(Medicamento medicamento);
     
-    public void seleccionarMetodoPago(String metodo);
+    public void seleccionarMetodoPago(int tipo);
     
     public void confirmarPedido();
     

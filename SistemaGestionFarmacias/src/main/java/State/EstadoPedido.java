@@ -17,7 +17,7 @@ public interface EstadoPedido {
     
     public void eliminarMedicamento(Medicamento medicamento, Pedido pedido);
     
-    public void seleccionarMetodoPago(String metodo, Pedido pedido);
+    public void seleccionarMetodoPago(int tipo, Pedido pedido);
     
     public void confirmarPedido(Pedido pedido);
     

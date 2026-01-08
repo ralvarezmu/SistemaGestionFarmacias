@@ -24,7 +24,7 @@ public class EstadoEleccionMedicamentos implements EstadoPedido{
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo, Pedido pedido) {
+    public void seleccionarMetodoPago(int tipo, Pedido pedido) {
         System.out.println("ERROR: Primero debe elegir medicamentos para su pedido");
     }
     

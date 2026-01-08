@@ -24,7 +24,7 @@ public class EstadoEnvio implements EstadoPedido{
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo, Pedido pedido) {
+    public void seleccionarMetodoPago(int tipo, Pedido pedido) {
         System.out.println("ERROR: Pedido confirmado, imposible modficar");
     }
     

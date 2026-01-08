@@ -5,6 +5,7 @@
 package Decorator;
 
 import AbstractFactory.Medicamento;
+import FactoryMethod.MetodoPago;
 import Observer.Notificador;
 import State.EstadoPedido;
 import java.math.BigDecimal;
@@ -64,12 +65,12 @@ public abstract class Decorador implements Pedido{
     }
     
     @Override
-    public String getMetodoPago() {
+    public MetodoPago getMetodoPago() {
         return pedido.getMetodoPago();
     }
     
     @Override
-    public void setMetodoPago(String metodo) {
+    public void setMetodoPago(MetodoPago metodo) {
         this.pedido.setMetodoPago(metodo);
     }
     
@@ -100,8 +101,8 @@ public abstract class Decorador implements Pedido{
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo) {
-        this.pedido.getEstado().seleccionarMetodoPago(metodo, this);
+    public void seleccionarMetodoPago(int tipo) {
+        this.pedido.getEstado().seleccionarMetodoPago(tipo, this);
     }
     
     @Override

@@ -5,6 +5,7 @@
 package Decorator;
 
 import AbstractFactory.Medicamento;
+import FactoryMethod.MetodoPago;
 import Observer.Notificador;
 import State.EstadoEntregado;
 import State.EstadoEnvio;
@@ -27,7 +28,7 @@ public class PedidoBase implements Pedido{
     private LocalDate fecha;
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
     private BigDecimal importe;
-    private String metodoPago;
+    private MetodoPago metodoPago;
     private EstadoPedido estado;
     private Notificador notificador;
     private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -90,12 +91,12 @@ public class PedidoBase implements Pedido{
     }
     
     @Override
-    public String getMetodoPago() {
+    public MetodoPago getMetodoPago() {
         return metodoPago;
     }
     
     @Override
-    public void setMetodoPago(String metodo) {
+    public void setMetodoPago(MetodoPago metodo) {
         this.metodoPago = metodo;
     }
     
@@ -126,8 +127,8 @@ public class PedidoBase implements Pedido{
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo) {
-        estado.seleccionarMetodoPago(metodo, this);
+    public void seleccionarMetodoPago(int tipo) {
+        estado.seleccionarMetodoPago(tipo, this);
     }
     
     @Override

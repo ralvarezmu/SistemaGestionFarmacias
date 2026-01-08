@@ -24,7 +24,7 @@ public class EstadoFinalizarPedido implements EstadoPedido {
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo, Pedido pedido) {
+    public void seleccionarMetodoPago(int tipo, Pedido pedido) {
         System.out.println("ERROR: Pedido pendiente de confirmacion, imposible modficar");
     }
     

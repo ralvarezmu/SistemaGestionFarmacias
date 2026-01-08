@@ -6,6 +6,7 @@ package State;
 
 import AbstractFactory.Medicamento;
 import Decorator.Pedido;
+import FactoryMethod.ElectorMetodoPago;
 
 /**
  *
@@ -13,6 +14,12 @@ import Decorator.Pedido;
  */
 public class EstadoEleccionMetodoPago implements EstadoPedido{
     
+    private ElectorMetodoPago elector;
+    
+    public EstadoEleccionMetodoPago() {
+        this.elector = ElectorMetodoPago.getInstancia();
+    }
+        
     @Override
     public void anadirMedicamento(Medicamento medicamento, Pedido pedido) {
         System.out.println("ERROR: Pedido pendiente de pago, imposible modficar");
@@ -24,8 +31,8 @@ public class EstadoEleccionMetodoPago implements EstadoPedido{
     }
     
     @Override
-    public void seleccionarMetodoPago(String metodo, Pedido pedido) {
-        pedido.setMetodoPago(metodo);
+    public void seleccionarMetodoPago(int tipo, Pedido pedido) {
+        pedido.setMetodoPago(elector.elegirMetodoPago(tipo));
     }
     
     @Override
