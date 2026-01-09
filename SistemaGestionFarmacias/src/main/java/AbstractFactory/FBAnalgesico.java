@@ -19,5 +19,11 @@ public class FBAnalgesico extends Analgesico {
                         String farmaciaAsociada, String nivelDolor) {
         super(id, nombre, descripcion, requiereReceta, precio, stock, fechaCaducidad, farmaciaAsociada, nivelDolor);
     }
+    
+    @Override
+    public String toString() {
+        return super.getNombre();
+    }
+    
 }
 

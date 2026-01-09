@@ -18,5 +18,10 @@ public class FBAntibiotico extends Antibiotico {
                          String farmaciaAsociada, String tipoBacteria) {
         super(id, nombre, descripcion, requiereReceta, precio, stock, fechaCaducidad, farmaciaAsociada, tipoBacteria);
     }
+    
+    @Override
+    public String toString() {
+        return super.getNombre();
+    }
 }
 
