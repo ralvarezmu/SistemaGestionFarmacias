@@ -7,6 +7,11 @@ package com.mycompany.sistemagestionfarmacias;
 import AbstractFactory.Medicamento;
 import Decorator.Pedido;
 import Decorator.PedidoBase;
+import State.EstadoEleccionMedicamentos;
+import State.EstadoEleccionMetodoPago;
+import State.EstadoFinalizarPedido;
+import State.EstadoPedido;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,9 +22,12 @@ import java.util.ArrayList;
 public class ServicioPedido {
     
     private Pedido pedido;
+    private EstadoPedido estado1 = new EstadoEleccionMedicamentos();
+    private EstadoPedido estado2 = new EstadoEleccionMetodoPago();
+    private EstadoPedido estado3 = new EstadoFinalizarPedido();
     
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setPedido(Pedido ped) {
+        this.pedido = ped;
     }
     
     public Pedido getPedido() {
@@ -31,6 +39,19 @@ public class ServicioPedido {
         
         // Crear el pedido
         this.pedido = new PedidoBase("1", cliente, LocalDate.now(), medicamentosPedido);
+        pedido.setEstado(estado1);
+    }
+    
+    public Boolean pasarPago() {
+        if (!pedido.getMedicamentos().isEmpty()) {
+            pedido.setEstado(estado2);
+            return true;
+        }
+        return false;
+    }
+    
+    public void actualizarImpoerte() {
+        pedido.calcularImporte();
     }
     
 }

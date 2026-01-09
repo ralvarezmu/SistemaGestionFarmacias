@@ -50,6 +50,11 @@ public abstract class Decorador implements Pedido{
     }
     
     @Override
+    public BigDecimal calcularImporte() {
+        return pedido.calcularImporte();
+    }
+    
+    @Override
     public String getId() {
         return pedido.getId();
     }

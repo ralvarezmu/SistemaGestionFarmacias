@@ -7,15 +7,12 @@ package Vista;
 import AbstractFactory.FBAnalgesico;
 import AbstractFactory.Medicamento;
 import Decorator.Pedido;
-import State.EstadoEleccionMedicamentos;
-import State.EstadoEleccionMetodoPago;
-import State.EstadoFinalizarPedido;
-import State.EstadoPedido;
 import com.mycompany.sistemagestionfarmacias.ServicioPedido;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,9 +23,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private String cliente;
     private Pedido pedido;
     private ServicioPedido servicioPedido;
-    private EstadoPedido estado1 = new EstadoEleccionMedicamentos();
-    private EstadoPedido estado2 = new EstadoEleccionMetodoPago();
-    private EstadoPedido estado3 = new EstadoFinalizarPedido();
+    
     
     private DefaultListModel<Medicamento> modeloMedicamentosAnalgesicos = new DefaultListModel<>();
     private DefaultListModel<Medicamento> modeloMedicamentosAntibioticos = new DefaultListModel<>();
@@ -45,7 +40,6 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         this.servicioPedido = new ServicioPedido();
         servicioPedido.crearPedido(cliente);
         this.pedido = servicioPedido.getPedido();
-        pedido.setEstado(estado1);
         cargarMedicamentos();
         jList1.setModel(modeloMedicamentosAnalgesicos);
         jList2.setModel(modeloMedicamentosAntibioticos);
@@ -53,12 +47,18 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         
     }
     
-    public void pasarPago() {
-        if (!modeloCarrito.isEmpty()) {
-            pedido.setEstado(estado2);
-        }
+    public void sumarMedicamento() {
+        String textoActual = jLabel10.getText().trim();
+        
+        int valorActual = Integer.parseInt(textoActual);
+        jLabel10.setText(String.valueOf(valorActual + 1));
     }
     
+    public void actualizarImporte() {
+        servicioPedido.actualizarImpoerte();
+        jLabel12.setText(pedido.getImporte().toString());
+    }
+        
     public void cargarMedicamentos() {
         Medicamento paracetamol = new FBAnalgesico(
             "A001", "Paracetamol", "Analgésico común", false,
@@ -141,6 +141,12 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -212,6 +218,18 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("Número de artículos: ");
+
+        jLabel10.setText("0");
+
+        jLabel11.setText("Precio Total:");
+
+        jLabel12.setText("0");
+
+        jLabel13.setText("Método de Pago:");
+
+        jLabel14.setText("-");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,23 +259,34 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                         .addComponent(jButton7))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(35, 35, 35)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(59, 59, 59))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,15 +298,16 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jButton5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -292,15 +322,27 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(34, 34, 34)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(22, 22, 22)
                         .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -313,6 +355,8 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         Medicamento medicamento = jList1.getSelectedValue();
         pedido.anadirMedicamento(medicamento);
         modeloCarrito.addElement(medicamento);
+        sumarMedicamento();
+        actualizarImporte();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -320,6 +364,8 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         Medicamento medicamento = jList2.getSelectedValue();
         pedido.anadirMedicamento(medicamento);
         modeloCarrito.addElement(medicamento);
+        sumarMedicamento();
+        actualizarImporte();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -327,21 +373,59 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         Medicamento medicamento = jList3.getSelectedValue();
         pedido.anadirMedicamento(medicamento);
         modeloCarrito.addElement(medicamento);
+        sumarMedicamento();
+        actualizarImporte();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pasarPago();
-        pedido.seleccionarMetodoPago(0);
+        if (servicioPedido.pasarPago()) {
+            pedido.seleccionarMetodoPago(0);
+            PantallaDatosTarjeta PDTarjeta = new PantallaDatosTarjeta(pedido.getMetodoPago());
+            PDTarjeta.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(
+            this, 
+            "No es posible realizar el pago aún.\n" +
+            "Primero selecciona medicamentos del carrito.", 
+            "Estado incorrecto", 
+            JOptionPane.WARNING_MESSAGE
+            );
+        }      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        pasarPago();
-        pedido.seleccionarMetodoPago(1);
+        if (servicioPedido.pasarPago()) {
+            pedido.seleccionarMetodoPago(1);
+            PantallaDatosPayPal PDPayPal = new PantallaDatosPayPal(pedido.getMetodoPago());
+            PDPayPal.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(
+            this, 
+            "No es posible realizar el pago aún.\n" +
+            "Primero selecciona medicamentos del carrito.", 
+            "Estado incorrecto", 
+            JOptionPane.WARNING_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        pasarPago();
-        pedido.seleccionarMetodoPago(2);
+        if (servicioPedido.pasarPago()) {
+            pedido.seleccionarMetodoPago(2);
+            PantallaDatosBizum PDBizum = new PantallaDatosBizum(pedido.getMetodoPago());
+            PDBizum.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(
+            this, 
+            "No es posible realizar el pago aún.\n" +
+            "Primero selecciona medicamentos del carrito.", 
+            "Estado incorrecto", 
+            JOptionPane.WARNING_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     
@@ -355,6 +439,11 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -362,6 +451,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<Medicamento
     > jList1;
     private javax.swing.JList<Medicamento> jList2;

@@ -10,9 +10,28 @@ package FactoryMethod;
  */
 public class PagoPayPal implements MetodoPago{
     
+    private String codigo;
+    
     @Override
-    public void PedirDatos() {
-        System.out.println("Pidiendo datos");
+    public void verificarDatos(String codigo) {
+        String cod = codigo.trim();
+
+        // Por ejemplo, exigimos 10 caracteres
+        if (cod.length() != 10) {
+            throw new IllegalArgumentException("El código de PayPal debe tener 10 caracteres");
+        }
+
+        // Permitimos solo letras mayúsculas y dígitos
+        for (int i = 0; i < cod.length(); i++) {
+            char c = cod.charAt(i);
+            if (!Character.isDigit(c) && !(c >= 'A' && c <= 'Z')) {
+                throw new IllegalArgumentException(
+                    "El código de PayPal solo puede contener letras mayúsculas y números"
+                );
+            }
+        }
+
+        this.codigo = cod;
     }
     
     @Override

@@ -30,6 +30,8 @@ public interface Pedido {
     
     public void setImporte(BigDecimal importe);
     
+    public BigDecimal calcularImporte();
+    
     public EstadoPedido getEstado();
     
     public void setEstado(EstadoPedido estado);

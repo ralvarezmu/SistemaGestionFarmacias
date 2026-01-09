@@ -10,7 +10,7 @@ package FactoryMethod;
  */
 public interface MetodoPago {
     
-    public void PedirDatos();
+    public void verificarDatos(String datos);
     
     public void realizarPago();
     

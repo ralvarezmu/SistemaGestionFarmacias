@@ -11,18 +11,28 @@ package FactoryMethod;
 public class PagoBizum implements MetodoPago{
     
     private String numeroTelefono;
-        
-    public void setNumeroTelefono(String numeroTelefono) {
-        this.numeroTelefono = numeroTelefono;
-    }
     
     public String getNumeroTelefono() {
         return numeroTelefono;
     } 
     
     @Override
-    public void PedirDatos() {
-        System.out.println("Pidiendo datos");
+    public void verificarDatos(String nTelefono) {
+        String num = nTelefono.trim();
+
+        // Por ejemplo, un teléfono de 9 dígitos (España fijo/móvil)
+        if (num.length() != 9) {
+            throw new IllegalArgumentException("El teléfono debe tener 9 dígitos");
+        }
+
+        // Comprobamos que todos sean dígitos
+        for (int i = 0; i < num.length(); i++) {
+            if (!Character.isDigit(num.charAt(i))) {
+                throw new IllegalArgumentException("El teléfono solo puede contener números");
+            }
+        }
+
+        this.numeroTelefono = num;
     }
     
     @Override

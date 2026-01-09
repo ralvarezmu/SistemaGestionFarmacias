@@ -71,12 +71,14 @@ public class PedidoBase implements Pedido{
         this.importe = importe;
     }
     
+    @Override
     public BigDecimal calcularImporte() {
         BigDecimal importeTotal = BigDecimal.ZERO;
         for (Medicamento m : medicamentos) {
             importeTotal = importeTotal.add(m.getPrecio());
         }
         
+        this.importe = importeTotal;
         return importeTotal;
     }
     
