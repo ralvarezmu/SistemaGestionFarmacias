@@ -38,6 +38,7 @@ public class EstadoEleccionMetodoPago implements EstadoPedido{
     @Override
     public void confirmarPedido(Pedido pedido) {
         System.out.println("ERROR: Primero debe elegir un metodo de pago");
+        throw new IllegalArgumentException("Primero debe elegir un metodo de pago");
     }
     
     @Override

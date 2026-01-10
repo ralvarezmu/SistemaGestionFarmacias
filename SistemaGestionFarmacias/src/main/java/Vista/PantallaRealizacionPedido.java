@@ -6,6 +6,11 @@ package Vista;
 
 import AbstractFactory.FBAnalgesico;
 import AbstractFactory.Medicamento;
+import Bridge.AlmacenMedicamentos;
+import Bridge.MostradorMedicamentosAbst;
+import Bridge.MostradorMedicamentosImp;
+import Bridge.MostradorMedicamentosImpBarcelona;
+import Bridge.MostradorMedicamentosImpMadrid;
 import Decorator.Pedido;
 import com.mycompany.sistemagestionfarmacias.ServicioPedido;
 import java.math.BigDecimal;
@@ -23,7 +28,9 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private String cliente;
     private Pedido pedido;
     private ServicioPedido servicioPedido;
-    
+    private MostradorMedicamentosAbst mostrador;
+    private MostradorMedicamentosImp implementador;
+    private AlmacenMedicamentos almacen;
     
     private DefaultListModel<Medicamento> modeloMedicamentosAnalgesicos = new DefaultListModel<>();
     private DefaultListModel<Medicamento> modeloMedicamentosAntibioticos = new DefaultListModel<>();
@@ -33,17 +40,21 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     /**
      * Creates new form PantallaRealizacionPedido
      */
-    public PantallaRealizacionPedido(String usuario) {
+    public PantallaRealizacionPedido(String usuario, String farmacia) {
         initComponents();
+        almacen = AlmacenMedicamentos.getInstancia();
         jList4.setModel(modeloCarrito);
         this.cliente = usuario;
         this.servicioPedido = new ServicioPedido();
         servicioPedido.crearPedido(cliente);
         this.pedido = servicioPedido.getPedido();
-        cargarMedicamentos();
-        jList1.setModel(modeloMedicamentosAnalgesicos);
-        jList2.setModel(modeloMedicamentosAntibioticos);
-        jList3.setModel(modeloMedicamentosAntinflamatorios);
+        this.mostrador = new MostradorMedicamentosAbst();
+        cargarImplementador(farmacia);
+        mostrador.setImplementador(implementador);
+        mostrador.mostrarMedicamentos();
+        //jList1.setModel(modeloMedicamentosAnalgesicos);
+        //jList2.setModel(modeloMedicamentosAntibioticos);
+        //jList3.setModel(modeloMedicamentosAntinflamatorios);
         
     }
     
@@ -57,6 +68,16 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     public void actualizarImporte() {
         servicioPedido.actualizarImpoerte();
         jLabel12.setText(pedido.getImporte().toString());
+    }
+    
+    public void cargarImplementador(String farmacia) {
+        if (farmacia.equals("M")) {
+            this.implementador = new MostradorMedicamentosImpMadrid(jList1, jList2, jList3, almacen);
+        }
+        else {
+            this.implementador = new MostradorMedicamentosImpBarcelona(jList1, jList2, jList3, almacen);
+        }
+        
     }
         
     public void cargarMedicamentos() {
@@ -147,6 +168,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,6 +214,11 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         jLabel7.setText("3. Confirme y finalice el pedido:");
 
         jButton4.setText("Confirmar Pedido");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Medicamentos seleccionados:");
 
@@ -229,6 +256,8 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         jLabel13.setText("Método de Pago:");
 
         jLabel14.setText("-");
+
+        jButton8.setText("Cancelar Pedido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,18 +302,18 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(35, 35, 35)
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(59, 59, 59))
         );
@@ -344,7 +373,9 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                             .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton8)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -382,6 +413,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             pedido.seleccionarMetodoPago(0);
             PantallaDatosTarjeta PDTarjeta = new PantallaDatosTarjeta(pedido.getMetodoPago());
             PDTarjeta.setVisible(true);
+            jLabel14.setText("Tarjeta");
         }
         else {
             JOptionPane.showMessageDialog(
@@ -399,6 +431,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             pedido.seleccionarMetodoPago(1);
             PantallaDatosPayPal PDPayPal = new PantallaDatosPayPal(pedido.getMetodoPago());
             PDPayPal.setVisible(true);
+            jLabel14.setText("PayPal");
         }
         else {
             JOptionPane.showMessageDialog(
@@ -416,6 +449,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             pedido.seleccionarMetodoPago(2);
             PantallaDatosBizum PDBizum = new PantallaDatosBizum(pedido.getMetodoPago());
             PDBizum.setVisible(true);
+            jLabel14.setText("Bizum");
         }
         else {
             JOptionPane.showMessageDialog(
@@ -428,6 +462,30 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //Confirmacion del pedido
+        try {
+            servicioPedido.pasarEstadoConfirmacion();
+
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Numero de Teléfono valido",
+                "Éxito",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+
+            this.setVisible(false);
+        } catch (IllegalArgumentException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                ex.getMessage(),              
+                "Selleccione antes un metodo de pago",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -438,6 +496,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -7,11 +7,11 @@ package com.mycompany.sistemagestionfarmacias;
 import AbstractFactory.Medicamento;
 import Decorator.Pedido;
 import Decorator.PedidoBase;
+import Decorator.PedidoDescuentoNumeroProductos;
 import State.EstadoEleccionMedicamentos;
 import State.EstadoEleccionMetodoPago;
 import State.EstadoFinalizarPedido;
 import State.EstadoPedido;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -52,6 +52,29 @@ public class ServicioPedido {
     
     public void actualizarImpoerte() {
         pedido.calcularImporte();
+    }
+    
+    public String mostrarPrecioFinal() {
+        String importeFinal = pedido.getImporte().toString();
+        // Comprobacion del tipo de usuario
+        if(pedido.getMedicamentos().size() >= 5) {
+            PedidoDescuentoNumeroProductos descuento = new PedidoDescuentoNumeroProductos(pedido);
+            descuento.aplicarDescuento();
+            importeFinal = pedido.calcularImporte().toString();
+        }
+        
+        return importeFinal;
+    }
+    
+    public void pasarEstadoConfirmacion() {
+        System.out.println("Estado actual: " + pedido.getEstado().getClass().getSimpleName());
+        if (!(pedido.getEstado() instanceof EstadoFinalizarPedido)) {
+            pedido.confirmarPedido();
+        }
+        else {
+            pedido.setEstado(estado3);
+            pedido.confirmarPedido();
+        }
     }
     
 }
