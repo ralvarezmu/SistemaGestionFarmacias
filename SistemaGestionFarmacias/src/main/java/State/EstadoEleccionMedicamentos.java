@@ -31,6 +31,7 @@ public class EstadoEleccionMedicamentos implements EstadoPedido{
     @Override
     public void confirmarPedido(Pedido pedido) {
         System.out.println("ERROR: Primero debe elegir medicamentos para su pedido");
+        throw new IllegalArgumentException("Primero debe elegir un metodo de pago");
     }
     
     @Override

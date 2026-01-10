@@ -5,9 +5,12 @@
 package com.mycompany.sistemagestionfarmacias;
 
 import AbstractFactory.Medicamento;
+import Decorator.Decorador;
 import Decorator.Pedido;
 import Decorator.PedidoBase;
 import Decorator.PedidoDescuentoNumeroProductos;
+import Observer.Notificador;
+import Observer.NotificadorCliente;
 import State.EstadoEleccionMedicamentos;
 import State.EstadoEleccionMetodoPago;
 import State.EstadoFinalizarPedido;
@@ -40,6 +43,10 @@ public class ServicioPedido {
         // Crear el pedido
         this.pedido = new PedidoBase("1", cliente, LocalDate.now(), medicamentosPedido);
         pedido.setEstado(estado1);
+        
+        // Crear el notificador
+        Notificador N1 = new NotificadorCliente(cliente, pedido);        
+        pedido.setNotificador(N1);
     }
     
     public Boolean pasarPago() {
@@ -58,23 +65,20 @@ public class ServicioPedido {
         String importeFinal = pedido.getImporte().toString();
         // Comprobacion del tipo de usuario
         if(pedido.getMedicamentos().size() >= 5) {
-            PedidoDescuentoNumeroProductos descuento = new PedidoDescuentoNumeroProductos(pedido);
+            Decorador descuento = new PedidoDescuentoNumeroProductos(pedido);
             descuento.aplicarDescuento();
-            importeFinal = pedido.calcularImporte().toString();
+            importeFinal = "(Descuento aplicado por numero de productos)" + descuento.getImporte().toString();
         }
         
         return importeFinal;
     }
     
     public void pasarEstadoConfirmacion() {
-        System.out.println("Estado actual: " + pedido.getEstado().getClass().getSimpleName());
-        if (!(pedido.getEstado() instanceof EstadoFinalizarPedido)) {
-            pedido.confirmarPedido();
-        }
-        else {
-            pedido.setEstado(estado3);
-            pedido.confirmarPedido();
-        }
+        pedido.setEstado(estado3);
+    }
+    
+    public void confirmarPedido() {
+        pedido.confirmarPedido();
     }
     
 }

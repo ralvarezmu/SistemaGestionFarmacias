@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import java.awt.Color;
+
 /**
  *
  * @author Admin
@@ -18,12 +20,13 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
      */
     public PantallaEleccionFarmacia(String cliente, PantallaPrincipalCliente pantalla) {
         initComponents();
+        this.getContentPane().setBackground(new Color(248, 250, 252));
         this.cliente = cliente;
         this.pantalla = pantalla;
     }
     
     public void pasarPantalla(String farmacia) {
-        PantallaRealizacionPedido PRPedido = new PantallaRealizacionPedido(cliente, farmacia);
+        PantallaRealizacionPedido PRPedido = new PantallaRealizacionPedido(cliente, farmacia, pantalla);
         PRPedido.setVisible(true);
         dispose();
         pantalla.dispose();
@@ -44,8 +47,12 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(16, 86, 148));
         jLabel1.setText("Eliga la Farmacia para hacer el pedido");
 
+        jButton1.setBackground(new java.awt.Color(240, 245, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Farmacia de Madrid");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,6 +60,8 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(240, 245, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("Farmacia de Barcelona");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,26 +74,26 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(93, 93, 93))
+                .addContainerGap(56, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(49, 49, 49))
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jButton1)
-                .addGap(30, 30, 30)
-                .addComponent(jButton2)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(142, 142, 142)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel1)
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();

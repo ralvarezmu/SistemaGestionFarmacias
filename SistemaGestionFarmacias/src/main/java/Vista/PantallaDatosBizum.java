@@ -5,6 +5,8 @@
 package Vista;
 
 import FactoryMethod.MetodoPago;
+import com.mycompany.sistemagestionfarmacias.ServicioPedido;
+import java.awt.Color;
 
 /**
  *
@@ -13,13 +15,16 @@ import FactoryMethod.MetodoPago;
 public class PantallaDatosBizum extends javax.swing.JFrame {
 
     private MetodoPago mPBizum;
+    private ServicioPedido servicio;
     
     /**
      * Creates new form PantallaDatosBizum
      */
-    public PantallaDatosBizum(MetodoPago mPBizum) {
+    public PantallaDatosBizum(MetodoPago mPBizum, ServicioPedido servicio) {
         initComponents();
+        this.getContentPane().setBackground(new Color(248, 250, 252));
         this.mPBizum = mPBizum;
+        this.servicio = servicio;
     }
 
     /**
@@ -38,10 +43,17 @@ public class PantallaDatosBizum extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(16, 86, 148));
         jLabel1.setText("Rellene datos para Bizum");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Número de teléfono:");
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jButton1.setBackground(new java.awt.Color(240, 245, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,34 +65,30 @@ public class PantallaDatosBizum extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(125, 125, 125)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jButton1)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(98, 98, 98))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addGap(58, 58, 58)
+                .addGap(70, 70, 70)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGap(42, 42, 42)
                 .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
@@ -89,7 +97,7 @@ public class PantallaDatosBizum extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             mPBizum.verificarDatos(jTextField1.getText());
-
+            servicio.pasarEstadoConfirmacion();
             javax.swing.JOptionPane.showMessageDialog(
                 this,
                 "Numero de Teléfono valido",

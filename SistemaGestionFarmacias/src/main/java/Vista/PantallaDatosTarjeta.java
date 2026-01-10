@@ -6,6 +6,8 @@ package Vista;
 
 import FactoryMethod.MetodoPago;
 import FactoryMethod.PagoTarjeta;
+import com.mycompany.sistemagestionfarmacias.ServicioPedido;
+import java.awt.Color;
 
 /**
  *
@@ -14,13 +16,16 @@ import FactoryMethod.PagoTarjeta;
 public class PantallaDatosTarjeta extends javax.swing.JFrame {
 
     private MetodoPago pTarjeta;
+    private ServicioPedido servicio;
     
     /**
      * Creates new form PantallaDatosTarjeta
      */
-    public PantallaDatosTarjeta(MetodoPago pTarjeta) {
+    public PantallaDatosTarjeta(MetodoPago pTarjeta, ServicioPedido servicio) {
         initComponents();
+        this.getContentPane().setBackground(new Color(248, 250, 252));
         this.pTarjeta = pTarjeta;
+        this.servicio = servicio;
     }
 
     /**
@@ -39,10 +44,17 @@ public class PantallaDatosTarjeta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(16, 86, 148));
         jLabel1.setText("Rellene los datos de su tarjeta");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Numero de Tarjeta:");
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jButton1.setBackground(new java.awt.Color(240, 245, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,33 +67,28 @@ public class PantallaDatosTarjeta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jButton1)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                        .addGap(95, 95, 95)
+                        .addComponent(jButton1))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addGap(61, 61, 61)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addGap(53, 53, 53)
                 .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -90,7 +97,7 @@ public class PantallaDatosTarjeta extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             pTarjeta.verificarDatos(jTextField1.getText());
-
+            servicio.pasarEstadoConfirmacion();
             javax.swing.JOptionPane.showMessageDialog(
                 this,
                 "Tarjeta valida",

@@ -24,6 +24,12 @@ public class NotificadorCliente implements Notificador{
     public void actualizar() {
         //if(pedido.getEstado().equals("Listo")) {
             System.out.println(cliente + ", tu pedido esta listo");
+            javax.swing.JOptionPane.showMessageDialog(
+                null,
+                "Tu pedido esta listo",
+                "Éxito",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
         //} 
     }
     
