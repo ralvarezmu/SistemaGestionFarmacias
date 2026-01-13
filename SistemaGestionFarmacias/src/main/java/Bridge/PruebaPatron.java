@@ -7,8 +7,10 @@ package Bridge;
 import AbstractFactory.Analgesico;
 import AbstractFactory.Antibiotico;
 import AbstractFactory.Antiinflamatorio;
-import AbstractFactory.FBAnalgesico;
+import AbstractFactory.FBMedicamentoFactory;
+import AbstractFactory.FMMedicamentoFactory;
 import AbstractFactory.Medicamento;
+import AbstractFactory.MedicamentoFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.swing.JFrame;
@@ -33,54 +35,58 @@ public class PruebaPatron {
             JList<Medicamento> listaAnalgesicos = new JList<>();
             JList<Medicamento> listaAntibioticos = new JList<>();
             JList<Medicamento> listaAntinflamatorios = new JList<>();
+            
+            MedicamentoFactory factoriaMadrid = new FMMedicamentoFactory();
+            MedicamentoFactory factoriaBarcelona = new FBMedicamentoFactory();
 
-            Medicamento paracetamol = new FBAnalgesico(
-            "A001", "Paracetamol", "Analgésico común", false,
-            new BigDecimal("2.95"), 120, LocalDate.of(2027, 5, 10),
-            "Farmacia Barcelona", "leve"
-        );
+            Medicamento paracetamol = factoriaBarcelona.crearAnalgesico(
+                "A101", "Paracetamol 1g", "Analgésico común", false,
+                3.10, 100, LocalDate.of(2027, 6, 15),
+                "leve"
+            );
 
-        Medicamento ibuprofeno = new FBAnalgesico(
-            "A002", "Ibuprofeno 400mg", "Dolor moderado", false,
-            new BigDecimal("4.50"), 80, LocalDate.of(2026, 11, 2),
-            "Farmacia Barcelona", "moderado"
-        );
+            Medicamento amoxicilina = factoriaBarcelona.crearAntibiotico(
+                "AB101", "Amoxicilina 500mg", "Antibiótico antibacteriano", true,
+                8.75, 30, LocalDate.of(2026, 9, 20),
+                "E. coli"
+            );
 
-        Medicamento aspirina = new FBAnalgesico(
-            "A003", "Aspirina 500mg", "Dolor y fiebre", false,
-            new BigDecimal("1.80"), 200, LocalDate.of(2026, 8, 15),
-            "Farmacia Barcelona", "leve"
-        );
-        
-        Medicamento gelocatil = new FBAnalgesico(
-            "A004", "Gelocatil 1g", "Dolor intenso", false,
-            new BigDecimal("5.20"), 50, LocalDate.of(2027, 3, 20),
-            "Farmacia Barcelona", "intenso"
-        );
+            Medicamento ibuprofeno = factoriaBarcelona.crearAntiinflamatorio(
+                "AI101", "Ibuprofeno 600mg", "Inflamación muscular", false,
+                5.40, 60, LocalDate.of(2026, 12, 10),
+                "muscular"
+            );
+            
+            Medicamento gelocatil = factoriaMadrid.crearAnalgesico(
+                "A201", "Gelocatil 1g", "Dolor intenso", false,
+                4.90, 80, LocalDate.of(2027, 3, 5),
+                "intenso"
+            );
 
-        Medicamento naproxeno = new FBAnalgesico(
-            "A005", "Naproxeno 550mg", "Dolor muscular", false,
-            new BigDecimal("6.75"), 40, LocalDate.of(2026, 12, 1),
-            "Farmacia Barcelona", "muscular"
-        );
+            Medicamento azitromicina = factoriaMadrid.crearAntibiotico(
+                "AB201", "Azitromicina 500mg", "Antibiótico respiratorio", true,
+                11.60, 20, LocalDate.of(2026, 7, 30),
+                "S. pneumoniae"
+            );
 
-        Medicamento metamizol = new FBAnalgesico(
-            "A006", "Nolotil 575mg", "Dolor severo", true,
-            new BigDecimal("3.90"), 30, LocalDate.of(2027, 1, 15),
-            "Farmacia Barcelona", "severo"
-        );
+            Medicamento naproxeno = factoriaMadrid.crearAntiinflamatorio(
+                "AI201", "Naproxeno 550mg", "Dolor articular", false,
+                6.80, 40, LocalDate.of(2026, 11, 25),
+                "articular"
+            );
             
             // Crear almacén con datos de prueba
             AlmacenMedicamentos almacen;
             almacen = AlmacenMedicamentos.getInstancia();
 
-            // Analgésicos Barcelona
+            // Medicamentos Barcelona
             almacen.anadirAnalgesicosBarcelona(paracetamol);
-            almacen.anadirAnalgesicosBarcelona(ibuprofeno);
-            almacen.anadirAnalgesicosBarcelona(aspirina);
-            almacen.anadirAnalgesicosBarcelona(gelocatil);
-            almacen.anadirAnalgesicosBarcelona(naproxeno);
-            almacen.anadirAnalgesicosBarcelona(metamizol);
+            almacen.anadirAntibioticosBarcelona(amoxicilina);
+            almacen.anadirAntiinflamatoriosBarcelona(ibuprofeno);
+            // Medicamentos Madrid
+            almacen.anadirAnalgesicosMadrid(gelocatil);
+            almacen.anadirAntibioticosMadrid(azitromicina);
+            almacen.anadirAntiinflamatoriosMadrid(naproxeno);
             
             // Crear implementador concreto (Barcelona)
             MostradorMedicamentosImp impBarcelona =
@@ -91,9 +97,7 @@ public class PruebaPatron {
                             almacen
                     );
             
-            almacen.anadirAnalgesicosMadrid(paracetamol);
-            almacen.anadirAnalgesicosMadrid(ibuprofeno);
-            
+            // Crear implementador concreto (Madrid)
             MostradorMedicamentosImp impMadrid =
                     new MostradorMedicamentosImpMadrid(
                             listaAnalgesicos,

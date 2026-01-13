@@ -27,7 +27,7 @@ public class MostradorMedicamentosImpMadrid extends MostradorMedicamentosImp {
             super.getModeloMedicamentosAntibioticos().addElement(m);
         }
         
-        for (Medicamento m : super.getAlmacen().getAntinflamatoriosMadrid()) {
+        for (Medicamento m : super.getAlmacen().getAntiinflamatoriosMadrid()) {
             super.getModeloMedicamentosAntinflamatorios().addElement(m);
         }
     }

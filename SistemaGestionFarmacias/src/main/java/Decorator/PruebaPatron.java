@@ -4,9 +4,10 @@
  */
 package Decorator;
 
-import AbstractFactory.FBAnalgesico;
+import AbstractFactory.FBMedicamentoFactory;
+import AbstractFactory.FMMedicamentoFactory;
 import AbstractFactory.Medicamento;
-import java.math.BigDecimal;
+import AbstractFactory.MedicamentoFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -21,50 +22,53 @@ public class PruebaPatron {
      */
     public static void main(String[] args) {
         
-        Medicamento paracetamol = new FBAnalgesico(
-            "A001", "Paracetamol", "Analgésico común", false,
-            new BigDecimal("2.95"), 120, LocalDate.of(2027, 5, 10),
-            "Farmacia Barcelona", "leve"
+        MedicamentoFactory factoriaMadrid = new FMMedicamentoFactory();
+        MedicamentoFactory factoriaBarcelona = new FBMedicamentoFactory();
+
+        Medicamento paracetamol = factoriaBarcelona.crearAnalgesico(
+            "A101", "Paracetamol 1g", "Analgésico común", false,
+            3.10, 100, LocalDate.of(2027, 6, 15),
+            "leve"
         );
 
-        Medicamento ibuprofeno = new FBAnalgesico(
-            "A002", "Ibuprofeno 400mg", "Dolor moderado", false,
-            new BigDecimal("4.50"), 80, LocalDate.of(2026, 11, 2),
-            "Farmacia Barcelona", "moderado"
+        Medicamento amoxicilina = factoriaBarcelona.crearAntibiotico(
+            "AB101", "Amoxicilina 500mg", "Antibiótico antibacteriano", true,
+            8.75, 30, LocalDate.of(2026, 9, 20),
+            "E. coli"
         );
 
-        Medicamento aspirina = new FBAnalgesico(
-            "A003", "Aspirina 500mg", "Dolor y fiebre", false,
-            new BigDecimal("1.80"), 200, LocalDate.of(2026, 8, 15),
-            "Farmacia Barcelona", "leve"
-        );
-        
-        Medicamento gelocatil = new FBAnalgesico(
-            "A004", "Gelocatil 1g", "Dolor intenso", false,
-            new BigDecimal("5.20"), 50, LocalDate.of(2027, 3, 20),
-            "Farmacia Barcelona", "intenso"
+        Medicamento ibuprofeno = factoriaBarcelona.crearAntiinflamatorio(
+            "AI101", "Ibuprofeno 600mg", "Inflamación muscular", false,
+            5.40, 60, LocalDate.of(2026, 12, 10),
+            "muscular"
         );
 
-        Medicamento naproxeno = new FBAnalgesico(
-            "A005", "Naproxeno 550mg", "Dolor muscular", false,
-            new BigDecimal("6.75"), 40, LocalDate.of(2026, 12, 1),
-            "Farmacia Barcelona", "muscular"
+        Medicamento gelocatil = factoriaMadrid.crearAnalgesico(
+            "A201", "Gelocatil 1g", "Dolor intenso", false,
+            4.90, 80, LocalDate.of(2027, 3, 5),
+            "intenso"
         );
 
-        Medicamento metamizol = new FBAnalgesico(
-            "A006", "Nolotil 575mg", "Dolor severo", true,
-            new BigDecimal("3.90"), 30, LocalDate.of(2027, 1, 15),
-            "Farmacia Barcelona", "severo"
+        Medicamento azitromicina = factoriaMadrid.crearAntibiotico(
+            "AB201", "Azitromicina 500mg", "Antibiótico respiratorio", true,
+            11.60, 20, LocalDate.of(2026, 7, 30),
+            "S. pneumoniae"
+        );
+
+        Medicamento naproxeno = factoriaMadrid.crearAntiinflamatorio(
+            "AI201", "Naproxeno 550mg", "Dolor articular", false,
+            6.80, 40, LocalDate.of(2026, 11, 25),
+            "articular"
         );
         
         ArrayList<Medicamento> medicamentosPedido = new ArrayList<>();
         medicamentosPedido.add(paracetamol);
+        medicamentosPedido.add(amoxicilina);
         medicamentosPedido.add(ibuprofeno);
-        medicamentosPedido.add(aspirina);
         medicamentosPedido.add(gelocatil);
+        medicamentosPedido.add(azitromicina);
         medicamentosPedido.add(naproxeno);
-        medicamentosPedido.add(metamizol);
-        
+            
         // Crear el pedido
         Pedido pedido = new PedidoBase("1", "Juan Pérez", LocalDate.now(), medicamentosPedido);
         

@@ -26,11 +26,11 @@ public interface Pedido {
     
     public ArrayList<Medicamento> getMedicamentos();
     
-    public BigDecimal getImporte();
+    public double getImporte();
     
-    public void setImporte(BigDecimal importe);
+    public void setImporte(double importe);
     
-    public BigDecimal calcularImporte();
+    public double calcularImporte();
     
     public EstadoPedido getEstado();
     

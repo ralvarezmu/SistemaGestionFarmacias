@@ -10,7 +10,6 @@ import Observer.Notificador;
 import State.EstadoEntregado;
 import State.EstadoEnvio;
 import State.EstadoPedido;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -27,7 +26,7 @@ public class PedidoBase implements Pedido{
     private String usuario;
     private LocalDate fecha;
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
-    private BigDecimal importe;
+    private double importe;
     private MetodoPago metodoPago;
     private EstadoPedido estado;
     private Notificador notificador;
@@ -62,25 +61,25 @@ public class PedidoBase implements Pedido{
     }
     
     @Override
-    public BigDecimal getImporte() {
+    public double getImporte() {
         return importe;
     }
     
     @Override
-    public void setImporte(BigDecimal importe) {
+    public void setImporte(double importe) {
         this.importe = importe;
     }
     
     @Override
-    public BigDecimal calcularImporte() {
-        BigDecimal importeTotal = BigDecimal.ZERO;
+    public double calcularImporte() {
+        double importeTotal = 0.0;
         for (Medicamento m : medicamentos) {
-            importeTotal = importeTotal.add(m.getPrecio());
+            importeTotal += m.getPrecio();
         }
-        
         this.importe = importeTotal;
         return importeTotal;
     }
+
     
     @Override
     public EstadoPedido getEstado() {

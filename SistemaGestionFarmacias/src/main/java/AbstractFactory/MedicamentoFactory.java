@@ -8,31 +8,20 @@ package AbstractFactory;
  *
  * @author claud
  */
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
+//Fábrica abstracta
 public interface MedicamentoFactory {
 
-    Analgesico crearAnalgesico(
-            String id, String nombre, String descripcion,
-            boolean requiereReceta, BigDecimal precio, int stock,
-            LocalDate fechaCaducidad,
-            String nivelDolor
-    );
+    Analgesico crearAnalgesico(String id, String nombre, String descripcion, boolean recetaMedica,
+                               double precio, int stock, LocalDate fechaCaducidad,
+                               String nivelDolor);
 
-    Antiinflamatorio crearAntiinflamatorio(
-            String id, String nombre, String descripcion,
-            boolean requiereReceta, BigDecimal precio, int stock,
-            LocalDate fechaCaducidad,
-            String zonaInflamacion
-    );
+    Antiinflamatorio crearAntiinflamatorio(String id, String nombre, String descripcion, boolean recetaMedica,
+                                           double precio, int stock, LocalDate fechaCaducidad,
+                                           String zonaInflamacion);
 
-    Antibiotico crearAntibiotico(
-            String id, String nombre, String descripcion,
-            boolean requiereReceta, BigDecimal precio, int stock,
-            LocalDate fechaCaducidad,
-            String tipoBacteria
-    );
+    Antibiotico crearAntibiotico(String id, String nombre, String descripcion, boolean recetaMedica,
+                                 double precio, int stock, LocalDate fechaCaducidad,
+                                 String tipoBacteria);
 }
-

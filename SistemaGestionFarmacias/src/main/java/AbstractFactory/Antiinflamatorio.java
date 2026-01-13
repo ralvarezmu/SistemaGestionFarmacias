@@ -8,37 +8,38 @@ package AbstractFactory;
  *
  * @author claud
  */
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class Antiinflamatorio extends Medicamento {
+//Producto concreto
+public class Antiinflamatorio extends Medicamento {
+    private String zonaInflamacion; //articular, muscular o general
 
-    private final String zonaInflamacion; // "articular", "muscular", "general"
-
-    protected Antiinflamatorio(
-            String id,
-            String nombre,
-            String descripcion,
-            boolean requiereReceta,
-            BigDecimal precio,
-            int stock,
-            LocalDate fechaCaducidad,
-            String farmaciaAsociada,
-            String zonaInflamacion
-    ) {
-        super(id, nombre, descripcion, "ANTIINFLAMATORIO", requiereReceta, precio, stock, fechaCaducidad, farmaciaAsociada);
-        this.zonaInflamacion = zonaInflamacion;
+    public Antiinflamatorio(String id, String nombre, String descripcion, boolean recetaMedica, double precio, int stock, LocalDate fechaCaducidad, String farmacia, String zonaInflamacion) {
+        super(id, nombre, descripcion, "antiinflamatorio", recetaMedica, precio, stock, fechaCaducidad, farmacia);
+        setZonaInflamacion(zonaInflamacion);
     }
 
-    public String getZonaInflamacion() {
-        return zonaInflamacion;
+    public String getZonaInflamacion() { 
+        return zonaInflamacion; 
+    }
+
+    public final void setZonaInflamacion(String zonaInflamacion) {
+        if (zonaInflamacion == null) throw new IllegalArgumentException("zonaInflamacion no puede ser null");
+
+        String v = zonaInflamacion.trim().toLowerCase();
+        if (!v.equals("articular") && !v.equals("muscular") && !v.equals("general")) {
+            throw new IllegalArgumentException("zonaInflamacion inválida (usa: articular, muscular o general)");
+        }
+        this.zonaInflamacion = v;
     }
 
     @Override
     public String toString() {
-        return super.toString().replace("}", "") +
+        return "Antiinflamatorio{" +
+                "id='" + getId() + '\'' +
+                ", nombre='" + getNombre() + '\'' +
+                ", farmacia='" + getFarmacia() + '\'' +
                 ", zonaInflamacion='" + zonaInflamacion + '\'' +
                 '}';
     }
 }
-

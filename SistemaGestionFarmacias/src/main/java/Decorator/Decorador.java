@@ -40,17 +40,17 @@ public abstract class Decorador implements Pedido{
     }
     
     @Override
-    public BigDecimal getImporte() {
+    public double getImporte() {
         return pedido.getImporte();
     }
     
     @Override
-    public void setImporte(BigDecimal importe) {
+    public void setImporte(double importe) {
         this.pedido.setImporte(importe);
     }
     
     @Override
-    public BigDecimal calcularImporte() {
+    public double calcularImporte() {
         return pedido.calcularImporte();
     }
     

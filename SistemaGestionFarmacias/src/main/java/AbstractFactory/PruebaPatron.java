@@ -8,53 +8,38 @@ package AbstractFactory;
  *
  * @author claud
  */
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class PruebaPatron {
 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
 
-        MedicamentoFactory factoryMadrid = new FMMedicamentoFactory();
-        MedicamentoFactory factoryBarcelona = new FBMedicamentoFactory();
+        MedicamentoFactory factoriaMadrid = new FMMedicamentoFactory();
+        MedicamentoFactory factoriaBarcelona = new FBMedicamentoFactory();
 
-        Analgesico a1 = factoryMadrid.crearAnalgesico(
-                "A-001",
-                "Paracetamol",
-                "Analgésico común para dolor y fiebre",
-                false,
-                new BigDecimal("2.95"),
-                120,
-                LocalDate.of(2027, 5, 10),
-                "leve"
+        Medicamento m1 = factoriaMadrid.crearAnalgesico(
+                "A-001", "Paracetamol", "Dolor leve/moderado", false,
+                3.50, 50, LocalDate.of(2027, 5, 10),
+                "moderado"
         );
 
-        Antiinflamatorio ai1 = factoryBarcelona.crearAntiinflamatorio(
-                "AI-010",
-                "Ibuprofeno",
-                "Antiinflamatorio para molestias musculares",
-                false,
-                new BigDecimal("4.50"),
-                60,
-                LocalDate.of(2026, 11, 2),
+        Medicamento m2 = factoriaBarcelona.crearAntiinflamatorio(
+                "AI-010", "Ibuprofeno", "Para inflamación muscular", false,
+                4.90, 40, LocalDate.of(2026, 12, 1),
                 "muscular"
         );
 
-        Antibiotico ab1 = factoryMadrid.crearAntibiotico(
-                "AB-100",
-                "Amoxicilina",
-                "Antibiótico de amplio espectro",
-                true,
-                new BigDecimal("9.90"),
-                25,
-                LocalDate.of(2026, 1, 15),
-                "Streptococcus"
+        Medicamento m3 = factoriaMadrid.crearAntibiotico(
+                "AB-100", "Amoxicilina", "Antibiótico de amplio espectro", true,
+                9.99, 15, LocalDate.of(2026, 8, 20),
+                "E. coli"
         );
 
-        System.out.println(a1);
-        System.out.println(ai1);
-        System.out.println(ab1);
+        System.out.println(m1);
+        System.out.println(m2);
+        System.out.println(m3);
     }
 }
-

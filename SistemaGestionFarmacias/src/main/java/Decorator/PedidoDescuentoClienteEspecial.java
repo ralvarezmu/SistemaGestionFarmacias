@@ -18,7 +18,8 @@ public class PedidoDescuentoClienteEspecial extends Decorador{
     
     @Override
     public void aplicarDescuento() {
-        super.setImporte(super.getImporte().multiply(new BigDecimal("0.40")));
+        super.setImporte(super.getImporte() * 0.40);
     }
+
     
 }

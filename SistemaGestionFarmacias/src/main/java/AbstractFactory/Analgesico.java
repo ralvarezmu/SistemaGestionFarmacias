@@ -8,37 +8,38 @@ package AbstractFactory;
  *
  * @author claud
  */
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class Analgesico extends Medicamento {
+//Producto concreto
+public class Analgesico extends Medicamento {
+    private String nivelDolor; // leve, moderado o intenso
 
-    private final String nivelDolor; // "leve", "moderado", "intenso"
-
-    protected Analgesico(
-            String id,
-            String nombre,
-            String descripcion,
-            boolean requiereReceta,
-            BigDecimal precio,
-            int stock,
-            LocalDate fechaCaducidad,
-            String farmaciaAsociada,
-            String nivelDolor
-    ) {
-        super(id, nombre, descripcion, "ANALGESICO", requiereReceta, precio, stock, fechaCaducidad, farmaciaAsociada);
-        this.nivelDolor = nivelDolor;
+    public Analgesico(String id, String nombre, String descripcion, boolean recetaMedica, double precio, int stock, LocalDate fechaCaducidad, String farmacia, String nivelDolor) {
+        super(id, nombre, descripcion, "analgesico", recetaMedica, precio, stock, fechaCaducidad, farmacia);
+        setNivelDolor(nivelDolor);
     }
 
-    public String getNivelDolor() {
-        return nivelDolor;
+    public String getNivelDolor() { 
+        return nivelDolor; 
+    }
+
+    public final void setNivelDolor(String nivelDolor) {
+        if (nivelDolor == null) throw new IllegalArgumentException("nivelDolor no puede ser null");
+
+        String v = nivelDolor.trim().toLowerCase();
+        if (!v.equals("leve") && !v.equals("moderado") && !v.equals("intenso")) {
+            throw new IllegalArgumentException("nivelDolor inválido (usa: leve, moderado o intenso)");
+        }
+        this.nivelDolor = v;
     }
 
     @Override
     public String toString() {
-        return super.toString().replace("}", "") +
+        return "Analgesico{" +
+                "id='" + getId() + '\'' +
+                ", nombre='" + getNombre() + '\'' +
+                ", farmacia='" + getFarmacia() + '\'' +
                 ", nivelDolor='" + nivelDolor + '\'' +
                 '}';
     }
 }
-

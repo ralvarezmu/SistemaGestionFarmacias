@@ -57,19 +57,21 @@ public class ServicioPedido {
         return false;
     }
     
-    public void actualizarImpoerte() {
+    public void actualizarImporte() {
         pedido.calcularImporte();
     }
     
     public String mostrarPrecioFinal() {
-        String importeFinal = pedido.getImporte().toString();
-        // Comprobacion del tipo de usuario
-        if(pedido.getMedicamentos().size() >= 5) {
+        String importeFinal = String.format("%.2f €", pedido.getImporte());
+
+        // Comprobación del número de productos
+        if (pedido.getMedicamentos().size() >= 5) {
             Decorador descuento = new PedidoDescuentoNumeroProductos(pedido);
             descuento.aplicarDescuento();
-            importeFinal = "(Descuento aplicado por numero de productos)" + descuento.getImporte().toString();
+            importeFinal = "(Descuento aplicado por número de productos) "
+                    + String.format("%.2f €", descuento.getImporte());
         }
-        
+
         return importeFinal;
     }
     

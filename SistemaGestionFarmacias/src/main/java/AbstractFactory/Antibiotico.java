@@ -8,38 +8,35 @@ package AbstractFactory;
  *
  * @author claud
  */
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class Antibiotico extends Medicamento {
+//Producto concreto
+public class Antibiotico extends Medicamento {
+    private String tipoBacteria; // "libre" (estreptococo, staphylococcus, E. coli…)
 
-    private final String tipoBacteria;
-
-    protected Antibiotico(
-            String id,
-            String nombre,
-            String descripcion,
-            boolean requiereReceta,
-            BigDecimal precio,
-            int stock,
-            LocalDate fechaCaducidad,
-            String farmaciaAsociada,
-            String tipoBacteria
-    ) {
-        super(id, nombre, descripcion, "ANTIBIOTICO", requiereReceta, precio, stock, fechaCaducidad, farmaciaAsociada);
-        this.tipoBacteria = tipoBacteria;
+    public Antibiotico(String id, String nombre, String descripcion, boolean recetaMedica, double precio, int stock, LocalDate fechaCaducidad, String farmacia, String tipoBacteria) {
+        super(id, nombre, descripcion, "antibiotico", recetaMedica, precio, stock, fechaCaducidad, farmacia);
+        setTipoBacteria(tipoBacteria);
     }
 
-    public String getTipoBacteria() {
-        return tipoBacteria;
+    public String getTipoBacteria() { 
+        return tipoBacteria; 
+    }
+
+    public final void setTipoBacteria(String tipoBacteria) {
+        if (tipoBacteria == null || tipoBacteria.trim().isEmpty()) {
+            throw new IllegalArgumentException("tipoBacteria no puede estar vacío");
+        }
+        this.tipoBacteria = tipoBacteria.trim();
     }
 
     @Override
     public String toString() {
-        return super.toString().replace("}", "") +
+        return "Antibiotico{" +
+                "id='" + getId() + '\'' +
+                ", nombre='" + getNombre() + '\'' +
+                ", farmacia='" + getFarmacia() + '\'' +
                 ", tipoBacteria='" + tipoBacteria + '\'' +
                 '}';
     }
 }
-
