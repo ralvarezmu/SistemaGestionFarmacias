@@ -135,4 +135,20 @@ public class AlmacenMedicamentos {
         //
     }
     
+    public ArrayList<Medicamento> getTodosLosMedicamentos() {
+        ArrayList<Medicamento> todosLosMedicamentos = new ArrayList<>();
+        
+        // Añadimos todos los medicamentos de Madrid
+        todosLosMedicamentos.addAll(analgesicosMadrid);
+        todosLosMedicamentos.addAll(antibioticosMadrid);
+        todosLosMedicamentos.addAll(antinflamatoriosMadrid);
+        
+        // Añadimos todos los medicamentos de Barcelona
+        todosLosMedicamentos.addAll(analgesicosBarcelona);
+        todosLosMedicamentos.addAll(antibioticosBarcelona);
+        todosLosMedicamentos.addAll(antinflamatoriosBarcelona);
+        
+        return todosLosMedicamentos;  
+    }
+    
 }
