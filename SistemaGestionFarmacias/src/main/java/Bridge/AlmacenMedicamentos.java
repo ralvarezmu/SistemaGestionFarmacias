@@ -23,6 +23,7 @@ public class AlmacenMedicamentos {
     private ArrayList<Medicamento> analgesicosBarcelona = new ArrayList<>();
     private ArrayList<Medicamento> antibioticosBarcelona = new ArrayList<>();
     private ArrayList<Medicamento> antinflamatoriosBarcelona = new ArrayList<>();
+    private ArrayList<Medicamento> todosLosMedicamentos = new ArrayList<>();
     
     private static AlmacenMedicamentos instancia;
     
@@ -111,6 +112,20 @@ public class AlmacenMedicamentos {
         return antinflamatoriosBarcelona;
     }
     
+    public ArrayList<Medicamento> getTodosLosMedicamentos() {    
+        // Añadimos todos los medicamentos de Madrid
+        todosLosMedicamentos.addAll(analgesicosMadrid);
+        todosLosMedicamentos.addAll(antibioticosMadrid);
+        todosLosMedicamentos.addAll(antinflamatoriosMadrid);
+        
+        // Añadimos todos los medicamentos de Barcelona
+        todosLosMedicamentos.addAll(analgesicosBarcelona);
+        todosLosMedicamentos.addAll(antibioticosBarcelona);
+        todosLosMedicamentos.addAll(antinflamatoriosBarcelona);
+        
+        return todosLosMedicamentos;  
+    }
+    
     public void anadirAnalgesicosMadrid(Medicamento medicamento) {
         analgesicosMadrid.add(medicamento);
     }
@@ -134,21 +149,5 @@ public class AlmacenMedicamentos {
     public void anadirAntiinflamatoriosBarcelona(Medicamento medicamento) {
         //
     }
-    
-    public ArrayList<Medicamento> getTodosLosMedicamentos() {
-        ArrayList<Medicamento> todosLosMedicamentos = new ArrayList<>();
-        
-        // Añadimos todos los medicamentos de Madrid
-        todosLosMedicamentos.addAll(analgesicosMadrid);
-        todosLosMedicamentos.addAll(antibioticosMadrid);
-        todosLosMedicamentos.addAll(antinflamatoriosMadrid);
-        
-        // Añadimos todos los medicamentos de Barcelona
-        todosLosMedicamentos.addAll(analgesicosBarcelona);
-        todosLosMedicamentos.addAll(antibioticosBarcelona);
-        todosLosMedicamentos.addAll(antinflamatoriosBarcelona);
-        
-        return todosLosMedicamentos;  
-    }
-    
+      
 }

@@ -30,7 +30,7 @@ public class PruebaPatron {
             System.out.println(medicamento);
         }
 
-        // Cambiar estrategia: buscar por tipo
+        // Buscar por tipo
         consultor.setEstrategia(new ConsultaPorTipo());
         List<Medicamento> r2 = consultor.consultar(todos, "analgesico");
         System.out.println("\nResultados por tipo 'analgesico':");
@@ -38,7 +38,7 @@ public class PruebaPatron {
             System.out.println(medicamento);
         }
 
-        // Cambiar estrategia: buscar por farmacia
+        // Buscar por farmacia
         consultor.setEstrategia(new ConsultaPorFarmacia());
         List<Medicamento> r3 = consultor.consultar(todos, "madrid");
         System.out.println("\nResultados por farmacia 'madrid':");
