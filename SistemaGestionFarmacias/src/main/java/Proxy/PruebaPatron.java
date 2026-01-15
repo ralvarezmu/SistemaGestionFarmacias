@@ -14,7 +14,6 @@ public class PruebaPatron {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         RepositorioUsuarios repo = new RepositorioUsuarios();
 
         // Sujeto real
@@ -24,16 +23,28 @@ public class PruebaPatron {
         ServicioLogin login = new ServicioLoginProxy(real);
 
         // Cliente OK
-        Sesion s1 = login.iniciarSesion("cliente1", "1234", "CLIENTE");
-        System.out.println("Sesion cliente: " + s1);
+        try {
+            Sesion s1 = login.iniciarSesion("cliente1", "1234", "CLIENTE");
+            System.out.println("Sesion cliente: " + s1);
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con cliente1: " + e.getMessage());
+        }
 
         // Farmacéutico OK
-        Sesion s2 = login.iniciarSesion("farmaceutico1", "admin", "FARMACEUTICO");
-        System.out.println("Sesion farma: " + s2);
+        try {
+            Sesion s2 = login.iniciarSesion("farmaceutico1", "admin", "FARMACEUTICO");
+            System.out.println("Sesion farma: " + s2);
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con farmaceutico1: " + e.getMessage());
+        }
 
         // Admin OK
-        Sesion s3 = login.iniciarSesion("admin1", "root", "ADMIN");
-        System.out.println("Sesion admin: " + s3);
+        try {
+            Sesion s3 = login.iniciarSesion("admin1", "root", "ADMIN");
+            System.out.println("Sesion admin: " + s3);
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión con admin1: " + e.getMessage());
+        }
 
         // Fallo de rol
         try {

@@ -19,10 +19,10 @@ public class AlmacenMedicamentos {
     
     private ArrayList<Medicamento> analgesicosMadrid = new ArrayList<>();
     private ArrayList<Medicamento> antibioticosMadrid = new ArrayList<>();
-    private ArrayList<Medicamento> antinflamatoriosMadrid = new ArrayList<>();
+    private ArrayList<Medicamento> antiinflamatoriosMadrid = new ArrayList<>();
     private ArrayList<Medicamento> analgesicosBarcelona = new ArrayList<>();
     private ArrayList<Medicamento> antibioticosBarcelona = new ArrayList<>();
-    private ArrayList<Medicamento> antinflamatoriosBarcelona = new ArrayList<>();
+    private ArrayList<Medicamento> antiinflamatoriosBarcelona = new ArrayList<>();
     private ArrayList<Medicamento> todosLosMedicamentos = new ArrayList<>();
     
     private static AlmacenMedicamentos instancia;
@@ -97,7 +97,7 @@ public class AlmacenMedicamentos {
     }
     
     public ArrayList<Medicamento> getAntiinflamatoriosMadrid() {
-        return antinflamatoriosMadrid;
+        return antiinflamatoriosMadrid;
     }
     
     public ArrayList<Medicamento> getAnalgesicosBarcelona() {
@@ -109,19 +109,19 @@ public class AlmacenMedicamentos {
     }
     
     public ArrayList<Medicamento> getAntiinflamatoriosBarcelona() {
-        return antinflamatoriosBarcelona;
+        return antiinflamatoriosBarcelona;
     }
     
     public ArrayList<Medicamento> getTodosLosMedicamentos() {    
         // Añadimos todos los medicamentos de Madrid
         todosLosMedicamentos.addAll(analgesicosMadrid);
         todosLosMedicamentos.addAll(antibioticosMadrid);
-        todosLosMedicamentos.addAll(antinflamatoriosMadrid);
+        todosLosMedicamentos.addAll(antiinflamatoriosMadrid);
         
         // Añadimos todos los medicamentos de Barcelona
         todosLosMedicamentos.addAll(analgesicosBarcelona);
         todosLosMedicamentos.addAll(antibioticosBarcelona);
-        todosLosMedicamentos.addAll(antinflamatoriosBarcelona);
+        todosLosMedicamentos.addAll(antiinflamatoriosBarcelona);
         
         return todosLosMedicamentos;  
     }
@@ -131,11 +131,11 @@ public class AlmacenMedicamentos {
     }
     
     public void anadirAntibioticosMadrid(Medicamento medicamento) {
-        //
+        antibioticosMadrid.add(medicamento);
     }
     
     public void anadirAntiinflamatoriosMadrid(Medicamento medicamento) {
-        //
+        antiinflamatoriosMadrid.add(medicamento);
     }
     
     public void anadirAnalgesicosBarcelona(Medicamento medicamento) {
@@ -143,11 +143,11 @@ public class AlmacenMedicamentos {
     }
     
     public void anadirAntibioticosBarcelona(Medicamento medicamento) {
-        //
+        antibioticosBarcelona.add(medicamento);
     }
     
     public void anadirAntiinflamatoriosBarcelona(Medicamento medicamento) {
-        //
+        antiinflamatoriosBarcelona.add(medicamento);
     }
       
 }
