@@ -25,7 +25,7 @@ public class PantallaAdmin extends javax.swing.JPanel {
     }
 
     private void configurarEventos() {
-        btnLogout.addActionListener(e -> app.mostrarLogin());
+        btnLogout.addActionListener(e -> app.mostrarRol());
     }
 
     public void setSesion(Sesion sesion) {

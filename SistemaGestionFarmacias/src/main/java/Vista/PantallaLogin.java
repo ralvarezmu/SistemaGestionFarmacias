@@ -53,10 +53,10 @@ public class PantallaLogin extends javax.swing.JPanel {
             Sesion sesion = loginService.iniciarSesion(usuario, password, rol);
 
             switch (sesion.getRol().toUpperCase()) {
-                case "CLIENTE" -> app.mostrarCliente(sesion);
-                case "FARMACEUTICO" -> app.mostrarFarmaceutico(sesion);
-                case "ADMIN" -> app.mostrarAdmin(sesion);
-                default -> lblStatus.setText("Rol desconocido: " + sesion.getRol());
+                    case "CLIENTE" -> app.mostrarCliente(sesion);
+                    case "FARMACEUTICO" -> app.mostrarFarmaceutico(sesion);
+                    case "ADMIN" -> app.mostrarAdmin(sesion);
+                    default -> lblStatus.setText("Rol desconocido: " + sesion.getRol());
             }
 
         } catch (RuntimeException ex) {
@@ -68,8 +68,24 @@ public class PantallaLogin extends javax.swing.JPanel {
         txtUser.setText("");
         txtPass.setText("");
         cmbRol.setSelectedIndex(0);
+        cmbRol.setEnabled(true); // <- clave
         lblStatus.setText(" ");
     }
+
+    
+    public void setRolSeleccionado(String rol) {
+        if (rol == null) return;
+
+        String r = rol.trim().toUpperCase();
+
+        cmbRol.setSelectedItem(r);
+
+        // Opcional (recomendado): si vienes desde PantallaRol, evita que lo cambien en Login
+        // Si quieres que el cliente pueda cambiarlo, puedes poner condición:
+        // cmbRol.setEnabled(r.equals("CLIENTE"));
+        cmbRol.setEnabled(false);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

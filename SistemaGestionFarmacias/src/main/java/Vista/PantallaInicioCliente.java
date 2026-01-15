@@ -9,12 +9,15 @@ package Vista;
  * @author claud
  */
 public class PantallaInicioCliente extends javax.swing.JPanel {
+    
+    private PantallaApp app;
 
-    /**
-     * Creates new form PantallaInicioCliente
-     */
-    public PantallaInicioCliente() {
+    public PantallaInicioCliente(PantallaApp app) {
         initComponents();
+        this.app = app;
+
+        btnIniciarSesion.addActionListener(e -> app.mostrarLoginConRol("CLIENTE"));
+        btnRegistrarse.addActionListener(e -> app.mostrarRegistroCliente());
     }
 
     /**
@@ -30,6 +33,8 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         lblBienvenido = new javax.swing.JLabel();
         lblCuenta = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JButton();
+        btnRegistrarse = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
@@ -41,6 +46,22 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
 
         lblCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCuenta.setText("¿Tienes cuenta?");
+
+        btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
+
+        btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRegistrarse.setText("Registrarse");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -60,7 +81,11 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
                         .addComponent(lblBienvenido))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(248, 248, 248)
-                        .addComponent(lblCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnRegistrarse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -74,12 +99,26 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
                 .addComponent(lblBienvenido)
                 .addGap(27, 27, 27)
                 .addComponent(lblCuenta)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(btnIniciarSesion)
+                .addGap(36, 36, 36)
+                .addComponent(btnRegistrarse)
+                .addContainerGap(108, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnRegistrarse;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblCuenta;

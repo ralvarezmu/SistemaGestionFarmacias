@@ -12,61 +12,102 @@ import java.awt.CardLayout;
  * @author claud
  */
 public class PantallaApp extends javax.swing.JFrame {
-    // CardLayout
+
     private CardLayout cardLayout;
 
-    // Proxy login
+    // Servicios
     private ServicioLogin loginService;
 
-    // Panels
+    // Panels (JPanel)
+    private PantallaRol pantallaRol;
+    private PantallaInicioCliente pantallaInicioCliente;
     private PantallaLogin pantallaLogin;
+    private PantallaRegistroCliente pantallaRegistroCliente;
+
     private PantallaCliente pantallaCliente;
     private PantallaFarmaceutico pantallaFarmaceutico;
     private PantallaAdmin pantallaAdmin;
 
     // Nombres de cartas
+    public static final String CARD_ROL = "ROL";
+    public static final String CARD_INICIO_CLIENTE = "INICIO_CLIENTE";
     public static final String CARD_LOGIN = "LOGIN";
+    public static final String CARD_REGISTRO_CLIENTE = "REGISTRO_CLIENTE";
+
     public static final String CARD_CLIENTE = "CLIENTE";
     public static final String CARD_FARMA = "FARMA";
     public static final String CARD_ADMIN = "ADMIN";
 
-    /**
-     * Creates new form PantallaApp
-     */
     public PantallaApp() {
         initComponents();
         initApp();
     }
 
     private void initApp() {
-        // 1) Crear servicio real + proxy
+        // 1) Servicio real + proxy
         RepositorioUsuarios repo = new RepositorioUsuarios();
         ServicioLogin real = new ServicioLoginReal(repo);
         loginService = new ServicioLoginProxy(real);
 
-        // 2) CardLayout del contentPanel (ya lo pusiste en el diseñador)
+        // 2) CardLayout
         cardLayout = (CardLayout) contentPanel.getLayout();
 
         // 3) Crear pantallas
+        pantallaRol = new PantallaRol(this);
+        pantallaInicioCliente = new PantallaInicioCliente(this);
         pantallaLogin = new PantallaLogin(this, loginService);
+        pantallaRegistroCliente = new PantallaRegistroCliente(this /*, si tienes servicio/Repo para registrar pásalo aquí */);
+
         pantallaCliente = new PantallaCliente(this);
         pantallaFarmaceutico = new PantallaFarmaceutico(this);
         pantallaAdmin = new PantallaAdmin(this);
 
         // 4) Añadir al CardLayout
+        contentPanel.add(pantallaRol, CARD_ROL);
+        contentPanel.add(pantallaInicioCliente, CARD_INICIO_CLIENTE);
         contentPanel.add(pantallaLogin, CARD_LOGIN);
+        contentPanel.add(pantallaRegistroCliente, CARD_REGISTRO_CLIENTE);
+
         contentPanel.add(pantallaCliente, CARD_CLIENTE);
         contentPanel.add(pantallaFarmaceutico, CARD_FARMA);
         contentPanel.add(pantallaAdmin, CARD_ADMIN);
 
-        // 5) Mostrar login
-        mostrarLogin();
+        // 5) Mostrar primero la selección de rol
+        mostrarRol();
     }
 
-    public void mostrarLogin() {
+    // ========= NAVEGACIÓN =========
+
+    public void mostrarRol() {
+        // Si tienes método reset en rol, úsalo, si no no pasa nada
+        // pantallaRol.resetFields();
+        cardLayout.show(contentPanel, CARD_ROL);
+    }
+
+    public void mostrarInicioCliente() {
+        cardLayout.show(contentPanel, CARD_INICIO_CLIENTE);
+    }
+
+    /**
+     * Muestra login ya con un rol seleccionado.
+     * Útil para: Admin/Farmacéutico (desde PantallaRol) y Cliente (desde PantallaInicioCliente)
+     */
+    public void mostrarLoginConRol(String rol) {
         pantallaLogin.resetFields();
+
+        // Esto requiere que implementes este método en PantallaLogin (abajo te lo dejo)
+        pantallaLogin.setRolSeleccionado(rol);
+
         cardLayout.show(contentPanel, CARD_LOGIN);
     }
+
+    public void mostrarRegistroCliente() {
+        // Si tienes reset en registro, puedes llamarlo aquí
+        // pantallaRegistroCliente.resetFields();
+        cardLayout.show(contentPanel, CARD_REGISTRO_CLIENTE);
+    }
+
+    // ========= LO QUE YA TENÍAS PARA IR A LOS MENÚS PRINCIPALES =========
 
     public void mostrarCliente(Sesion sesion) {
         pantallaCliente.setSesion(sesion);

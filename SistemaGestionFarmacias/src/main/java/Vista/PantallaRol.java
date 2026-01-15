@@ -9,12 +9,27 @@ package Vista;
  * @author claud
  */
 public class PantallaRol extends javax.swing.JPanel {
+    
+    private PantallaApp app;
 
-    /**
-     * Creates new form PantallaRol
-     */
-    public PantallaRol() {
+    public PantallaRol(PantallaApp app) {
         initComponents();
+        this.app = app;
+
+        btnContinuar.addActionListener(e -> onContinuar());
+    }
+
+    private void onContinuar() {
+        String rol = cmbRol.getSelectedItem().toString();
+
+        if (rol.equalsIgnoreCase("CLIENTE")) {
+            app.mostrarInicioCliente();
+        } else if (rol.equalsIgnoreCase("FARMACEUTICO") || rol.equalsIgnoreCase("ADMIN")) {
+            app.mostrarLoginConRol(rol);
+        } else {
+            // si hubiese otro valor raro
+            app.mostrarRol();
+        }
     }
 
     /**
