@@ -147,7 +147,8 @@ public class PantallaCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGestionarPedidosActionPerformed
 
     private void btnRealizarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedido1ActionPerformed
-        // TODO add your handling code here:
+        PantallaEleccionFarmacia pantallaEF = new PantallaEleccionFarmacia("Jose Luis", this);
+        pantallaEF.setVisible(true);
     }//GEN-LAST:event_btnRealizarPedido1ActionPerformed
 
     private void btnBuscarFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFarmacosActionPerformed

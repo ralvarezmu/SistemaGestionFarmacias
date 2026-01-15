@@ -13,12 +13,12 @@ import java.awt.Color;
 public class PantallaEleccionFarmacia extends javax.swing.JFrame {
 
     private String cliente;
-    private PantallaPrincipalCliente pantalla;
+    private PantallaCliente pantalla;
     
     /**
      * Creates new form PantallaEleccionFarmacia
      */
-    public PantallaEleccionFarmacia(String cliente, PantallaPrincipalCliente pantalla) {
+    public PantallaEleccionFarmacia(String cliente, PantallaCliente pantalla) {
         initComponents();
         this.getContentPane().setBackground(new Color(248, 250, 252));
         this.cliente = cliente;
@@ -29,7 +29,7 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
         PantallaRealizacionPedido PRPedido = new PantallaRealizacionPedido(cliente, farmacia, pantalla);
         PRPedido.setVisible(true);
         dispose();
-        pantalla.dispose();
+        //pantalla.setVisible(false);
     }
 
     /**

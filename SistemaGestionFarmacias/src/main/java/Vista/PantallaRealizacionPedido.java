@@ -30,14 +30,14 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     private MostradorMedicamentosAbst mostrador;
     private MostradorMedicamentosImp implementador;
     private AlmacenMedicamentos almacen;
-    private PantallaPrincipalCliente principal;
+    private PantallaCliente principal;
     
     private DefaultListModel<Medicamento> modeloCarrito = new DefaultListModel<>();
     
     /**
      * Creates new form PantallaRealizacionPedido
      */
-    public PantallaRealizacionPedido(String usuario, String farmacia, PantallaPrincipalCliente principal) {
+    public PantallaRealizacionPedido(String usuario, String farmacia, PantallaCliente principal) {
         initComponents();
         this.getContentPane().setBackground(new Color(248, 250, 252));
         this.principal = principal;
