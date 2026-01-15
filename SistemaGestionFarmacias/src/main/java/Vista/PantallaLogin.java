@@ -80,21 +80,21 @@ public class PantallaLogin extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
+        lblIniciarSesion = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
-        txtPass = new javax.swing.JTextField();
         lblRol = new javax.swing.JLabel();
         cmbRol = new javax.swing.JComboBox<>();
         btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
         jSeparator = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
 
-        lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(16, 86, 148));
-        lblTitle.setText("Iniciar sesión");
+        lblIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblIniciarSesion.setForeground(new java.awt.Color(16, 86, 148));
+        lblIniciarSesion.setText("Iniciar sesión");
 
         lblUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblUser.setText("Usuario:");
@@ -103,8 +103,6 @@ public class PantallaLogin extends javax.swing.JPanel {
 
         lblPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPassword.setText("Contraseña:");
-
-        txtPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         lblRol.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRol.setText("Rol:");
@@ -120,9 +118,11 @@ public class PantallaLogin extends javax.swing.JPanel {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(16, 86, 148));
-        jLabel8.setText("Sistema de Gestión de Farmacias");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(16, 86, 148));
+        lblTitle.setText("Sistema de Gestión de Farmacias");
+
+        txtPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,7 +133,7 @@ public class PantallaLogin extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -141,7 +141,7 @@ public class PantallaLogin extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(237, 237, 237)
-                                .addComponent(lblTitle))
+                                .addComponent(lblIniciarSesion))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(238, 238, 238)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,33 +157,33 @@ public class PantallaLogin extends javax.swing.JPanel {
                     .addComponent(lblRol))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                    .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbRol, javax.swing.GroupLayout.Alignment.LEADING, 0, 1, Short.MAX_VALUE))
+                    .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(cmbRol, javax.swing.GroupLayout.Alignment.LEADING, 0, 1, Short.MAX_VALUE)
+                    .addComponent(txtPass))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel8)
+                .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTitle)
+                .addComponent(lblIniciarSesion)
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUser)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword))
-                .addGap(26, 26, 26)
+                    .addComponent(lblPassword)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRol))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,14 +199,14 @@ public class PantallaLogin extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<String> cmbRol;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator;
+    private javax.swing.JLabel lblIniciarSesion;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblRol;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

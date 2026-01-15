@@ -18,12 +18,12 @@ public class RepositorioUsuarios {
 
     public RepositorioUsuarios() {
         // CLIENTES
-        usuarios.put("cliente1", new UsuarioRecord("1234", "CLIENTE", "C-001", "Ana Cliente"));
-        usuarios.put("cliente2", new UsuarioRecord("abcd", "CLIENTE", "C-002", "Luis Cliente"));
+        usuarios.put("cliente1", new UsuarioRecord("1234", "CLIENTE", "C-001", "Ana Sánchez"));
+        usuarios.put("cliente2", new UsuarioRecord("abcd", "CLIENTE", "C-002", "Luis López"));
 
         // FARMACÉUTICOS
-        usuarios.put("farma1", new UsuarioRecord("admin", "FARMACEUTICO", "F-001", "Marta Farma"));
-        usuarios.put("farma2", new UsuarioRecord("pass", "FARMACEUTICO", "F-002", "Carlos Farma"));
+        usuarios.put("farma1", new UsuarioRecord("admin", "FARMACEUTICO", "F-001", "Marta Gutiérrez"));
+        usuarios.put("farma2", new UsuarioRecord("pass", "FARMACEUTICO", "F-002", "Carlos Gracía"));
 
         // ADMIN
         usuarios.put("admin1", new UsuarioRecord("root", "ADMIN", "AD-001", "Administrador"));
