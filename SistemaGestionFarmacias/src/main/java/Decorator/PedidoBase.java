@@ -161,5 +161,10 @@ public class PedidoBase implements Pedido{
             scheduler.shutdown();
         }, 1, TimeUnit.MINUTES);
     }
+
+    @Override
+    public String toString() {
+        return "PedidoBase{" + "id=" + id + ", usuario=" + usuario + ", fecha=" + fecha + ", medicamentos=" + medicamentos + ", importe=" + importe + ", metodoPago=" + metodoPago + ", estado=" + estado + ", notificador=" + notificador + ", scheduler=" + scheduler + '}';
+    }
     
 }
