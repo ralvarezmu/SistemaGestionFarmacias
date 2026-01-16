@@ -12,6 +12,7 @@ import Proxy.Sesion;
 public class PantallaCliente extends javax.swing.JPanel {
 
     private PantallaApp app;
+    private Sesion sesion;
 
     public PantallaCliente(PantallaApp app) {
         this.app = app;
@@ -22,9 +23,11 @@ public class PantallaCliente extends javax.swing.JPanel {
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
         btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_CLIENTE));
+        btnRealizarPedido1.addActionListener(e -> app.mostrarEleccionFarmacia(sesion));
     }
 
     public void setSesion(Sesion sesion) {
+        this.sesion = sesion;
         lblInfo.setText("Cliente: " + sesion.getNombre() +
                 " | ID: " + sesion.getIdUsuario() +
                 " | Rol: " + sesion.getRol());
@@ -146,8 +149,7 @@ public class PantallaCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGestionarPedidosActionPerformed
 
     private void btnRealizarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedido1ActionPerformed
-        PantallaEleccionFarmacia pantallaEF = new PantallaEleccionFarmacia("Jose Luis", this);
-        pantallaEF.setVisible(true);
+        
     }//GEN-LAST:event_btnRealizarPedido1ActionPerformed
 
     private void btnBuscarFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFarmacosActionPerformed

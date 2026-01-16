@@ -33,6 +33,8 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaAltaBajaFarmacos pantallaAltaBajaFarmacos;
     private PantallaAltaFarmacos pantallaAltaFarmacos;
     private PantallaBajaFarmacos pantallaBajaFarmacos;
+    private PantallaEleccionFarmacia pantallaEleccionFarmacia;
+    private PantallaRealizacionPedido pantallaRealizacionPedido;
 
     // Nombres de cartas
     public static final String CARD_ROL = "ROL";
@@ -46,6 +48,8 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_ALTA_BAJA = "ALTA_BAJA";
     public static final String CARD_ALTA_FARMACOS = "ALTA_FARMACOS";
     public static final String CARD_BAJA_FARMACOS = "BAJA_FARMACOS";
+    public static final String CARD_ELECCION_FARMACIA = "ELEGIR_FARMACIA";
+    public static final String CARD_REALIZACION_PEDIDO = "REALIZAR PEDIDO";
 
     public PantallaApp() {
         initComponents();
@@ -73,6 +77,9 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaAltaBajaFarmacos = new PantallaAltaBajaFarmacos(this);
         pantallaAltaFarmacos = new PantallaAltaFarmacos(this);
         pantallaBajaFarmacos = new PantallaBajaFarmacos(this);
+        pantallaEleccionFarmacia = new PantallaEleccionFarmacia(this);
+        pantallaRealizacionPedido = new PantallaRealizacionPedido(this);
+        
 
         // 4) Añadir al CardLayout
         contentPanel.add(pantallaRol, CARD_ROL);
@@ -87,6 +94,9 @@ public class PantallaApp extends javax.swing.JFrame {
         contentPanel.add(pantallaAltaBajaFarmacos, CARD_ALTA_BAJA);
         contentPanel.add(pantallaAltaFarmacos, CARD_ALTA_FARMACOS);
         contentPanel.add(pantallaBajaFarmacos, CARD_BAJA_FARMACOS);
+        
+        contentPanel.add(pantallaEleccionFarmacia, CARD_ELECCION_FARMACIA);
+        contentPanel.add(pantallaRealizacionPedido, CARD_REALIZACION_PEDIDO);
 
         // 5) Mostrar primero la selección de rol
         mostrarRol();
@@ -158,6 +168,19 @@ public class PantallaApp extends javax.swing.JFrame {
     public void mostrarBajaFarmacos() {
         pantallaBajaFarmacos.cargarMedicamentos();
         cardLayout.show(contentPanel, CARD_BAJA_FARMACOS);
+    }
+    
+    public void mostrarEleccionFarmacia(Sesion sesion) {
+        pantallaEleccionFarmacia.setSesion(sesion);
+        cardLayout.show(contentPanel, CARD_ELECCION_FARMACIA);
+    }
+    
+    public void mostrarRealizacionPedido(Sesion sesion, String farmacia) {
+        // 1. Preparar completamente el panel ANTES de mostrarlo
+        pantallaRealizacionPedido.prepararPantalla(sesion, farmacia);
+
+        // 2. Cambiar al card
+        cardLayout.show(contentPanel, CARD_REALIZACION_PEDIDO);
     }
 
     

@@ -4,32 +4,36 @@
  */
 package Vista;
 
-import java.awt.Color;
+import Proxy.Sesion;
 
 /**
  *
  * @author Admin
  */
-public class PantallaEleccionFarmacia extends javax.swing.JFrame {
+public class PantallaEleccionFarmacia extends javax.swing.JPanel {
 
     private String cliente;
     private PantallaCliente pantalla;
+    private PantallaApp app;
+    private Sesion sesion;
     
     /**
      * Creates new form PantallaEleccionFarmacia
      */
-    public PantallaEleccionFarmacia(String cliente, PantallaCliente pantalla) {
+    public PantallaEleccionFarmacia(PantallaApp app) {
         initComponents();
-        this.getContentPane().setBackground(new Color(248, 250, 252));
-        this.cliente = cliente;
-        this.pantalla = pantalla;
+        //this.getContentPane().setBackground(new Color(248, 250, 252));
+        this.app = app;
+        configurarEventos();
     }
     
-    public void pasarPantalla(String farmacia) {
-        PantallaRealizacionPedido PRPedido = new PantallaRealizacionPedido(cliente, farmacia, pantalla);
-        PRPedido.setVisible(true);
-        dispose();
-        //pantalla.setVisible(false);
+    private void configurarEventos() {
+        jButton1.addActionListener(e -> app.mostrarRealizacionPedido(sesion, "M"));
+        jButton2.addActionListener(e -> app.mostrarRealizacionPedido(sesion, "B"));
+    }
+    
+    public void setSesion(Sesion sesion) {
+        this.sesion = sesion;
     }
 
     /**
@@ -44,8 +48,6 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(16, 86, 148));
@@ -69,8 +71,8 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -95,16 +97,14 @@ public class PantallaEleccionFarmacia extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(62, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pasarPantalla("M");
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        pasarPantalla("B");
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     

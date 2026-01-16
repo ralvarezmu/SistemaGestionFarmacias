@@ -11,10 +11,8 @@ import Bridge.MostradorMedicamentosImp;
 import Bridge.MostradorMedicamentosImpBarcelona;
 import Bridge.MostradorMedicamentosImpMadrid;
 import Decorator.Pedido;
+import Proxy.Sesion;
 import com.mycompany.sistemagestionfarmacias.ServicioPedido;
-import java.awt.Color;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -22,10 +20,13 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class PantallaRealizacionPedido extends javax.swing.JFrame {
+public class PantallaRealizacionPedido extends javax.swing.JPanel {
     
+    private PantallaApp app;
     private String cliente;
     private Pedido pedido;
+    public String farmacia;
+    public Sesion sesion;
     private ServicioPedido servicioPedido;
     private MostradorMedicamentosAbst mostrador;
     private MostradorMedicamentosImp implementador;
@@ -37,20 +38,46 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
     /**
      * Creates new form PantallaRealizacionPedido
      */
-    public PantallaRealizacionPedido(String usuario, String farmacia, PantallaCliente principal) {
+    public PantallaRealizacionPedido(PantallaApp app) {
         initComponents();
-        this.getContentPane().setBackground(new Color(248, 250, 252));
-        this.principal = principal;
+        this.app = app;
         almacen = AlmacenMedicamentos.getInstancia();
         jList4.setModel(modeloCarrito);
-        this.cliente = usuario;
+        
+        this.mostrador = new MostradorMedicamentosAbst();
+        
+    }
+    
+    public void prepararPantalla(Sesion sesion, String farmacia) {
+        setSesion(sesion);
+        setFarmacia(farmacia);
+        this.cliente = sesion.getNombre();
+
+        modeloCarrito.clear();
+        jLabel10.setText("0");
+        jLabel12.setText("0");
+        jLabel14.setText("-");
+        // Crear nuevo pedido para este cliente
         this.servicioPedido = new ServicioPedido();
         servicioPedido.crearPedido(cliente);
         this.pedido = servicioPedido.getPedido();
-        this.mostrador = new MostradorMedicamentosAbst();
+
+        // Cargar medicamentos según farmacia
         cargarImplementador(farmacia);
-        mostrador.setImplementador(implementador);
-        mostrador.mostrarMedicamentos();
+        configurarEventos();
+    }
+
+    
+    private void configurarEventos() {        
+        jButton8.addActionListener(e -> app.mostrarCliente(sesion));
+    }
+    
+    public void setFarmacia(String farmacia) {
+        this.farmacia = farmacia;
+    }
+    
+    public void setSesion(Sesion sesion) {
+        this.sesion = sesion;
     }
     
     public void sumarMedicamento() {
@@ -73,6 +100,8 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             this.implementador = new MostradorMedicamentosImpBarcelona(jList1, jList2, jList3, almacen);
         }
         
+        mostrador.setImplementador(implementador);
+        mostrador.mostrarMedicamentos();
     }
 
     /**
@@ -115,8 +144,6 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(16, 86, 148));
@@ -235,9 +262,14 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton8.setText("Cancelar Pedido");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -350,8 +382,6 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -450,8 +480,7 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             // Según la opción elegida
             if (opcion == javax.swing.JOptionPane.YES_OPTION) {
                 servicioPedido.confirmarPedido();
-                this.setVisible(false);
-                principal.setVisible(true);
+                app.mostrarCliente(sesion);
             } else if (opcion == javax.swing.JOptionPane.NO_OPTION) {
                 // Aquí cancelas o vuelves atrás
             }
@@ -467,6 +496,10 @@ public class PantallaRealizacionPedido extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     
 
