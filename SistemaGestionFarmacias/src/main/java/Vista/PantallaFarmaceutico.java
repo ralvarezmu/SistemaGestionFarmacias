@@ -22,6 +22,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
         btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_FARMA));
+        btnAltaBajaFarmacos.addActionListener(e -> app.mostrarAltaBajaFarmacos());
     }
 
     public void setSesion(Sesion sesion) {
@@ -43,7 +44,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
         lblInfo = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnAltaFarmacos = new javax.swing.JButton();
+        btnAltaBajaFarmacos = new javax.swing.JButton();
         btnBuscarFarmacos = new javax.swing.JButton();
         btnModificacionFarmacos = new javax.swing.JButton();
 
@@ -61,12 +62,12 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
             }
         });
 
-        btnAltaFarmacos.setBackground(new java.awt.Color(240, 245, 255));
-        btnAltaFarmacos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnAltaFarmacos.setText("Alta/Baja de fármacos");
-        btnAltaFarmacos.addActionListener(new java.awt.event.ActionListener() {
+        btnAltaBajaFarmacos.setBackground(new java.awt.Color(240, 245, 255));
+        btnAltaBajaFarmacos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAltaBajaFarmacos.setText("Alta/Baja de fármacos");
+        btnAltaBajaFarmacos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAltaFarmacosActionPerformed(evt);
+                btnAltaBajaFarmacosActionPerformed(evt);
             }
         });
 
@@ -105,7 +106,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(194, 194, 194)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAltaFarmacos, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAltaBajaFarmacos, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnBuscarFarmacos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnModificacionFarmacos))))
@@ -128,7 +129,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addComponent(btnModificacionFarmacos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btnAltaFarmacos)
+                .addComponent(btnAltaBajaFarmacos)
                 .addGap(38, 38, 38)
                 .addComponent(btnLogout)
                 .addGap(34, 34, 34))
@@ -144,9 +145,9 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBuscarFarmacosActionPerformed
 
-    private void btnAltaFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaFarmacosActionPerformed
+    private void btnAltaBajaFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaBajaFarmacosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAltaFarmacosActionPerformed
+    }//GEN-LAST:event_btnAltaBajaFarmacosActionPerformed
 
     private void btnModificacionFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificacionFarmacosActionPerformed
         // TODO add your handling code here:
@@ -154,7 +155,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAltaFarmacos;
+    private javax.swing.JButton btnAltaBajaFarmacos;
     private javax.swing.JButton btnBuscarFarmacos;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnModificacionFarmacos;

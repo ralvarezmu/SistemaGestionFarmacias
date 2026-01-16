@@ -126,6 +126,46 @@ public class AlmacenMedicamentos {
         
         return todosLosMedicamentos;  
     }
+    public void anadirMedicamento(Medicamento m) {
+        if (m == null) return;
+
+        String tipo = m.getTipo();
+        String farmacia = m.getFarmacia();
+
+        boolean esMadrid = farmacia.contains("madrid");
+        boolean esBarcelona = farmacia.contains("barcelona");
+
+        if (tipo.contains("analges")) {
+            if (esMadrid) anadirAnalgesicosMadrid(m);
+            else if (esBarcelona) anadirAnalgesicosBarcelona(m);
+        } else if (tipo.contains("antibi")) {
+            if (esMadrid) anadirAntibioticosMadrid(m);
+            else if (esBarcelona) anadirAntibioticosBarcelona(m);
+        } else if (tipo.contains("antiinfl")) {
+            if (esMadrid) anadirAntiinflamatoriosMadrid(m);
+            else if (esBarcelona) anadirAntiinflamatoriosBarcelona(m);
+        }
+    }
+    
+    public boolean eliminarMedicamento(Medicamento m) {
+        if (m == null) return false;
+
+        boolean eliminado = false;
+
+        eliminado |= analgesicosMadrid.remove(m);
+        eliminado |= antibioticosMadrid.remove(m);
+        eliminado |= antiinflamatoriosMadrid.remove(m);
+
+        eliminado |= analgesicosBarcelona.remove(m);
+        eliminado |= antibioticosBarcelona.remove(m);
+        eliminado |= antiinflamatoriosBarcelona.remove(m);
+
+        // Por si acaso: mantener la lista "todos" coherente
+        todosLosMedicamentos.remove(m);
+
+        return eliminado;
+    }
+
     
     public void anadirAnalgesicosMadrid(Medicamento medicamento) {
         analgesicosMadrid.add(medicamento);
@@ -150,5 +190,5 @@ public class AlmacenMedicamentos {
     public void anadirAntiinflamatoriosBarcelona(Medicamento medicamento) {
         antiinflamatoriosBarcelona.add(medicamento);
     }
-      
+    
 }

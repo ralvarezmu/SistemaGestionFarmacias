@@ -26,24 +26,26 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaInicioCliente pantallaInicioCliente;
     private PantallaLogin pantallaLogin;
     private PantallaRegistroCliente pantallaRegistroCliente;
-
     private PantallaCliente pantallaCliente;
     private PantallaFarmaceutico pantallaFarmaceutico;
-    private PantallaAdmin pantallaAdmin;
-    
+    private PantallaAdmin pantallaAdmin;    
     private PantallaBuscarFarmacos pantallaBuscarFarmacos;
+    private PantallaAltaBajaFarmacos pantallaAltaBajaFarmacos;
+    private PantallaAltaFarmacos pantallaAltaFarmacos;
+    private PantallaBajaFarmacos pantallaBajaFarmacos;
 
     // Nombres de cartas
     public static final String CARD_ROL = "ROL";
     public static final String CARD_INICIO_CLIENTE = "INICIO_CLIENTE";
     public static final String CARD_LOGIN = "LOGIN";
     public static final String CARD_REGISTRO_CLIENTE = "REGISTRO_CLIENTE";
-
     public static final String CARD_CLIENTE = "CLIENTE";
     public static final String CARD_FARMA = "FARMA";
     public static final String CARD_ADMIN = "ADMIN";
-    
     public static final String CARD_BUSCAR_FARMACOS = "BUSCAR_FARMACOS";
+    public static final String CARD_ALTA_BAJA = "ALTA_BAJA";
+    public static final String CARD_ALTA_FARMACOS = "ALTA_FARMACOS";
+    public static final String CARD_BAJA_FARMACOS = "BAJA_FARMACOS";
 
     public PantallaApp() {
         initComponents();
@@ -64,12 +66,13 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaInicioCliente = new PantallaInicioCliente(this);
         pantallaLogin = new PantallaLogin(this, loginService);
         pantallaRegistroCliente = new PantallaRegistroCliente(this /*, si tienes servicio/Repo para registrar pásalo aquí */);
-
         pantallaCliente = new PantallaCliente(this);
         pantallaFarmaceutico = new PantallaFarmaceutico(this);
-        pantallaAdmin = new PantallaAdmin(this);
-        
+        pantallaAdmin = new PantallaAdmin(this);   
         pantallaBuscarFarmacos = new PantallaBuscarFarmacos(this);
+        pantallaAltaBajaFarmacos = new PantallaAltaBajaFarmacos(this);
+        pantallaAltaFarmacos = new PantallaAltaFarmacos(this);
+        pantallaBajaFarmacos = new PantallaBajaFarmacos(this);
 
         // 4) Añadir al CardLayout
         contentPanel.add(pantallaRol, CARD_ROL);
@@ -80,12 +83,14 @@ public class PantallaApp extends javax.swing.JFrame {
         contentPanel.add(pantallaCliente, CARD_CLIENTE);
         contentPanel.add(pantallaFarmaceutico, CARD_FARMA);
         contentPanel.add(pantallaAdmin, CARD_ADMIN);
+        contentPanel.add(pantallaBuscarFarmacos, CARD_BUSCAR_FARMACOS);
+        contentPanel.add(pantallaAltaBajaFarmacos, CARD_ALTA_BAJA);
+        contentPanel.add(pantallaAltaFarmacos, CARD_ALTA_FARMACOS);
+        contentPanel.add(pantallaBajaFarmacos, CARD_BAJA_FARMACOS);
 
         // 5) Mostrar primero la selección de rol
         mostrarRol();
         
-        
-        contentPanel.add(pantallaBuscarFarmacos, CARD_BUSCAR_FARMACOS);
     }
 
     // ========= NAVEGACIÓN =========
@@ -142,9 +147,25 @@ public class PantallaApp extends javax.swing.JFrame {
     cardLayout.show(contentPanel, CARD_BUSCAR_FARMACOS);
     }
     
+    public void mostrarAltaBajaFarmacos() {
+        cardLayout.show(contentPanel, CARD_ALTA_BAJA);
+    }
+
+    public void mostrarAltaFarmacos() {
+        cardLayout.show(contentPanel, CARD_ALTA_FARMACOS);
+    }
+
+    public void mostrarBajaFarmacos() {
+        pantallaBajaFarmacos.cargarMedicamentos();
+        cardLayout.show(contentPanel, CARD_BAJA_FARMACOS);
+    }
+
+    
     public void mostrarCard(String card) {
         cardLayout.show(contentPanel, card);
     }
+    
+    
 
 
     /**

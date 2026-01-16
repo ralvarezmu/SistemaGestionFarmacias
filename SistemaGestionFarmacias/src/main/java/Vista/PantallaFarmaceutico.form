@@ -32,7 +32,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnAltaFarmacos" min="-2" pref="241" max="-2" attributes="0"/>
+                          <Component id="btnAltaBajaFarmacos" min="-2" pref="241" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="btnBuscarFarmacos" max="32767" attributes="0"/>
                               <Component id="btnModificacionFarmacos" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="btnModificacionFarmacos" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="36" max="32767" attributes="0"/>
-              <Component id="btnAltaFarmacos" min="-2" max="-2" attributes="0"/>
+              <Component id="btnAltaBajaFarmacos" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
@@ -102,7 +102,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JButton" name="btnAltaFarmacos">
+    <Component class="javax.swing.JButton" name="btnAltaBajaFarmacos">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="f5" red="f0" type="rgb"/>
@@ -113,7 +113,7 @@
         <Property name="text" type="java.lang.String" value="Alta/Baja de f&#xe1;rmacos"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAltaFarmacosActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAltaBajaFarmacosActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscarFarmacos">
