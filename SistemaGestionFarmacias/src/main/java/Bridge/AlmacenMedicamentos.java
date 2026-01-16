@@ -112,7 +112,8 @@ public class AlmacenMedicamentos {
         return antiinflamatoriosBarcelona;
     }
     
-    public ArrayList<Medicamento> getTodosLosMedicamentos() {    
+    public ArrayList<Medicamento> getTodosLosMedicamentos() {
+        todosLosMedicamentos.clear(); // Para no duplicarlos
         // Añadimos todos los medicamentos de Madrid
         todosLosMedicamentos.addAll(analgesicosMadrid);
         todosLosMedicamentos.addAll(antibioticosMadrid);

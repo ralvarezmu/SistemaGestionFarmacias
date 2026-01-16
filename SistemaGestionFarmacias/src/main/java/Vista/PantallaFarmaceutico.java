@@ -13,11 +13,6 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
 
     private PantallaApp app;
 
-    public PantallaFarmaceutico() {
-        initComponents();
-        configurarEventos();
-    }
-
     public PantallaFarmaceutico(PantallaApp app) {
         this.app = app;
         initComponents();
@@ -26,6 +21,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
 
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
+        btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_FARMA));
     }
 
     public void setSesion(Sesion sesion) {
@@ -144,7 +140,8 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnBuscarFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFarmacosActionPerformed
-        // TODO add your handling code here:
+
+
     }//GEN-LAST:event_btnBuscarFarmacosActionPerformed
 
     private void btnAltaFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaFarmacosActionPerformed

@@ -5,7 +5,10 @@
 package Vista;
 
 import Proxy.*;
+import Bridge.AlmacenMedicamentos;
+import AbstractFactory.Medicamento;
 import java.awt.CardLayout;
+import java.util.List;
 
 /**
  *
@@ -27,6 +30,8 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaCliente pantallaCliente;
     private PantallaFarmaceutico pantallaFarmaceutico;
     private PantallaAdmin pantallaAdmin;
+    
+    private PantallaBuscarFarmacos pantallaBuscarFarmacos;
 
     // Nombres de cartas
     public static final String CARD_ROL = "ROL";
@@ -37,6 +42,8 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_CLIENTE = "CLIENTE";
     public static final String CARD_FARMA = "FARMA";
     public static final String CARD_ADMIN = "ADMIN";
+    
+    public static final String CARD_BUSCAR_FARMACOS = "BUSCAR_FARMACOS";
 
     public PantallaApp() {
         initComponents();
@@ -61,6 +68,8 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaCliente = new PantallaCliente(this);
         pantallaFarmaceutico = new PantallaFarmaceutico(this);
         pantallaAdmin = new PantallaAdmin(this);
+        
+        pantallaBuscarFarmacos = new PantallaBuscarFarmacos(this);
 
         // 4) Añadir al CardLayout
         contentPanel.add(pantallaRol, CARD_ROL);
@@ -74,6 +83,9 @@ public class PantallaApp extends javax.swing.JFrame {
 
         // 5) Mostrar primero la selección de rol
         mostrarRol();
+        
+        
+        contentPanel.add(pantallaBuscarFarmacos, CARD_BUSCAR_FARMACOS);
     }
 
     // ========= NAVEGACIÓN =========
@@ -123,6 +135,17 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaAdmin.setSesion(sesion);
         cardLayout.show(contentPanel, CARD_ADMIN);
     }
+    
+    public void mostrarBuscarFarmacos(String volverACard) {
+    List<Medicamento> meds = AlmacenMedicamentos.getInstancia().getTodosLosMedicamentos();
+    pantallaBuscarFarmacos.setContext(volverACard, meds);
+    cardLayout.show(contentPanel, CARD_BUSCAR_FARMACOS);
+    }
+    
+    public void mostrarCard(String card) {
+        cardLayout.show(contentPanel, card);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

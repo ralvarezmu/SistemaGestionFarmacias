@@ -15,21 +15,28 @@ import java.util.List;
 //Estrategia concreta
 public class ConsultaPorFarmacia implements EstrategiaConsultaMedicamentos {
 
-    @Override
     public List<Medicamento> buscar(List<Medicamento> medicamentos, String criterio) {
         List<Medicamento> resultado = new ArrayList<>();
         if (medicamentos == null || criterio == null) return resultado;
 
-        String c = criterio.trim().toLowerCase();
+        String c = normalizar(criterio);
 
         for (Medicamento m : medicamentos) {
             if (m == null) continue;
 
-            if (m.getFarmacia() != null && m.getFarmacia().toLowerCase().contains(c)) {
+            String f = normalizar(m.getFarmacia());  // <- CLAVE
+            if (f.contains(c)) {
                 resultado.add(m);
             }
         }
         return resultado;
+    }
+    
+        private String normalizar(String s) {
+        if (s == null) return "";
+        return s.trim().toLowerCase()
+                .replace("á", "a").replace("é", "e").replace("í", "i")
+                .replace("ó", "o").replace("ú", "u");
     }
 }
 

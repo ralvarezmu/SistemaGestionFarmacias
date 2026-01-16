@@ -13,11 +13,6 @@ public class PantallaCliente extends javax.swing.JPanel {
 
     private PantallaApp app;
 
-    public PantallaCliente() {
-        initComponents();
-        configurarEventos();
-    }
-
     public PantallaCliente(PantallaApp app) {
         this.app = app;
         initComponents();
@@ -26,6 +21,7 @@ public class PantallaCliente extends javax.swing.JPanel {
 
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
+        btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_CLIENTE));
     }
 
     public void setSesion(Sesion sesion) {
@@ -33,6 +29,9 @@ public class PantallaCliente extends javax.swing.JPanel {
                 " | ID: " + sesion.getIdUsuario() +
                 " | Rol: " + sesion.getRol());
     }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,7 +151,7 @@ public class PantallaCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRealizarPedido1ActionPerformed
 
     private void btnBuscarFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFarmacosActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnBuscarFarmacosActionPerformed
 
 
