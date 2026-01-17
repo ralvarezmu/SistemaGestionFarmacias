@@ -10,6 +10,10 @@ import Bridge.MostradorMedicamentosAbst;
 import Bridge.MostradorMedicamentosImp;
 import Bridge.MostradorMedicamentosImpBarcelona;
 import Bridge.MostradorMedicamentosImpMadrid;
+import Command.Command;
+import Command.PedidoInvoker;
+import Command.PedidoService;
+import Command.RealizarPedidoCommand;
 import Decorator.Pedido;
 import Proxy.Sesion;
 import com.mycompany.sistemagestionfarmacias.ServicioPedido;
@@ -32,6 +36,9 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
     private MostradorMedicamentosImp implementador;
     private AlmacenMedicamentos almacen;
     private PantallaCliente principal;
+    private PedidoInvoker invoker;              
+    private Command realizarpedido;
+    private PedidoService pedidoService;
     
     private DefaultListModel<Medicamento> modeloCarrito = new DefaultListModel<>();
     
@@ -61,6 +68,9 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
         this.servicioPedido = new ServicioPedido();
         servicioPedido.crearPedido(cliente);
         this.pedido = servicioPedido.getPedido();
+        this.pedidoService = new PedidoService();
+        this.invoker = new PedidoInvoker();
+        this.realizarpedido = new RealizarPedidoCommand(pedidoService, pedido); 
 
         // Cargar medicamentos según farmacia
         cargarImplementador(farmacia);
@@ -479,7 +489,7 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
 
             // Según la opción elegida
             if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-                servicioPedido.confirmarPedido();
+                invoker.ejecutar(realizarpedido);
                 app.mostrarCliente(sesion);
             } else if (opcion == javax.swing.JOptionPane.NO_OPTION) {
                 // Aquí cancelas o vuelves atrás
@@ -498,7 +508,18 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        int opcion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Quieres cancelar/deshacer el último pedido confirmado?",
+            "Cancelar pedido",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            invoker.deshacerUltimo();           // ✅ undo (cancel del último command)
+            app.mostrarCliente(sesion);
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     
