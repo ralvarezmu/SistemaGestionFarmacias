@@ -15,6 +15,19 @@ import java.util.List;
 //Estrategia concreta
 public class ConsultaPorNombre implements EstrategiaConsultaMedicamentos {
 
+    /**
+     * Busca medicamentos cuyo nombre contenga el criterio especificado.
+     * 
+     * Ejemplos de uso:
+     * 
+     *   criterio="para" → encuentra "Paracetamol 1g"
+     *   criterio="ibu" → encuentra "Ibuprofeno 600mg"
+     *   criterio="Gelo" → encuentra "Gelocatil 1g"
+     * 
+     * @param medicamentos Lista completa de medicamentos del inventario.
+     * @param criterio     Parte del nombre del medicamento a buscar.
+     * @return Lista de medicamentos cuyo nombre contiene el criterio.
+     */
     @Override
     public List<Medicamento> buscar(List<Medicamento> medicamentos, String criterio) {
         //El criterio sería el nombre del medicamento

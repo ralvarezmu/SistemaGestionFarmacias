@@ -14,11 +14,20 @@ public class ElectorMetodoPago {
  
     public static final int TARJETA = 0;
     public static final int PAYPAL = 1;
-    public static final int BIZUM = 0;
+    public static final int BIZUM = 2;
     
+    /**
+     * Constructor privado para prevenir instanciación externa
+     * (implementación del patrón Singleton).
+     */
     private ElectorMetodoPago(){
     }
     
+    /**
+     * Devuelve la única instancia de {@code ElectorMetodoPago} (lazy initialization).
+     *
+     * @return Instancia única del elector de métodos de pago.
+     */
     public static ElectorMetodoPago getInstancia() {
         if(instancia == null) {
             instancia = new ElectorMetodoPago();
@@ -26,6 +35,11 @@ public class ElectorMetodoPago {
         return instancia;
     }
     
+    /**
+     * Devuelve la única instancia de {@code ElectorMetodoPago} (lazy initialization).
+     *
+     * @return Instancia única del elector de métodos de pago.
+     */
     public MetodoPago elegirMetodoPago(int tipo) {
         if (tipo == TARJETA) {
             return (new PagoTarjeta());

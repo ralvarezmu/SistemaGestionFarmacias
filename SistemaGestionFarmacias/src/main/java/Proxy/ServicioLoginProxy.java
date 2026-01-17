@@ -27,16 +27,43 @@ public class ServicioLoginProxy implements ServicioLogin {
     private final int maxIntentos;
     private final long bloqueoMs;
 
+    /**
+     * Constructor con configuración por defecto:
+     * 3 intentos fallidos → bloqueo de 1 minuto (60 segundos).
+     *
+     * @param servicioReal Servicio de login real que se protegerá.
+     */
     public ServicioLoginProxy(ServicioLogin servicioReal) {
         this(servicioReal, 3, 60000); // 3 intentos, 1 minuto (60000 milisegundos/60 segundos/1 minuto)
     }
 
+    /**
+     * Constructor configurable para ajustar la política de seguridad.
+     *
+     * @param servicioReal Servicio real de autenticación.
+     * @param maxIntentos  Máximo número de intentos fallidos permitidos.
+     * @param bloqueoMs    Duración del bloqueo temporal en milisegundos.
+     */
     public ServicioLoginProxy(ServicioLogin servicioReal, int maxIntentos, long bloqueoMs) {
         this.servicioReal = servicioReal;
         this.maxIntentos = maxIntentos;
         this.bloqueoMs = bloqueoMs;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Flujo de procesamiento del Proxy:
+     * 
+     *   Validación de parámetros básicos
+     *   Validación de rol permitido
+     *   Comprobación de bloqueo temporal activo
+     *   Registro del intento de login
+     *   Delegación al servicio real
+     *      ÉXITO: Reset de contadores → devuelve sesión
+     *      FRACASO: Incrementa contador → bloquea si excede límite
+     * 
+     */
     @Override
     public Sesion iniciarSesion(String usuario, String password, String rolSolicitado) {
 
@@ -96,6 +123,12 @@ public class ServicioLoginProxy implements ServicioLogin {
         }
     }
 
+    /**
+     * Valida si el rol solicitado es uno de los permitidos en el sistema.
+     *
+     * @param rol Rol a validar.
+     * @return {@code true} si es CLIENTE, FARMACEUTICO o ADMIN.
+     */
     private boolean esRolPermitido(String rol) {
         String r = rol.trim().toUpperCase();
         return r.equals("CLIENTE") || r.equals("FARMACEUTICO") || r.equals("ADMIN");

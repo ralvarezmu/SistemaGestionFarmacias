@@ -16,6 +16,12 @@ public class RepositorioUsuarios {
     // clave (String) es el nombre (cliente1) y el valor (UsuarioRecord) todos los datos de ese usuario
     private final Map<String, UsuarioRecord> usuarios = new HashMap<>();
 
+    /**
+     * Constructor que inicializa el repositorio con usuarios predefinidos:
+     *   2 clientes de prueba
+     *   2 farmacéuticos de prueba
+     *   1 administrador
+     */
     public RepositorioUsuarios() {
         // CLIENTES
         usuarios.put("cliente1", new UsuarioRecord("1234", "CLIENTE", "C-001", "Ana Sánchez"));
@@ -29,16 +35,33 @@ public class RepositorioUsuarios {
         usuarios.put("admin1", new UsuarioRecord("root", "ADMIN", "AD-001", "Administrador"));
     }
 
+    /**
+     * Busca un usuario por su nombre de usuario.
+     *
+     * @param usuario Nombre de usuario (clave en el mapa).
+     * @return {@link UsuarioRecord} del usuario encontrado, o {@code null} si no existe.
+     */
     public UsuarioRecord buscarPorUsuario(String usuario) {
         return usuarios.get(usuario);
     }
 
+    /**
+     * Clase interna inmutable que representa los datos completos de un usuario.
+     */
     public static class UsuarioRecord {
         private final String password;
         private final String rol;
         private final String id;
         private final String nombre;
 
+        /**
+         * Crea un nuevo registro de usuario con datos inmutables.
+         *
+         * @param password Contraseña en texto plano.
+         * @param rol      Rol del usuario.
+         * @param id       ID único.
+         * @param nombre   Nombre completo mostrado.
+         */
         public UsuarioRecord(String password, String rol, String id, String nombre) {
             this.password = password;
             this.rol = rol;
@@ -46,23 +69,39 @@ public class RepositorioUsuarios {
             this.nombre = nombre;
         }
 
+        /** Devuelve la contraseña del usuario. */
         public String getPassword() { 
             return password; 
         }
         
+        /** Devuelve el rol del usuario. */
         public String getRol() {
             return rol; 
         }
         
+        /** Devuelve el ID único del usuario. */
         public String getId() {
             return id; 
         }
         
+        /** Devuelve el nombre mostrado del usuario. */
         public String getNombre() {
             return nombre; 
         }
     }
     
+    /**
+     * Registra un nuevo cliente en el sistema.
+     *
+     * Valida que no existan campos vacíos y que el usuario no esté ya registrado.
+     * Genera automáticamente un ID secuencial del tipo "C-###".
+     * 
+     *
+     * @param usuario        Nombre de usuario único.
+     * @param password       Contraseña del nuevo cliente.
+     * @param nombreMostrado Nombre completo que se mostrará.
+     * @throws RuntimeException Si faltan datos obligatorios o el usuario ya existe.
+     */
     public void registrarCliente(String usuario, String password, String nombreMostrado) {
 
         if (usuario == null || usuario.trim().isEmpty())
@@ -84,6 +123,13 @@ public class RepositorioUsuarios {
         usuarios.put(key, new UsuarioRecord(password, "CLIENTE", id, nombreMostrado));
     }
 
+    /**
+     * Genera un nuevo ID secuencial para clientes del formato "C-###".
+     * 
+     * Analiza todos los clientes existentes y asigna el siguiente número disponible.
+     *
+     * @return Nuevo ID del tipo "C-003", "C-004", etc.
+     */
     private String generarNuevoIdCliente() {
         int max = 0;
         for (UsuarioRecord r : usuarios.values()) {

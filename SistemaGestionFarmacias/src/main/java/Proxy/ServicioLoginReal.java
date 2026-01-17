@@ -13,10 +13,23 @@ public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
 
     private final RepositorioUsuarios repo;
 
+    /**
+     * Crea una nueva instancia del servicio real, inyectando el repositorio de usuarios.
+     *
+     * @param repo Repositorio donde se almacenan todos los usuarios del sistema.
+     */
     public ServicioLoginReal(RepositorioUsuarios repo) {
         this.repo = repo;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Realiza la autenticación completa en tres pasos:
+     *   Busca el usuario en el repositorio
+     *   Valida la contraseña
+     *   Verifica que el rol solicitado coincida
+     */
     @Override
     public Sesion iniciarSesion(String usuario, String password, String rolSolicitado) {
         RepositorioUsuarios.UsuarioRecord record = repo.buscarPorUsuario(usuario);
@@ -36,6 +49,17 @@ public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
         return new Sesion(record.getId(), record.getNombre(), record.getRol());
     }
     
+    /**
+     * Registra un nuevo cliente delegando completamente en el repositorio.
+     * 
+     * Todas las validaciones (campos vacíos, usuario duplicado, generación de ID)
+     * se realizan en {@link RepositorioUsuarios#registrarCliente(String, String, String)}.
+     *
+     * @param usuario  Nombre de usuario único para el nuevo cliente.
+     * @param password Contraseña del nuevo cliente.
+     * @param nombre   Nombre completo mostrado del cliente.
+     * @throws RuntimeException Si las validaciones del repositorio fallan.
+     */
     public void registrarCliente(String usuario, String password, String nombre) {
         repo.registrarCliente(usuario, password, nombre);
     }

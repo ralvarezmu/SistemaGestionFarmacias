@@ -10,6 +10,9 @@ package Observer;
  */
 public interface Notificador {
     
+    /**
+     * Método que se invoca cuando cambia el estado del pedido observado.
+     */
     public void actualizar();
     
 }

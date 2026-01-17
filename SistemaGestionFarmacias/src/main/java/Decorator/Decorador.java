@@ -20,9 +20,15 @@ public abstract class Decorador implements Pedido{
     
     private Pedido pedido;
     
+    /**
+     * Crea un nuevo decorador envolviendo el pedido indicado.
+     *
+     * @param pedido Pedido que se va a decorar.
+     */
     public Decorador(Pedido pedido) {
         this.pedido = pedido;
     }
+    
     
     @Override
     public String getUsuario() {
@@ -79,6 +85,9 @@ public abstract class Decorador implements Pedido{
         this.pedido.setMetodoPago(metodo);
     }
     
+    /**
+     * Marca el pedido como listo y notifica a los observadores mediante el notificador.
+     */
     @Override
     public void marcarComoListo() {
         //setEstado("Listo");
@@ -90,35 +99,52 @@ public abstract class Decorador implements Pedido{
         return pedido.getNotificador();
     }
     
+    
     @Override
     public void setNotificador(Notificador notificador) {
         this.pedido.setNotificador(notificador);
     }
     
+    /**
+     * Añade un medicamento al pedido respetando las reglas del estado actual.
+     */
     @Override
     public void anadirMedicamento(Medicamento medicamento) {
         this.pedido.getEstado().anadirMedicamento(medicamento, this);
     }
     
+    /**
+     * Elimina un medicamento del pedido respetando las reglas del estado actual.
+     */
     @Override
     public void eliminarMedicamento(Medicamento medicamento) {
         this.pedido.getEstado().eliminarMedicamento(medicamento, this);
     }
     
+    /**
+     * Selecciona método de pago delegando en la lógica del estado actual.
+     */
     @Override
     public void seleccionarMetodoPago(int tipo) {
         this.pedido.getEstado().seleccionarMetodoPago(tipo, this);
     }
     
+    /**
+     * Confirma el pedido según las reglas del estado actual.
+     */
     @Override
     public void confirmarPedido() {
         this.pedido.getEstado().confirmarPedido(this);
     }
     
+    /**
+     * Muestra información del estado actual del pedido.
+     */
     @Override
     public void verEstadoPedido() {
         this.pedido.getEstado().verEstadoPedido(this);
     }
+    
     
     @Override
     public void prepararPedido() {
@@ -130,6 +156,12 @@ public abstract class Decorador implements Pedido{
         this.pedido.enviarPedido();
     }
     
+    /**
+     * Aplica la decoración específica de la subclase (descuento, impuesto, etc.).
+     * 
+     * Método abstracto que debe ser implementado por cada decorador concreto.
+     * 
+     */
     public abstract void aplicarDescuento();
     
 }

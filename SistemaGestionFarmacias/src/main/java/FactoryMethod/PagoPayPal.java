@@ -12,6 +12,17 @@ public class PagoPayPal implements MetodoPago{
     
     private String codigo;
     
+    /**
+     * Verifica la validez de los datos del pago PayPal.
+     * 
+     * Realiza las siguientes validaciones:
+     * 
+     *   Longitud exacta de 10 caracteres
+     *   Solo letras mayúsculas (A-Z) y dígitos (0-9)
+     *
+     * @param codigo Código de PayPal proporcionado por el usuario.
+     * @throws IllegalArgumentException Si el código no cumple los requisitos de formato.
+     */
     @Override
     public void verificarDatos(String codigo) {
         String cod = codigo.trim();
@@ -34,6 +45,9 @@ public class PagoPayPal implements MetodoPago{
         this.codigo = cod;
     }
     
+    /**
+     * Simula la realización del pago mediante PayPal utilizando el código validado.
+     */
     @Override
     public void realizarPago() {
         System.out.println("Pago efectuado con PayPal correctamente");
