@@ -27,10 +27,17 @@ public class AlmacenMedicamentos {
     
     private static AlmacenMedicamentos instancia;
     
+    /**
+     * Constructor privado que inicializa el almacén con algunos medicamentos de ejemplo.
+     * Usa fábricas concretas para crear medicamentos de Madrid y Barcelona.
+     */
     private AlmacenMedicamentos() {
         iniciarAlmacen();
     }
     
+    /**
+     * Inicializa el almacén con medicamentos predeterminados de ambas farmacias.
+     */
     private void iniciarAlmacen() {
         MedicamentoFactory factoriaMadrid = new FMMedicamentoFactory();
         MedicamentoFactory factoriaBarcelona = new FBMedicamentoFactory();
@@ -81,6 +88,11 @@ public class AlmacenMedicamentos {
         this.anadirAntiinflamatoriosMadrid(naproxeno);
     }
     
+    /**
+     * Devuelve la única instancia del almacén de medicamentos.
+     *
+     * @return Instancia única de {@code AlmacenMedicamentos}.
+     */
     public static AlmacenMedicamentos getInstancia() {
         if(instancia == null) {
             instancia = new AlmacenMedicamentos();
@@ -88,30 +100,42 @@ public class AlmacenMedicamentos {
         return instancia;
     }
     
+    /** @return Lista de analgésicos disponibles en Madrid. */
     public ArrayList<Medicamento> getAnalgesicosMadrid() {
         return analgesicosMadrid;
     }
     
+    /** @return Lista de antibióticos disponibles en Madrid. */
     public ArrayList<Medicamento> getAntibioticosMadrid() {
         return antibioticosMadrid;
     }
     
+    /** @return Lista de antiinflamatorios disponibles en Madrid. */
     public ArrayList<Medicamento> getAntiinflamatoriosMadrid() {
         return antiinflamatoriosMadrid;
     }
     
+    /** @return Lista de analgésicos disponibles en Barcelona. */
     public ArrayList<Medicamento> getAnalgesicosBarcelona() {
         return analgesicosBarcelona;
     }
     
+    /** @return Lista de antibióticos disponibles en Barcelona. */
     public ArrayList<Medicamento> getAntibioticosBarcelona() {
         return antibioticosBarcelona;
     }
     
+    /** @return Lista de antiinflamatorios disponibles en Barcelona. */
     public ArrayList<Medicamento> getAntiinflamatoriosBarcelona() {
         return antiinflamatoriosBarcelona;
     }
     
+    /**
+     * Devuelve una lista combinada con todos los medicamentos del sistema.
+     * La lista se reconstruye cada vez que se llama al método para evitar duplicados.
+     *
+     * @return Lista con todos los medicamentos de Madrid y Barcelona.
+     */
     public ArrayList<Medicamento> getTodosLosMedicamentos() {
         todosLosMedicamentos.clear(); // Para no duplicarlos
         // Añadimos todos los medicamentos de Madrid
@@ -126,6 +150,12 @@ public class AlmacenMedicamentos {
         
         return todosLosMedicamentos;  
     }
+    
+    /**
+     * Añade un nuevo medicamento al almacén, clasificándolo por tipo y farmacia de origen.
+     *
+     * @param m Medicamento a añadir.
+     */
     public void anadirMedicamento(Medicamento m) {
         if (m == null) return;
 
@@ -147,6 +177,12 @@ public class AlmacenMedicamentos {
         }
     }
     
+    /**
+     * Elimina un medicamento del almacén, sin importar su tipo o farmacia de procedencia.
+     *
+     * @param m Medicamento a eliminar.
+     * @return {@code true} si el medicamento fue eliminado; {@code false} en caso contrario.
+     */
     public boolean eliminarMedicamento(Medicamento m) {
         if (m == null) return false;
 
@@ -166,27 +202,32 @@ public class AlmacenMedicamentos {
         return eliminado;
     }
 
-    
+    /** Añade un analgésico a la lista de Madrid. */
     public void anadirAnalgesicosMadrid(Medicamento medicamento) {
         analgesicosMadrid.add(medicamento);
     }
     
+    /** Añade un antibiótico a la lista de Madrid. */
     public void anadirAntibioticosMadrid(Medicamento medicamento) {
         antibioticosMadrid.add(medicamento);
     }
     
+    /** Añade un antiinflamatorio a la lista de Madrid. */
     public void anadirAntiinflamatoriosMadrid(Medicamento medicamento) {
         antiinflamatoriosMadrid.add(medicamento);
     }
     
+    /** Añade un analgésico a la lista de Barcelona. */
     public void anadirAnalgesicosBarcelona(Medicamento medicamento) {
         analgesicosBarcelona.add(medicamento);
     }
     
+    /** Añade un antibiótico a la lista de Barcelona. */
     public void anadirAntibioticosBarcelona(Medicamento medicamento) {
         antibioticosBarcelona.add(medicamento);
     }
     
+    /** Añade un antiinflamatorio a la lista de Barcelona. */
     public void anadirAntiinflamatoriosBarcelona(Medicamento medicamento) {
         antiinflamatoriosBarcelona.add(medicamento);
     }

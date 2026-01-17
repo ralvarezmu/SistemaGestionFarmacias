@@ -10,7 +10,17 @@ package Command;
  */
 public interface Command {
     
+    /**
+     * Ejecuta la operación encapsulada por el comando.
+     */
     void execute();
+    
+    /**
+     * Cancela o deshace la operación realizada por {@link #execute()}, si es posible.
+     *
+     * En algunas implementaciones puede no hacer nada o no estar soportado.
+     * 
+     */
     void cancel();
     
 }
