@@ -8,6 +8,17 @@ package Vista;
  *
  * @author claud
  */
+import AbstractFactory.FBMedicamentoFactory;
+import AbstractFactory.FMMedicamentoFactory;
+import AbstractFactory.Medicamento;
+import AbstractFactory.MedicamentoFactory;
+import Bridge.AlmacenMedicamentos;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import java.time.LocalDate;
+
 public class PantallaAltaFarmacos extends javax.swing.JPanel {
 
     private PantallaApp app;
@@ -17,11 +28,196 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         initComponents();
         configurarEventos();
     }
+    
+      // Guarda el detalle específico elegido en el JDialog
+    // ANALGESICO -> nivelDolor: leve/moderado/intenso
+    // ANTIINFLAMATORIO -> zona: articular/muscular/general
+    // ANTIBIOTICO -> bacteria: texto
+    private String detalleTipo = null;
 
     private void configurarEventos() {
+        // Atrás
         btnVolver.addActionListener(e -> app.mostrarAltaBajaFarmacos());
+
+        // Dar de alta
+        btnAlta.addActionListener(e -> darDeAlta());
+
+        // Abrir diálogo de detalles
+        btnDetalles.addActionListener(e -> abrirDetalles());
+
+        // Si cambias el tipo, el detalle anterior ya no vale
+        cmbTipo.addActionListener(e -> detalleTipo = null);
     }
 
+    private void abrirDetalles() {
+        String tipo = String.valueOf(cmbTipo.getSelectedItem()).trim().toUpperCase();
+
+        // Abrimos el JDialog modal
+        java.awt.Frame parent = (java.awt.Frame) SwingUtilities.getWindowAncestor(this);
+
+        PantallaDetallesTipo dlg = new PantallaDetallesTipo(parent, true);
+        dlg.preparar(tipo, detalleTipo);
+        dlg.setVisible(true); // bloquea hasta pulsar Aceptar
+
+        // Recuperamos el detalle (si aceptó)
+        String nuevo = dlg.getDetalle();
+        if (nuevo != null && !nuevo.isBlank()) {
+            detalleTipo = nuevo;
+            // Si tienes un label para mostrarlo, aquí:
+            // lblDetalle.setText("Detalle: " + detalleTipo);
+        }
+    }
+
+    private void darDeAlta() {
+        // 1) Leer campos
+        String id = txtId.getText().trim();
+        String nombre = txtNombre.getText().trim();
+        String tipo = String.valueOf(cmbTipo.getSelectedItem()).trim().toUpperCase();
+        String descripcion = txtDescripcion.getText().trim();
+
+        boolean receta = RadioButtonSi.isSelected();
+
+        String precioTxt = txtPrecio.getText().trim().replace(",", ".");
+        String stockTxt = txtStock.getText().trim();
+        String fechaTxt = txtFecha.getText().trim();
+
+        // Farmacia (lo guardamos como texto “usable” por búsqueda)
+        String farmacia = RadioButtonMadrid.isSelected()
+                ? "farmacia de madrid"
+                : (RadioButtonBarcelona.isSelected() ? "farmacia de barcelona" : "");
+
+        // 2) Validar generales
+        String error = validarCampos(id, nombre, descripcion, precioTxt, stockTxt, fechaTxt, farmacia, tipo);
+        if (error != null) {
+            JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 3) Validar detalle específico (obligatorio)
+        String errorDetalle = validarDetalle(tipo, detalleTipo);
+        if (errorDetalle != null) {
+            JOptionPane.showMessageDialog(this, errorDetalle, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 4) Parseos
+        double precio = Double.parseDouble(precioTxt);
+        int stock = Integer.parseInt(stockTxt);
+        LocalDate caducidad = LocalDate.parse(fechaTxt); // YYYY-MM-DD
+
+        // 5) Elegir factoría según farmacia
+        MedicamentoFactory factory = RadioButtonMadrid.isSelected()
+                ? new FMMedicamentoFactory()
+                : new FBMedicamentoFactory();
+
+        // 6) Crear medicamento según tipo
+        Medicamento nuevo;
+        switch (tipo) {
+            case "ANALGESICO" -> nuevo = factory.crearAnalgesico(
+                    id, nombre, descripcion, receta,
+                    precio, stock, caducidad,
+                    detalleTipo // nivelDolor
+            );
+
+            case "ANTIBIOTICO" -> nuevo = factory.crearAntibiotico(
+                    id, nombre, descripcion, receta,
+                    precio, stock, caducidad,
+                    detalleTipo // bacteria
+            );
+
+            case "ANTIINFLAMATORIO" -> nuevo = factory.crearAntiinflamatorio(
+                    id, nombre, descripcion, receta,
+                    precio, stock, caducidad,
+                    detalleTipo // zonaInflamacion
+            );
+
+            default -> {
+                JOptionPane.showMessageDialog(this, "Tipo inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // 7) Guardar en almacén
+        AlmacenMedicamentos.getInstancia().anadirMedicamento(nuevo);
+
+        // 8) OK + limpiar
+        JOptionPane.showMessageDialog(this, "Fármaco dado de alta correctamente.");
+        limpiarCampos();
+    }
+
+    private String validarCampos(String id, String nombre, String descripcion,
+                                 String precioTxt, String stockTxt, String fechaTxt,
+                                 String farmacia, String tipo) {
+
+        if (id.isEmpty()) return "El ID es obligatorio.";
+        if (nombre.isEmpty()) return "El nombre es obligatorio.";
+        if (descripcion.isEmpty()) return "La descripción es obligatoria.";
+        if (farmacia.isEmpty()) return "Selecciona farmacia (Madrid o Barcelona).";
+
+        if (!(tipo.equals("ANALGESICO") || tipo.equals("ANTIBIOTICO") || tipo.equals("ANTIINFLAMATORIO"))) {
+            return "Tipo inválido.";
+        }
+
+        try {
+            double p = Double.parseDouble(precioTxt);
+            if (p <= 0) return "El precio debe ser mayor que 0.";
+        } catch (NumberFormatException e) {
+            return "Precio inválido. Ejemplo: 5.40";
+        }
+
+        try {
+            int s = Integer.parseInt(stockTxt);
+            if (s < 0) return "El stock no puede ser negativo.";
+        } catch (NumberFormatException e) {
+            return "Stock inválido. Debe ser un entero.";
+        }
+
+        try {
+            LocalDate.parse(fechaTxt); // YYYY-MM-DD
+        } catch (Exception e) {
+            return "Fecha inválida. Formato: YYYY-MM-DD (ej: 2027-06-15).";
+        }
+
+        return null;
+    }
+
+    private String validarDetalle(String tipo, String detalle) {
+        if (detalle == null || detalle.isBlank()) {
+            return "Faltan los detalles del tipo. Pulsa el botón 'Detalles'.";
+        }
+
+        String d = detalle.trim().toLowerCase();
+
+        if (tipo.equals("ANALGESICO")) {
+            if (!(d.equals("leve") || d.equals("moderado") || d.equals("intenso"))) {
+                return "Nivel de dolor inválido (leve, moderado, intenso).";
+            }
+        } else if (tipo.equals("ANTIINFLAMATORIO")) {
+            if (!(d.equals("articular") || d.equals("muscular") || d.equals("general"))) {
+                return "Zona de inflamación inválida (articular, muscular, general).";
+            }
+        } else if (tipo.equals("ANTIBIOTICO")) {
+            if (d.isBlank()) return "La bacteria es obligatoria.";
+        }
+
+        return null;
+    }
+
+    private void limpiarCampos() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        cmbTipo.setSelectedIndex(0);
+
+        RadioButtonNo.setSelected(true);
+        RadioButtonMadrid.setSelected(true);
+
+        txtPrecio.setText("");
+        txtStock.setText("");
+        txtFecha.setText("");
+
+        detalleTipo = null;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +252,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         RadioButtonMadrid = new javax.swing.JRadioButton();
         btnVolver = new javax.swing.JButton();
         lblDescripción = new javax.swing.JLabel();
-        txtDescripción = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
         btnDetalles = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -85,7 +281,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         lblTipo.setText("Tipo:");
 
         cmbTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ANALGESICO", "ANTIINFLAMATORIO", "ANTIBIÓTICO" }));
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ANALGESICO", "ANTIINFLAMATORIO", "ANTIBIOTICO" }));
 
         lblStock.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblStock.setText("Stock:");
@@ -150,7 +346,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         lblDescripción.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblDescripción.setText("Descripción:");
 
-        txtDescripción.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         btnDetalles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnDetalles.setText("Detalles");
@@ -193,7 +389,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
                                     .addComponent(cmbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtId)
                                     .addComponent(txtNombre)
-                                    .addComponent(txtDescripción))))
+                                    .addComponent(txtDescripcion))))
                         .addGap(31, 31, 31)
                         .addComponent(btnDetalles)))
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -247,7 +443,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescripción)
-                    .addComponent(txtDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReceta)
@@ -325,7 +521,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
     private javax.swing.JLabel lblStock;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtDescripción;
+    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;

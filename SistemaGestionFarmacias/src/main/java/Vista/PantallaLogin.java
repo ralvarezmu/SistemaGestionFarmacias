@@ -102,11 +102,11 @@ public class PantallaLogin extends javax.swing.JPanel {
         lblPassword = new javax.swing.JLabel();
         lblRol = new javax.swing.JLabel();
         cmbRol = new javax.swing.JComboBox<>();
-        btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
         jSeparator = new javax.swing.JSeparator();
         lblTitle = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
 
         lblIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblIniciarSesion.setForeground(new java.awt.Color(16, 86, 148));
@@ -126,19 +126,14 @@ public class PantallaLogin extends javax.swing.JPanel {
         cmbRol.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CLIENTE", "FARMACEUTICO", "ADMIN" }));
 
-        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnLogin.setText("Iniciar sesión");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Sistema de Gestión de Farmacias");
 
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin.setText("Iniciar sesión");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -161,8 +156,8 @@ public class PantallaLogin extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(238, 238, 238)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLogin))))
+                                    .addComponent(btnLogin)
+                                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -199,17 +194,13 @@ public class PantallaLogin extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRol))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLogin)
+                .addGap(64, 64, 64))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
