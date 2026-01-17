@@ -64,12 +64,12 @@ public class PantallaApp extends javax.swing.JFrame {
 
         // 2) CardLayout
         cardLayout = (CardLayout) contentPanel.getLayout();
-
+        
         // 3) Crear pantallas
         pantallaRol = new PantallaRol(this);
         pantallaInicioCliente = new PantallaInicioCliente(this);
         pantallaLogin = new PantallaLogin(this, loginService);
-        pantallaRegistroCliente = new PantallaRegistroCliente(this /*, si tienes servicio/Repo para registrar pásalo aquí */);
+        pantallaRegistroCliente = new PantallaRegistroCliente(this,repo);
         pantallaCliente = new PantallaCliente(this);
         pantallaFarmaceutico = new PantallaFarmaceutico(this);
         pantallaAdmin = new PantallaAdmin(this);   

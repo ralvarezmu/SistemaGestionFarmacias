@@ -4,22 +4,30 @@
  */
 package Vista;
 
+import Builder.Cliente;
+import Builder.ClienteBuilder;
+import Builder.UsuarioDirector;
+import Proxy.RepositorioUsuarios;
+import Proxy.ServicioLogin;
+
 /**
  *
  * @author claud
  */
 public class PantallaRegistroCliente extends javax.swing.JPanel {
     private PantallaApp app;
-
-    public PantallaRegistroCliente(PantallaApp app /*, servicios si tienes */) {
+    private UsuarioDirector director;
+    private ClienteBuilder clienteBuilder;
+    private ServicioLogin loginService;
+    private final RepositorioUsuarios repoUsuarios;
+    
+    public PantallaRegistroCliente(PantallaApp app,RepositorioUsuarios repoUsuarios) {
         initComponents();
         this.app = app;
-
-        // EJEMPLO: si tienes un botón "Volver"
-        // btnVolver.addActionListener(e -> app.mostrarInicioCliente());
-
-        // EJEMPLO: si tienes "Registrar"
-        // btnRegistrar.addActionListener(e -> onRegistrar());
+        director = new UsuarioDirector();
+        clienteBuilder = new ClienteBuilder();
+        this.repoUsuarios = repoUsuarios;
+        
     }
 
 
@@ -36,6 +44,14 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         lblRegistrarse = new javax.swing.JLabel();
         btnRegistrarse = new javax.swing.JButton();
+        lblUser = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        lblPassword1 = new javax.swing.JLabel();
+        lblPassword2 = new javax.swing.JLabel();
+        jPass = new javax.swing.JPasswordField();
+        txtDir = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
@@ -47,14 +63,37 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
 
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarse.setText("Registrarse");
+        btnRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarseMouseClicked(evt);
+            }
+        });
+
+        lblUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblUser.setText("Nombre:");
+
+        txtName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        lblPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPassword.setText("Email:");
+
+        lblPassword1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPassword1.setText("Contraseña:");
+
+        lblPassword2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPassword2.setText("Direccion:");
+
+        txtDir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,9 +102,29 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(247, 247, 247)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegistrarse)
-                            .addComponent(lblRegistrarse))))
+                        .addComponent(lblRegistrarse))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(btnRegistrarse))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPassword2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblPassword1, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPass, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblUser)
+                                    .addComponent(lblPassword))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                    .addComponent(txtEmail))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -77,17 +136,114 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblRegistrarse)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUser)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPassword)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPassword2)
+                    .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPassword1)
+                    .addComponent(jPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
                 .addComponent(btnRegistrarse)
-                .addGap(54, 54, 54))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarseMouseClicked
+        String nombre = txtName.getText().trim();              // username
+        String email = txtEmail.getText().trim();              // dato extra
+        String direccion = txtDir.getText().trim();            // dato extra
+        String password = new String(jPass.getPassword()).trim();
+
+        // 1) Validación: todos rellenos
+        if (nombre.isEmpty() || email.isEmpty() || direccion.isEmpty() || password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "❌ Todos los campos son obligatorios",
+                    "Error de registro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            // 2) Construcción con Builder + Director
+            Cliente cliente = director.constructCliente(
+                    clienteBuilder,
+                    nombre,
+                    email,
+                    password,
+                    direccion
+            );
+
+            // 3) Guardar en el MISMO repositorio que usa el login
+            // Clave del login = nombre (username)
+            repoUsuarios.registrarCliente(nombre, password, nombre);
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "✅ Cliente registrado correctamente.\nInicia sesión con:\nUsuario: " + nombre,
+                    "Registro completado",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // 4) Limpiar campos
+            txtName.setText("");
+            txtDir.setText("");
+            txtDir.setText("");
+            jPass.setText("");
+
+            // 5) Volver a login (si tu PantallaApp tiene un método para ello)
+            // Cambia el nombre del método según tu PantallaApp:
+            app.mostrarLoginConRol("CLIENTE"); 
+            // o: app.mostrarLogin(); y luego app.getPantallaLogin().setRolSeleccionado("CLIENTE");
+
+        } catch (IllegalStateException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "⚠️ Error en los datos: " + ex.getMessage(),
+                    "Error de validación",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        } catch (RuntimeException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "❌ No se pudo registrar: " + ex.getMessage(),
+                    "Error de registro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "❌ Error inesperado al registrar",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnRegistrarseMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarse;
+    private javax.swing.JPasswordField jPass;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblPassword1;
+    private javax.swing.JLabel lblPassword2;
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblUser;
+    private javax.swing.JTextField txtDir;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

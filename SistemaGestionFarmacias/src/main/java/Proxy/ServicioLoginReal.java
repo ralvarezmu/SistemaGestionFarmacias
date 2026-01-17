@@ -9,7 +9,7 @@ package Proxy;
  * @author claud
  */
 //Sujeto real
-public class ServicioLoginReal implements ServicioLogin {
+public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
 
     private final RepositorioUsuarios repo;
 
@@ -34,6 +34,10 @@ public class ServicioLoginReal implements ServicioLogin {
         }
 
         return new Sesion(record.getId(), record.getNombre(), record.getRol());
+    }
+    
+    public void registrarCliente(String usuario, String password, String nombre) {
+        repo.registrarCliente(usuario, password, nombre);
     }
 }
 

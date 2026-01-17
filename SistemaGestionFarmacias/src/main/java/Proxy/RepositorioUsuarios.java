@@ -62,5 +62,40 @@ public class RepositorioUsuarios {
             return nombre; 
         }
     }
+    
+    public void registrarCliente(String usuario, String password, String nombreMostrado) {
+
+        if (usuario == null || usuario.trim().isEmpty())
+            throw new RuntimeException("Usuario vacío.");
+
+        if (password == null || password.trim().isEmpty())
+            throw new RuntimeException("Contraseña vacía.");
+
+        if (nombreMostrado == null || nombreMostrado.trim().isEmpty())
+            throw new RuntimeException("Nombre vacío.");
+
+        String key = usuario.trim();
+
+        if (usuarios.containsKey(key)) {
+            throw new RuntimeException("Ese usuario ya existe.");
+        }
+
+        String id = generarNuevoIdCliente();
+        usuarios.put(key, new UsuarioRecord(password, "CLIENTE", id, nombreMostrado));
+    }
+
+    private String generarNuevoIdCliente() {
+        int max = 0;
+        for (UsuarioRecord r : usuarios.values()) {
+            if ("CLIENTE".equalsIgnoreCase(r.getRol()) && r.getId().startsWith("C-")) {
+                try {
+                    int n = Integer.parseInt(r.getId().substring(2));
+                    if (n > max) max = n;
+                } catch (NumberFormatException ignored) { }
+            }
+        }
+        return String.format("C-%03d", max + 1);
+    }
+    
 }
 
