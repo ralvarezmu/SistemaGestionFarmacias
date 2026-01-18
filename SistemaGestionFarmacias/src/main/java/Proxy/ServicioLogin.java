@@ -8,6 +8,7 @@ package Proxy;
  *
  * @author claud
  */
+
 //Sujeto
 public interface ServicioLogin {
     

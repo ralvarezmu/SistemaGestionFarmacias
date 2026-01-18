@@ -44,12 +44,12 @@ public class Analgesico extends Medicamento {
     }
 
     /**
-     * Establece el nivel de dolor que el analgésico puede tratar.
-     * 
+     * Establece el nivel de dolor que el analgésico puede tratar. 
      * El valor debe ser uno de los siguientes: "leve", "moderado" o "intenso".
      * 
-     *
      * @param nivelDolor Nivel de dolor que el medicamento trata.
+     * @throws IllegalArgumentException Si {@code nivelDolor} es {@code null}
+     *                                  o no coincide con los valores permitidos.
      */
     public final void setNivelDolor(String nivelDolor) {
         if (nivelDolor == null) throw new IllegalArgumentException("nivelDolor no puede ser null");
@@ -64,7 +64,8 @@ public class Analgesico extends Medicamento {
     /**
      * Devuelve una representación en cadena del objeto Analgésico.
      *
-     * @return Una cadena con los datos principales del analgésico.
+     * @return Una cadena con los datos principales del analgésico,
+     *         incluyendo su identificador, nombre, farmacia y  nivel de dolor.
      */
     @Override
     public String toString() {

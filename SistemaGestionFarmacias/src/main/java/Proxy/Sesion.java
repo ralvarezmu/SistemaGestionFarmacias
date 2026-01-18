@@ -21,7 +21,7 @@ public class Sesion {
      * Crea una nueva sesión de usuario con timestamp automático.
      *
      * @param idUsuario Identificador único del usuario (ej: "C-001", "F-002").
-     * @param nombre    Nombre completo mostrado del usuario.
+     * @param nombre    Nombre completo del usuario.
      * @param rol       Rol asignado: "CLIENTE", "FARMACEUTICO" o "ADMIN".
      */
     public Sesion(String idUsuario, String nombre, String rol) {
@@ -70,7 +70,8 @@ public class Sesion {
     /**
      * Devuelve una representación legible de la sesión activa.
      *
-     * @return Cadena con todos los datos de la sesión.
+     * @return Cadena con todos los datos de la sesión,
+     *         incluyendo el idUsuario, nombre, rol e inicio.
      */
     @Override
     public String toString() {

@@ -36,7 +36,7 @@ public class ConsultaPorTipo implements EstrategiaConsultaMedicamentos {
         String c = normalizar(criterio);
 
         for (Medicamento m : medicamentos) {
-            if (m == null) continue; //Si m es null se salta la iteración y pasa al siguiente medicamento
+            if (m == null) continue; //Si medicamento es null se salta la iteración y pasa al siguiente medicamento
 
             String tipoMedicamento = normalizar(m.getTipo()); // ej: "analgesico"
             if (tipoMedicamento.contains(c)) {

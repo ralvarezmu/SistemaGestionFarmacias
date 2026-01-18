@@ -9,7 +9,7 @@ package Proxy;
  * @author claud
  */
 public class PruebaPatron {
-
+    
     /**
      * @param args the command line arguments
      */

@@ -9,7 +9,6 @@ package Strategy;
  * @author claud
  */
 import AbstractFactory.Medicamento;
-import java.util.ArrayList;
 import java.util.List;
 
 //Contexto

@@ -67,7 +67,7 @@ public class ServicioLoginProxy implements ServicioLogin {
     @Override
     public Sesion iniciarSesion(String usuario, String password, String rolSolicitado) {
 
-        // 1) Validaciones básicas
+        // Validaciones
         if (usuario == null || usuario.trim().isEmpty()) {
             throw new RuntimeException("Usuario vacío.");
         }
@@ -78,12 +78,12 @@ public class ServicioLoginProxy implements ServicioLogin {
             throw new RuntimeException("Rol no indicado.");
         }
 
-        // 2) Roles permitidos 
+        // Roles permitidos 
         if (!esRolPermitido(rolSolicitado)) {
             throw new RuntimeException("Rol no válido. Usa CLIENTE, FARMACEUTICO o ADMIN.");
         }
 
-        // 3) Comprobar bloqueo
+        // Comprobar bloqueo
         long ahora = Instant.now().toEpochMilli();
         Long hasta = tiempoUsuarioBloqueado.get(usuario);
 
@@ -92,14 +92,14 @@ public class ServicioLoginProxy implements ServicioLogin {
             throw new RuntimeException("Usuario bloqueado. Intenta en " + segundos + "s.");
         }
 
-        // 4) Registro del intento de inicio de sesión
+        // Registro del intento de inicio de sesión
         System.out.println("[LOGIN] Intento -> usuario=" + usuario + " rol=" + rolSolicitado);
 
         try {
-            // 5) Delegar al real
+            // Delegar al real
             Sesion sesion = servicioReal.iniciarSesion(usuario, password, rolSolicitado);
 
-            // 6) Reset intentos si OK
+            // Reset intentos si OK
             intentosFallidos.remove(usuario);
             tiempoUsuarioBloqueado.remove(usuario);
 
@@ -107,7 +107,7 @@ public class ServicioLoginProxy implements ServicioLogin {
             return sesion;
 
         } catch (RuntimeException ex) {
-            // 7) Contar fallos
+            // Contar fallos
             int n = intentosFallidos.getOrDefault(usuario, 0) + 1;
             intentosFallidos.put(usuario, n);
 

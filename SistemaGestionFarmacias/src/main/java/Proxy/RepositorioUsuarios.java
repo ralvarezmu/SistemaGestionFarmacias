@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class RepositorioUsuarios {
 
-    // clave (String) es el nombre (cliente1) y el valor (UsuarioRecord) todos los datos de ese usuario
+    // Clave (String) es el nombre de usuario (cliente1) y el valor (UsuarioRecord) todos los datos de ese usuario
     private final Map<String, UsuarioRecord> usuarios = new HashMap<>();
 
     /**
@@ -59,7 +59,7 @@ public class RepositorioUsuarios {
         /**
          * Crea un nuevo registro de usuario con datos inmutables.
          *
-         * @param password Contraseña en texto plano.
+         * @param password Contraseña del usuario.
          * @param rol      Rol del usuario.
          * @param id       ID único.
          * @param nombre   Nombre completo mostrado.

@@ -29,6 +29,7 @@ public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
      *   Busca el usuario en el repositorio
      *   Valida la contraseña
      *   Verifica que el rol solicitado coincida
+     * 
      */
     @Override
     public Sesion iniciarSesion(String usuario, String password, String rolSolicitado) {
@@ -60,6 +61,7 @@ public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
      * @param nombre   Nombre completo mostrado del cliente.
      * @throws RuntimeException Si las validaciones del repositorio fallan.
      */
+    @Override
     public void registrarCliente(String usuario, String password, String nombre) {
         repo.registrarCliente(usuario, password, nombre);
     }

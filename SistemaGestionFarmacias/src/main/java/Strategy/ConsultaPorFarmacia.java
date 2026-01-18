@@ -27,6 +27,7 @@ public class ConsultaPorFarmacia implements EstrategiaConsultaMedicamentos {
      * @param criterio     Nombre o parte del nombre de la farmacia a buscar.
      * @return Lista de medicamentos de la farmacia coincidente.
      */
+    @Override
     public List<Medicamento> buscar(List<Medicamento> medicamentos, String criterio) {
         List<Medicamento> resultado = new ArrayList<>();
         if (medicamentos == null || criterio == null) return resultado;
@@ -36,7 +37,7 @@ public class ConsultaPorFarmacia implements EstrategiaConsultaMedicamentos {
         for (Medicamento m : medicamentos) {
             if (m == null) continue;
 
-            String f = normalizar(m.getFarmacia());  // <- CLAVE
+            String f = normalizar(m.getFarmacia());  
             if (f.contains(c)) {
                 resultado.add(m);
             }

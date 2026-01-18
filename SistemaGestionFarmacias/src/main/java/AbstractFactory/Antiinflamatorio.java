@@ -65,8 +65,8 @@ public class Antiinflamatorio extends Medicamento {
     /**
      * Devuelve una representación en cadena del antiinflamatorio.
      *
-     * @return Una cadena con los datos principales del medicamento,
-     *         incluyendo id, nombre, farmacia y zona de inflamación.
+     * @return Una cadena con los datos principales del antiinflamatorio,
+     *         incluyendo su identificador, nombre, farmacia y zona de inflamación.
      */
     @Override
     public String toString() {
