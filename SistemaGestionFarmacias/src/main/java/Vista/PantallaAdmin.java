@@ -26,6 +26,7 @@ public class PantallaAdmin extends javax.swing.JPanel {
 
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
+        btnAltaClientes.addActionListener(e -> app.mostrarAltaBajaClientes());
     }
 
     public void setSesion(Sesion sesion) {
@@ -68,6 +69,11 @@ public class PantallaAdmin extends javax.swing.JPanel {
         btnAltaClientes.setBackground(new java.awt.Color(240, 245, 255));
         btnAltaClientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAltaClientes.setText("Alta/baja de clientes");
+        btnAltaClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaClientesActionPerformed(evt);
+            }
+        });
 
         btnAltaFarmaceuticos.setBackground(new java.awt.Color(240, 245, 255));
         btnAltaFarmaceuticos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -138,6 +144,10 @@ public class PantallaAdmin extends javax.swing.JPanel {
     private void btnConsultaStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaStockActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultaStockActionPerformed
+
+    private void btnAltaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaClientesActionPerformed
+        
+    }//GEN-LAST:event_btnAltaClientesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

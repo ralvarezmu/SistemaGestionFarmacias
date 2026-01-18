@@ -38,6 +38,7 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaRealizacionPedido pantallaRealizacionPedido;
     private PantallaListaFarmacos pantallaListaFarmacos;
     private PantallaModificacionFarmacos pantallaModificacionFarmacos;
+    private PantallaAltaBajaClientes pantallaAltaBajaClientes;
 
     // Nombres de cartas
     public static final String CARD_ROL = "ROL";
@@ -55,6 +56,7 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_REALIZACION_PEDIDO = "REALIZAR PEDIDO";
     public static final String CARD_LISTA_FARMACOS = "LISTA_FARMACOS";
     public static final String CARD_MODIFICACION_FARMACOS = "MODIFICACION_FARMACOS";
+    public static final String CARD_ALTABAJA_CLIENTES = "ALTABAJA_CLIENTES";
 
     
     public PantallaApp() {
@@ -90,6 +92,7 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaRealizacionPedido = new PantallaRealizacionPedido(this,pedidoService);
         pantallaListaFarmacos = new PantallaListaFarmacos(this);
         pantallaModificacionFarmacos = new PantallaModificacionFarmacos(this);
+        pantallaAltaBajaClientes = new PantallaAltaBajaClientes(this, repo);
 
         
 
@@ -112,6 +115,7 @@ public class PantallaApp extends javax.swing.JFrame {
         
         contentPanel.add(wrap(pantallaListaFarmacos), CARD_LISTA_FARMACOS);
         contentPanel.add(wrap(pantallaModificacionFarmacos), CARD_MODIFICACION_FARMACOS);
+        contentPanel.add(wrap(pantallaAltaBajaClientes),CARD_ALTABAJA_CLIENTES);
 
         // 5) Mostrar primero la selección de rol
         mostrarRol();
@@ -206,6 +210,9 @@ public class PantallaApp extends javax.swing.JFrame {
     public void mostrarModificacionFarmacos(Medicamento seleccionado) {
         pantallaModificacionFarmacos.preparar(seleccionado); // carga valores por defecto
         cardLayout.show(contentPanel, CARD_MODIFICACION_FARMACOS);
+    }
+    public void mostrarAltaBajaClientes(){
+        cardLayout.show(contentPanel, CARD_ALTABAJA_CLIENTES);
     }
 
 

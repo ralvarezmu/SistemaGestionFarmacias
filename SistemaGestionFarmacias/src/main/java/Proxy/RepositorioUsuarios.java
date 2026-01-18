@@ -8,7 +8,9 @@ package Proxy;
  *
  * @author claud
  */
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RepositorioUsuarios {
@@ -141,6 +143,47 @@ public class RepositorioUsuarios {
             }
         }
         return String.format("C-%03d", max + 1);
+    }
+    
+    /**
+     * Recogemos el nombre de todos los usuarios.
+     * 
+     * Nos devuelve una lista de todos los clientes.
+     *
+     * @return Lista de clientes.
+     */
+    public List<String> getUsernamesClientes() {
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, UsuarioRecord> e : usuarios.entrySet()) {
+            UsuarioRecord r = e.getValue();
+            if ("CLIENTE".equalsIgnoreCase(r.getRol())) {
+                res.add(e.getKey()); 
+            }
+        }
+        res.sort(String::compareToIgnoreCase); 
+        return res;
+    }
+    /**
+     * Eliminacion de un cliente por su nombre.
+     * 
+     * @param username nombre de usuario que eliminar
+     *
+     */
+    public void eliminarCliente(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new RuntimeException("Usuario vacío.");
+        }
+
+        UsuarioRecord r = usuarios.get(username);
+        if (r == null) {
+            throw new RuntimeException("El cliente no existe.");
+        }
+
+        if (!"CLIENTE".equalsIgnoreCase(r.getRol())) {
+            throw new RuntimeException("Solo se pueden dar de baja clientes.");
+        }
+
+        usuarios.remove(username);
     }
     
 }
