@@ -126,6 +126,8 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         lblTitle = new javax.swing.JLabel();
         lblRegistrarse = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         jScrollPane1.setViewportView(jClientes);
 
         jBaja.setText("Dar de Baja");
@@ -148,6 +150,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         lblPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPassword.setText("Email:");
 
+        btnRegistrarse.setBackground(new java.awt.Color(240, 245, 255));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarse.setText("Registrar Cliente");
         btnRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {

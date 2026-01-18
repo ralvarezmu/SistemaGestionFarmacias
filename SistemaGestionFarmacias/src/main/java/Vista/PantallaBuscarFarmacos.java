@@ -200,6 +200,8 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
         txtBuscar = new javax.swing.JTextField();
         lblStatus = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Buscar fármacos");
@@ -212,9 +214,11 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
         cmbBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TIPO", "NOMBRE", "FARMACIA" }));
 
+        jButton1.setBackground(new java.awt.Color(240, 245, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Buscar");
 
+        btnVolver.setBackground(new java.awt.Color(240, 245, 255));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVolver.setText("Volver al menú");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {

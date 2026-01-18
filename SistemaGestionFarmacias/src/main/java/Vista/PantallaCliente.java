@@ -51,6 +51,8 @@ public class PantallaCliente extends javax.swing.JPanel {
         btnRealizarPedido1 = new javax.swing.JButton();
         btnBuscarFarmacos = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Panel cliente");

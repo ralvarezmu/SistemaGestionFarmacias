@@ -108,6 +108,8 @@ public class PantallaLogin extends javax.swing.JPanel {
         txtPass = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblIniciarSesion.setForeground(new java.awt.Color(16, 86, 148));
         lblIniciarSesion.setText("Iniciar sesión");
@@ -132,6 +134,7 @@ public class PantallaLogin extends javax.swing.JPanel {
 
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        btnLogin.setBackground(new java.awt.Color(240, 245, 255));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnLogin.setText("Iniciar sesión");
 

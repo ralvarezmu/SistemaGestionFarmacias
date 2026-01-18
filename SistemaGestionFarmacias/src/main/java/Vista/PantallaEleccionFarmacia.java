@@ -5,6 +5,7 @@
 package Vista;
 
 import Proxy.Sesion;
+import java.awt.Color;
 
 /**
  *
@@ -22,7 +23,7 @@ public class PantallaEleccionFarmacia extends javax.swing.JPanel {
      */
     public PantallaEleccionFarmacia(PantallaApp app) {
         initComponents();
-        //this.getContentPane().setBackground(new Color(248, 250, 252));
+        setBackground(new Color(248, 250, 252));
         this.app = app;
         configurarEventos();
     }

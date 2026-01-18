@@ -36,6 +36,8 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
         btnIniciarSesion = new javax.swing.JButton();
         btnRegistrarse = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Sistema de Gestión de Farmacias");
@@ -47,6 +49,7 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
         lblCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCuenta.setText("¿Tienes cuenta?");
 
+        btnIniciarSesion.setBackground(new java.awt.Color(240, 245, 255));
         btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnIniciarSesion.setText("Iniciar sesión");
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -55,6 +58,7 @@ public class PantallaInicioCliente extends javax.swing.JPanel {
             }
         });
 
+        btnRegistrarse.setBackground(new java.awt.Color(240, 245, 255));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarse.setText("Registrarse");
         btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {

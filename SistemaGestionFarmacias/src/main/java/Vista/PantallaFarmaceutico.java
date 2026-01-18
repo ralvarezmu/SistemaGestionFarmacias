@@ -49,6 +49,8 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
         btnBuscarFarmacos = new javax.swing.JButton();
         btnModificacionFarmacos = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Panel farmacéutico");

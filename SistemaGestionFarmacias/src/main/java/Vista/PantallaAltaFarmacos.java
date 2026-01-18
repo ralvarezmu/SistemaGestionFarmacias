@@ -259,10 +259,13 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         txtDescripcion = new javax.swing.JTextField();
         btnDetalles = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Alta de fármacos");
 
+        btnAlta.setBackground(new java.awt.Color(240, 245, 255));
         btnAlta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAlta.setText("Dar de alta");
         btnAlta.addActionListener(new java.awt.event.ActionListener() {
@@ -339,6 +342,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(240, 245, 255));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVolver.setText("Atrás");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -352,6 +356,7 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
 
         txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        btnDetalles.setBackground(new java.awt.Color(240, 250, 255));
         btnDetalles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnDetalles.setText("Detalles");
         btnDetalles.addActionListener(new java.awt.event.ActionListener() {

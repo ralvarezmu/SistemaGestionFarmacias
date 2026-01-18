@@ -125,6 +125,8 @@ public class PantallaListaFarmacos extends javax.swing.JPanel {
         btnModificar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Lista de fármacos");
@@ -132,9 +134,11 @@ public class PantallaListaFarmacos extends javax.swing.JPanel {
         listMedicamentos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jScrollPane1.setViewportView(listMedicamentos);
 
+        btnModificar.setBackground(new java.awt.Color(240, 245, 255));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar.setText("Modificar");
 
+        btnVolver.setBackground(new java.awt.Color(240, 245, 255));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVolver.setText("Volver al menú");
 

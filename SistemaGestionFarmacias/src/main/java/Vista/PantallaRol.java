@@ -48,6 +48,8 @@ public class PantallaRol extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnContinuar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblBienvenido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(16, 86, 148));
         lblBienvenido.setText("Bienvenido");

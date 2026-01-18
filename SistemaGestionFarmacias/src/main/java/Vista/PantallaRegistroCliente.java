@@ -53,6 +53,8 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
         txtDir = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Sistema de Gestión de Farmacias");
@@ -61,6 +63,7 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
         lblRegistrarse.setForeground(new java.awt.Color(16, 86, 148));
         lblRegistrarse.setText("Registrarse");
 
+        btnRegistrarse.setBackground(new java.awt.Color(240, 245, 255));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarse.setText("Registrarse");
         btnRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {

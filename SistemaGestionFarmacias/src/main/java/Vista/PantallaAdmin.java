@@ -52,6 +52,8 @@ public class PantallaAdmin extends javax.swing.JPanel {
         btnAltaFarmaceuticos = new javax.swing.JButton();
         btnConsultaStock = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(248, 250, 252));
+
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
         lblTitle.setText("Panel administrador");

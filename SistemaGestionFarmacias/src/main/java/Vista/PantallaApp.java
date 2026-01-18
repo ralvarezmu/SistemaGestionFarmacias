@@ -9,6 +9,8 @@ import Bridge.AlmacenMedicamentos;
 import AbstractFactory.Medicamento;
 import Command.PedidoService;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.List;
 
 /**
@@ -58,11 +60,14 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_MODIFICACION_FARMACOS = "MODIFICACION_FARMACOS";
     public static final String CARD_ALTABAJA_CLIENTES = "ALTABAJA_CLIENTES";
 
+    private Dimension tamanoInicial;
     
     public PantallaApp() {
         initComponents();
+        this.getContentPane().setBackground(new Color(248, 250, 252));
         initApp();
         pack();
+        tamanoInicial = getSize();
         setLocationRelativeTo(null);
 
     }
@@ -199,6 +204,7 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaRealizacionPedido.prepararPantalla(sesion, farmacia);
 
         // 2. Cambiar al card
+        pack();
         cardLayout.show(contentPanel, CARD_REALIZACION_PEDIDO);
     }
     
@@ -221,9 +227,18 @@ public class PantallaApp extends javax.swing.JFrame {
         cardLayout.show(contentPanel, card);
     }
     
+    public Dimension getTamanoInicial() {
+        return tamanoInicial;
+    }
+    
+    public void setTamanoInicial(Dimension tamanoInicial) {
+        this.tamanoInicial = tamanoInicial;
+    }
+    
     private javax.swing.JPanel wrap(javax.swing.JPanel p) {
         javax.swing.JPanel w = new javax.swing.JPanel(new java.awt.GridBagLayout());
-        w.setOpaque(false); // opcional, si quieres que herede el color de fondo
+        w.setBackground(new Color(248, 250, 252));  // ← COLOR en lugar de transparente
+        w.setOpaque(true);
         w.add(p);           // sin constraints: queda centrado
         return w;
     }
