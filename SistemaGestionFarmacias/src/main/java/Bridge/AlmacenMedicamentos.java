@@ -159,23 +159,32 @@ public class AlmacenMedicamentos {
     public void anadirMedicamento(Medicamento m) {
         if (m == null) return;
 
-        String tipo = m.getTipo();
-        String farmacia = m.getFarmacia();
+        String tipo = m.getTipo().trim().toUpperCase();
+        String farmacia = m.getFarmacia().trim().toLowerCase();
 
         boolean esMadrid = farmacia.contains("madrid");
         boolean esBarcelona = farmacia.contains("barcelona");
 
-        if (tipo.contains("analges")) {
-            if (esMadrid) anadirAnalgesicosMadrid(m);
-            else if (esBarcelona) anadirAnalgesicosBarcelona(m);
-        } else if (tipo.contains("antibi")) {
-            if (esMadrid) anadirAntibioticosMadrid(m);
-            else if (esBarcelona) anadirAntibioticosBarcelona(m);
-        } else if (tipo.contains("antiinfl")) {
-            if (esMadrid) anadirAntiinflamatoriosMadrid(m);
-            else if (esBarcelona) anadirAntiinflamatoriosBarcelona(m);
+        switch (tipo) {
+            case "ANALGESICO" -> {
+                if (esMadrid) anadirAnalgesicosMadrid(m);
+                else if (esBarcelona) anadirAnalgesicosBarcelona(m);
+            }
+            case "ANTIBIOTICO" -> {
+                if (esMadrid) anadirAntibioticosMadrid(m);
+                else if (esBarcelona) anadirAntibioticosBarcelona(m);
+            }
+            case "ANTIINFLAMATORIO" -> {
+                if (esMadrid) anadirAntiinflamatoriosMadrid(m);
+                else if (esBarcelona) anadirAntiinflamatoriosBarcelona(m);
+            }
+            default -> {
+                // opcional: log o excepción
+                System.out.println("Tipo desconocido: " + tipo);
+            }
         }
     }
+
     
     /**
      * Elimina un medicamento del almacén, sin importar su tipo o farmacia de procedencia.

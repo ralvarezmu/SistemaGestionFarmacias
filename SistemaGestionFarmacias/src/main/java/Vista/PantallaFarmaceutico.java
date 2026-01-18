@@ -23,6 +23,7 @@ public class PantallaFarmaceutico extends javax.swing.JPanel {
         btnLogout.addActionListener(e -> app.mostrarRol());
         btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_FARMA));
         btnAltaBajaFarmacos.addActionListener(e -> app.mostrarAltaBajaFarmacos());
+        btnModificacionFarmacos.addActionListener(e -> app.mostrarListaFarmacos());
     }
 
     public void setSesion(Sesion sesion) {

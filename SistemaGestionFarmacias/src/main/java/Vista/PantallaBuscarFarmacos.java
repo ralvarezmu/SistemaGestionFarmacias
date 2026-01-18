@@ -8,8 +8,12 @@ package Vista;
  *
  * @author claud
  */
+import AbstractFactory.Analgesico;
+import AbstractFactory.Antibiotico;
+import AbstractFactory.Antiinflamatorio;
 import AbstractFactory.Medicamento;
 import Strategy.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.DefaultListModel;
 
@@ -89,7 +93,7 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
 
         DefaultListModel<String> model = new DefaultListModel<>();
         for (Medicamento m : resultados) {
-            model.addElement(formatearMedicamento(m));
+            model.addElement(formatearCompleto(m));
         }
         listBusqueda.setModel(model);
     }
@@ -98,7 +102,7 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
         listBusqueda.setModel(new DefaultListModel<>());
     }
 
-    private String formatearMedicamento(Medicamento m) {
+    /*private String formatearMedicamento(Medicamento m) {
         if (m == null) return "(null)";
 
         // Con tus Strategy sabemos que existen:
@@ -110,7 +114,7 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
 
     private String safe(String s) {
         return (s == null) ? "-" : s;
-    }
+    }*/
 
     private String validarEntrada(String modo, String criterioRaw) {
         if (criterioRaw == null || criterioRaw.trim().isEmpty()) {
@@ -140,11 +144,40 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
                 .replace("á", "a").replace("é", "e").replace("í", "i")
                 .replace("ó", "o").replace("ú", "u");
     }
-    /**
-     * Creates new form PantallaBuscarFarmacos
-     */
-    public PantallaBuscarFarmacos() {
-        initComponents();
+
+    public static String formatearCompleto(Medicamento m) {
+        if (m == null) return "(null)";
+        
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Detalle específico según tipo
+        String detalle = "";
+        if (m instanceof Analgesico a) {
+            detalle = "nivelDolor=" + a.getNivelDolor();
+        } else if (m instanceof Antiinflamatorio ai) {
+            detalle = "zonaInflamacion=" + ai.getZonaInflamacion();
+        } else if (m instanceof Antibiotico ab) {
+            detalle = "bacteria=" + ab.getTipoBacteria();
+        } else {
+            detalle = "detalle=(n/a)";
+        }
+
+        String receta = m.isRecetaMedica() ? "Sí" : "No";
+        String fecha = (m.getFechaCaducidad() != null) ? m.getFechaCaducidad().format(f) : "(sin fecha)";
+
+        return String.format(
+            "ID=%s | Nombre=%s | Tipo=%s | %s | Desc=%s | Receta=%s | Precio=%.2f | Stock=%d | Cad=%s | Farmacia=%s",
+            m.getId(),
+            m.getNombre(),
+            m.getTipo(),
+            detalle,
+            m.getDescripcion(),
+            receta,
+            m.getPrecio(),
+            m.getStock(),
+            fecha,
+            m.getFarmacia()
+        );
     }
 
     /**

@@ -17,35 +17,45 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public class PantallaBajaFarmacos extends javax.swing.JPanel {
+public class PantallaListaFarmacos extends javax.swing.JPanel {
 
     private PantallaApp app;
 
-    // Modelo y array espejo para recuperar el Medicamento seleccionado
     private DefaultListModel<String> model = new DefaultListModel<>();
     private java.util.List<Medicamento> espejo = new java.util.ArrayList<>();
 
-    public PantallaBajaFarmacos(PantallaApp app) {
+    public PantallaListaFarmacos(PantallaApp app) {
         this.app = app;
         initComponents();
         configurarEventos();
-
-        // Vincular modelo al JList (CAMBIA jList1 por el nombre real de tu JList)
         listMedicamentos.setModel(model);
     }
 
     private void configurarEventos() {
-        btnVolver.addActionListener(e -> app.mostrarCard(PantallaApp.CARD_ALTA_BAJA));
-        btnBaja.addActionListener(e -> darDeBajaSeleccionado());
+        btnVolver.addActionListener(e -> app.mostrarCard(PantallaApp.CARD_FARMA));
+
+        btnModificar.addActionListener(e -> {
+            if (espejo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay medicamentos.");
+                return;
+            }
+
+            int idx = listMedicamentos.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this, "Selecciona un medicamento.");
+                return;
+            }
+
+            Medicamento seleccionado = espejo.get(idx);
+            app.mostrarModificacionFarmacos(seleccionado);
+        });
     }
 
-    /** Llamar cuando entras a esta pantalla */
     public void cargarMedicamentos() {
         model.clear();
         espejo.clear();
 
         var meds = AlmacenMedicamentos.getInstancia().getTodosLosMedicamentos();
-
         if (meds == null || meds.isEmpty()) {
             model.addElement("(No hay medicamentos)");
             listMedicamentos.setEnabled(false);
@@ -60,47 +70,11 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
         }
     }
 
-    private void darDeBajaSeleccionado() {
-        if (espejo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay medicamentos para dar de baja.");
-            return;
-        }
-
-        int idx = listMedicamentos.getSelectedIndex();
-        if (idx < 0) {
-            JOptionPane.showMessageDialog(this, "Selecciona un medicamento de la lista.");
-            return;
-        }
-
-        Medicamento seleccionado = espejo.get(idx);
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Seguro que quieres dar de baja:\n" + formatearCompleto(seleccionado) + "?",
-                "Confirmar baja",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) return;
-
-        boolean ok = AlmacenMedicamentos.getInstancia().eliminarMedicamento(seleccionado);
-
-        if (!ok) {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar (puede que ya no exista).");
-        } else {
-            JOptionPane.showMessageDialog(this, "Medicamento dado de baja correctamente.");
-        }
-
-        // refrescar lista
-        cargarMedicamentos();
-    }
-
     /*private String formatear(Medicamento m) {
-        if (m == null) return "(null)";
         return m.getId() + " | " + m.getNombre() + " | " + m.getTipo() + " | " + m.getFarmacia();
     }*/
     
-    public static String formatearCompleto(Medicamento m) {
+        public static String formatearCompleto(Medicamento m) {
         if (m == null) return "(null)";
         
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -134,7 +108,6 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
             m.getFarmacia()
         );
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,82 +120,67 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
 
         lblTitle = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnBaja = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listMedicamentos = new javax.swing.JList<>();
+        btnModificar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(16, 86, 148));
-        lblTitle.setText("Baja de fármacos");
+        lblTitle.setText("Lista de fármacos");
 
-        btnBaja.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnBaja.setText("Dar de baja");
-        btnBaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBajaActionPerformed(evt);
-            }
-        });
-
+        listMedicamentos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jScrollPane1.setViewportView(listMedicamentos);
 
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnModificar.setText("Modificar");
+
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnVolver.setText("Atrás");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
+        btnVolver.setText("Volver al menú");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(83, 83, 83))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnVolver)))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBaja)
+                    .addComponent(btnModificar)
                     .addComponent(btnVolver))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBajaActionPerformed
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVolverActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBaja;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

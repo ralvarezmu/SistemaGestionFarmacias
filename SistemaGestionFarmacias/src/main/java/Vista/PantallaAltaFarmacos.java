@@ -14,10 +14,10 @@ import AbstractFactory.Medicamento;
 import AbstractFactory.MedicamentoFactory;
 import Bridge.AlmacenMedicamentos;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class PantallaAltaFarmacos extends javax.swing.JPanel {
 
@@ -103,7 +103,9 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         // 4) Parseos
         double precio = Double.parseDouble(precioTxt);
         int stock = Integer.parseInt(stockTxt);
-        LocalDate caducidad = LocalDate.parse(fechaTxt); // YYYY-MM-DD
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate caducidad = LocalDate.parse(fechaTxt, formatter);
+
 
         // 5) Elegir factoría según farmacia
         MedicamentoFactory factory = RadioButtonMadrid.isSelected()
@@ -173,10 +175,12 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         }
 
         try {
-            LocalDate.parse(fechaTxt); // YYYY-MM-DD
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate.parse(fechaTxt, formatter);
         } catch (Exception e) {
-            return "Fecha inválida. Formato: YYYY-MM-DD (ej: 2027-06-15).";
+            return "Fecha inválida. Formato: DD/MM/YYYY (ej: 15/06/2027).";
         }
+
 
         return null;
     }
