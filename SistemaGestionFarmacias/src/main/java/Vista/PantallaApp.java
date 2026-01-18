@@ -41,6 +41,9 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaListaFarmacos pantallaListaFarmacos;
     private PantallaModificacionFarmacos pantallaModificacionFarmacos;
     private PantallaAltaBajaClientes pantallaAltaBajaClientes;
+    private PantallaAltaBajaFarmaceuticos pantallaAltaBajaFarmaceuticos;
+    private PantallaStock pantallaStock;
+    private PantallaGestionarPedidosCliente pantallaGestionarPedidosCliente;
 
     // Nombres de cartas
     public static final String CARD_ROL = "ROL";
@@ -59,9 +62,12 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_LISTA_FARMACOS = "LISTA_FARMACOS";
     public static final String CARD_MODIFICACION_FARMACOS = "MODIFICACION_FARMACOS";
     public static final String CARD_ALTABAJA_CLIENTES = "ALTABAJA_CLIENTES";
+    public static final String CARD_ALTABAJA_FARMACEUTICOS = "ALTABAJA_FARMACEUTICOS";
+    public static final String CARD_CONSULTA_STOCK = "CONSULTA_STOCK";
+    public static final String CARD_GESTIONAR_PEDIDOS = "GESTIONAR_PEDIDOS";
 
     private Dimension tamanoInicial;
-
+    private PedidoService pedidoService;
     public PantallaApp() {
         initComponents();
         this.getContentPane().setBackground(new Color(248, 250, 252));
@@ -76,7 +82,7 @@ public class PantallaApp extends javax.swing.JFrame {
         RepositorioUsuarios repo = new RepositorioUsuarios();
         ServicioLogin real = new ServicioLoginReal(repo);
         loginService = new ServicioLoginProxy(real);
-        PedidoService pedidoService = new PedidoService();
+        pedidoService = new PedidoService();
         // CardLayout
         cardLayout = (CardLayout) contentPanel.getLayout();
 
@@ -97,6 +103,9 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaListaFarmacos = new PantallaListaFarmacos(this);
         pantallaModificacionFarmacos = new PantallaModificacionFarmacos(this);
         pantallaAltaBajaClientes = new PantallaAltaBajaClientes(this, repo);
+        pantallaAltaBajaFarmaceuticos = new PantallaAltaBajaFarmaceuticos(this, repo);
+        pantallaStock = new PantallaStock(this);
+        pantallaGestionarPedidosCliente = new PantallaGestionarPedidosCliente(this);
 
         // Añadir al CardLayout
         contentPanel.add(wrap(pantallaRol), CARD_ROL);
@@ -115,6 +124,9 @@ public class PantallaApp extends javax.swing.JFrame {
         contentPanel.add(wrap(pantallaListaFarmacos), CARD_LISTA_FARMACOS);
         contentPanel.add(wrap(pantallaModificacionFarmacos), CARD_MODIFICACION_FARMACOS);
         contentPanel.add(wrap(pantallaAltaBajaClientes), CARD_ALTABAJA_CLIENTES);
+        contentPanel.add(wrap(pantallaAltaBajaFarmaceuticos),CARD_ALTABAJA_FARMACEUTICOS);
+        contentPanel.add(wrap(pantallaStock),CARD_CONSULTA_STOCK);
+        contentPanel.add(wrap(pantallaGestionarPedidosCliente),CARD_GESTIONAR_PEDIDOS);
 
         // Mostrar primero la selección de rol
         mostrarRol();
@@ -196,7 +208,19 @@ public class PantallaApp extends javax.swing.JFrame {
     public void mostrarAltaBajaClientes() {
         cardLayout.show(contentPanel, CARD_ALTABAJA_CLIENTES);
     }
-
+    
+    public void mostrarAltaBajaFarmaceuticos(){
+        cardLayout.show(contentPanel, CARD_ALTABAJA_FARMACEUTICOS);
+    }
+    
+    public void mostrarConsultaStock(){
+        cardLayout.show(contentPanel,CARD_CONSULTA_STOCK);
+    }
+    
+    public void mostrarGestionarPedidos(Sesion sesion){
+        pantallaGestionarPedidosCliente.prepararPantalla(sesion, pedidoService, CARD_CLIENTE);
+        cardLayout.show(contentPanel,CARD_GESTIONAR_PEDIDOS);
+    }
     public void mostrarCard(String card) {
         cardLayout.show(contentPanel, card);
     }

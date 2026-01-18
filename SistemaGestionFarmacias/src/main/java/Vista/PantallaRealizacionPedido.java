@@ -494,6 +494,7 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
             // Según la opción elegida
             if (opcion == javax.swing.JOptionPane.YES_OPTION) {
                 servicioPedido.confirmarPedido();
+                invoker.ejecutar(realizarpedido);
                 app.setSize(app.getTamanoInicial());
                 app.mostrarCliente(sesion);
             } else if (opcion == javax.swing.JOptionPane.NO_OPTION) {

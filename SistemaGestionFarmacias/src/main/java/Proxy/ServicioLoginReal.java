@@ -4,6 +4,8 @@
  */
 package Proxy;
 
+import Builder.Cliente;
+
 /**
  *
  * @author claud
@@ -62,8 +64,8 @@ public class ServicioLoginReal implements ServicioLogin,ServicioRegistro {
      * @throws RuntimeException Si las validaciones del repositorio fallan.
      */
     @Override
-    public void registrarCliente(String usuario, String password, String nombre) {
-        repo.registrarCliente(usuario, password, nombre);
+    public void registrarCliente(Cliente cliente) {
+        repo.registrarCliente(cliente);
     }
 }
 

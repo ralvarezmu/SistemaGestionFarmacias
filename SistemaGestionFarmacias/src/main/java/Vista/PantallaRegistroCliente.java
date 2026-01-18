@@ -187,10 +187,8 @@ public class PantallaRegistroCliente extends javax.swing.JPanel {
                     password,
                     direccion
             );
-
-            // 3) Guardar en el MISMO repositorio que usa el login
-            // Clave del login = nombre (username)
-            repoUsuarios.registrarCliente(nombre, password, nombre);
+            
+            repoUsuarios.registrarCliente(cliente);
 
             javax.swing.JOptionPane.showMessageDialog(
                     this,

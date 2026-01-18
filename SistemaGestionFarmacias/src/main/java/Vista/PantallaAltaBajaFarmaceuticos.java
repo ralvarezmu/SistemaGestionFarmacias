@@ -4,7 +4,8 @@
  */
 package Vista;
 import Builder.Cliente;
-import Builder.ClienteBuilder;
+import Builder.Farmaceutico;
+import Builder.FarmaceuticoBuilder;
 import Builder.UsuarioDirector;
 import Proxy.RepositorioUsuarios;
 import Proxy.ServicioLogin;
@@ -15,47 +16,47 @@ import javax.swing.JOptionPane;
  *
  * @author sete
  */
-public class PantallaAltaBajaClientes extends javax.swing.JPanel {
+public class PantallaAltaBajaFarmaceuticos extends javax.swing.JPanel {
     private PantallaApp app;
     private UsuarioDirector director;
-    private ClienteBuilder clienteBuilder;
+    private FarmaceuticoBuilder farmaceuticoBuilder;
     private ServicioLogin loginService;
     private final RepositorioUsuarios repoUsuarios;
-    private DefaultListModel<String> modeloClientes;
+    private DefaultListModel<String> modeloFarmaceuticos;
 
-    public PantallaAltaBajaClientes(PantallaApp app,RepositorioUsuarios repoUsuarios) {
+    public PantallaAltaBajaFarmaceuticos(PantallaApp app,RepositorioUsuarios repoUsuarios) {
         initComponents();              
         this.app = app;
         this.repoUsuarios = repoUsuarios;
 
         director = new UsuarioDirector();
-        clienteBuilder = new ClienteBuilder();
+        farmaceuticoBuilder = new FarmaceuticoBuilder();
 
-        modeloClientes = new DefaultListModel<>();
-        jClientes.setModel(modeloClientes);
+        modeloFarmaceuticos = new DefaultListModel<>();
+        jFarmaceuticos.setModel(modeloFarmaceuticos);
       
-        cargarClientes();
+        cargarFarmaceuticos();
        
-        jBaja.addActionListener(e -> darDeBajaCliente());
+        jBaja.addActionListener(e -> darDeBajaFarmaceutico());
     }
     
-    private void cargarClientes() {
-        modeloClientes.clear();
+    private void cargarFarmaceuticos() {
+        modeloFarmaceuticos.clear();
 
-        List<String> clientes = repoUsuarios.getUsernamesClientes();
+        List<String> clientes = repoUsuarios.getUsernamesFarmaceuticos();
 
         for (String c : clientes) {
-            modeloClientes.addElement(c);
+            modeloFarmaceuticos.addElement(c);
         }
     }
 
-    private void darDeBajaCliente() {
-        String seleccionado = jClientes.getSelectedValue();
+    private void darDeBajaFarmaceutico() {
+        String seleccionado = jFarmaceuticos.getSelectedValue();
 
         if (seleccionado == null) {
             JOptionPane.showMessageDialog(
                 this,
-                "Selecciona un cliente primero.",
+                "Selecciona un farmaceutico primero.",
                 "Aviso",
                 JOptionPane.WARNING_MESSAGE
             );
@@ -64,7 +65,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
 
         int opcion = JOptionPane.showConfirmDialog(
             this,
-            "¿Dar de baja al cliente '" + seleccionado + "'?",
+            "¿Dar de baja al farmaceutico '" + seleccionado + "'?",
             "Confirmar baja",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
@@ -73,17 +74,17 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         if (opcion != JOptionPane.YES_OPTION) return;
 
         try {
-            repoUsuarios.eliminarCliente(seleccionado);
+            repoUsuarios.eliminarFarmaceutico(seleccionado);
 
             JOptionPane.showMessageDialog(
                 this,
-                "✅ Cliente dado de baja correctamente.",
+                "✅ Farmaceutico dado de baja correctamente.",
                 "OK",
                 JOptionPane.INFORMATION_MESSAGE
             );
 
             // Refrescar lista
-            cargarClientes();
+            cargarFarmaceuticos();
 
         } catch (RuntimeException ex) {
             JOptionPane.showMessageDialog(
@@ -105,12 +106,12 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jClientes = new javax.swing.JList<>();
+        jFarmaceuticos = new javax.swing.JList<>();
         jBaja = new javax.swing.JButton();
         lblPassword1 = new javax.swing.JLabel();
         lblPassword2 = new javax.swing.JLabel();
         jPass = new javax.swing.JPasswordField();
-        txtDir = new javax.swing.JTextField();
+        txtidFarmacia = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         lblUser = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -121,7 +122,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(248, 250, 252));
 
-        jScrollPane1.setViewportView(jClientes);
+        jScrollPane1.setViewportView(jFarmaceuticos);
 
         jBaja.setText("Dar de Baja");
 
@@ -129,9 +130,9 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         lblPassword1.setText("Contraseña:");
 
         lblPassword2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblPassword2.setText("Direccion:");
+        lblPassword2.setText("idFarmacia:");
 
-        txtDir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtidFarmacia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -145,7 +146,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
 
         btnRegistrarse.setBackground(new java.awt.Color(240, 245, 255));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnRegistrarse.setText("Registrar Cliente");
+        btnRegistrarse.setText("Registrar Farmaceutico");
         btnRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegistrarseMouseClicked(evt);
@@ -179,7 +180,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jPass, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtidFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblUser)
@@ -222,7 +223,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPassword2)
-                            .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtidFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPassword1)
@@ -236,69 +237,51 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarseMouseClicked
-        String nombre = txtName.getText().trim();              // username
-        String email = txtEmail.getText().trim();              // dato extra
-        String direccion = txtDir.getText().trim();            // dato extra
+        String nombre = txtName.getText().trim();  
+        String email = txtEmail.getText().trim();
+        String idFarmacia = txtidFarmacia.getText().trim();  
         String password = new String(jPass.getPassword()).trim();
 
-        // 1) Validación: todos rellenos
-        if (nombre.isEmpty() || email.isEmpty() || direccion.isEmpty() || password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(
+        if (nombre.isEmpty() || email.isEmpty() || idFarmacia.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(
                 this,
                 "❌ Todos los campos son obligatorios",
-                "Error de registro",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+                "Error",
+                JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
         try {
-            // 2) Construcción con Builder + Director
-        Cliente cliente = director.constructCliente(
-            clienteBuilder,
-            nombre,
-            email,
-            password,
-            direccion
-        );
-
-        // 3) Guardar en el MISMO repositorio que usa el login
-        // Clave del login = nombre (username)
-        repoUsuarios.registrarCliente(cliente);
-        cargarClientes();
-        javax.swing.JOptionPane.showMessageDialog(
-            this,
-            "✅ Cliente registrado correctamente.\nInicia sesión con:\nUsuario: " + nombre,
-            "Registro completado",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
-
-        // 4) Limpiar campos
-        txtName.setText("");
-        txtEmail.setText("");
-        txtDir.setText("");
-        jPass.setText("");
-
-        } catch (IllegalStateException ex) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "⚠️ Error en los datos: " + ex.getMessage(),
-                "Error de validación",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+            Farmaceutico farmaceutico = (Farmaceutico) director.constructFarmaceutico(
+                farmaceuticoBuilder,
+                nombre,
+                email,
+                password,
+                idFarmacia
             );
-        } catch (RuntimeException ex) {
-            javax.swing.JOptionPane.showMessageDialog(
+
+            repoUsuarios.registrarFarmaceutico(farmaceutico);
+            cargarFarmaceuticos();
+
+            JOptionPane.showMessageDialog(
                 this,
-                "❌ No se pudo registrar: " + ex.getMessage(),
-                "Error de registro",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+                "✅ Farmacéutico registrado correctamente",
+                "Registro completado",
+                JOptionPane.INFORMATION_MESSAGE
             );
+
+            txtName.setText("");
+            txtEmail.setText("");
+            txtidFarmacia.setText("");
+            jPass.setText("");
+
         } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                 this,
-                "❌ Error inesperado al registrar",
+                ex.getMessage(),
                 "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+                JOptionPane.ERROR_MESSAGE
             );
         }
     }//GEN-LAST:event_btnRegistrarseMouseClicked
@@ -307,7 +290,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarse;
     private javax.swing.JButton jBaja;
-    private javax.swing.JList<String> jClientes;
+    private javax.swing.JList<String> jFarmaceuticos;
     private javax.swing.JPasswordField jPass;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblPassword;
@@ -316,8 +299,8 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JTextField txtDir;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtidFarmacia;
     // End of variables declaration//GEN-END:variables
 }

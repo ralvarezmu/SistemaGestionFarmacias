@@ -23,7 +23,8 @@ public class PantallaCliente extends javax.swing.JPanel {
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
         btnBuscarFarmacos.addActionListener(e -> app.mostrarBuscarFarmacos(PantallaApp.CARD_CLIENTE));
-        btnRealizarPedido1.addActionListener(e -> app.mostrarEleccionFarmacia(sesion));
+        btnRealizarPedido.addActionListener(e -> app.mostrarEleccionFarmacia(sesion));
+        btnGestionarPedidos.addActionListener(e -> app.mostrarGestionarPedidos(sesion));
     }
 
     public void setSesion(Sesion sesion) {
@@ -48,8 +49,9 @@ public class PantallaCliente extends javax.swing.JPanel {
         lblInfo = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnRealizarPedido1 = new javax.swing.JButton();
+        btnGestionarPedidos = new javax.swing.JButton();
         btnBuscarFarmacos = new javax.swing.JButton();
+        btnRealizarPedido = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(248, 250, 252));
 
@@ -67,12 +69,12 @@ public class PantallaCliente extends javax.swing.JPanel {
             }
         });
 
-        btnRealizarPedido1.setBackground(new java.awt.Color(240, 245, 255));
-        btnRealizarPedido1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnRealizarPedido1.setText("Realizar pedido");
-        btnRealizarPedido1.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionarPedidos.setBackground(new java.awt.Color(240, 245, 255));
+        btnGestionarPedidos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnGestionarPedidos.setText("Gestionar Pedidos");
+        btnGestionarPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRealizarPedido1ActionPerformed(evt);
+                btnGestionarPedidosActionPerformed(evt);
             }
         });
 
@@ -85,14 +87,19 @@ public class PantallaCliente extends javax.swing.JPanel {
             }
         });
 
+        btnRealizarPedido.setBackground(new java.awt.Color(240, 245, 255));
+        btnRealizarPedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRealizarPedido.setText("Realizar pedido");
+        btnRealizarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarPedidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(177, 177, 177))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -101,14 +108,20 @@ public class PantallaCliente extends javax.swing.JPanel {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBuscarFarmacos, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                            .addComponent(btnRealizarPedido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(239, 239, 239)
+                        .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(241, 241, 241)
-                        .addComponent(btnLogout)))
+                        .addGap(218, 218, 218)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnGestionarPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnBuscarFarmacos, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                                .addComponent(btnRealizarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(10, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(177, 177, 177))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,10 +135,12 @@ public class PantallaCliente extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarFarmacos)
                 .addGap(18, 18, 18)
-                .addComponent(btnRealizarPedido1)
+                .addComponent(btnRealizarPedido)
                 .addGap(18, 18, 18)
+                .addComponent(btnGestionarPedidos)
+                .addGap(40, 40, 40)
                 .addComponent(btnLogout)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -133,19 +148,24 @@ public class PantallaCliente extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void btnRealizarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedido1ActionPerformed
+    private void btnGestionarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarPedidosActionPerformed
         
-    }//GEN-LAST:event_btnRealizarPedido1ActionPerformed
+    }//GEN-LAST:event_btnGestionarPedidosActionPerformed
 
     private void btnBuscarFarmacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFarmacosActionPerformed
 
     }//GEN-LAST:event_btnBuscarFarmacosActionPerformed
 
+    private void btnRealizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRealizarPedidoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarFarmacos;
+    private javax.swing.JButton btnGestionarPedidos;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnRealizarPedido1;
+    private javax.swing.JButton btnRealizarPedido;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblTitle;

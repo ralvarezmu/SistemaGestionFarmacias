@@ -8,6 +8,8 @@ package Proxy;
  *
  * @author claud
  */
+import Builder.Cliente;
+import Builder.Farmaceutico;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,25 +106,25 @@ public class RepositorioUsuarios {
      * @param nombreMostrado Nombre completo que se mostrará.
      * @throws RuntimeException Si faltan datos obligatorios o el usuario ya existe.
      */
-    public void registrarCliente(String usuario, String password, String nombreMostrado) {
+    public void registrarCliente(Cliente cliente) {
 
-        if (usuario == null || usuario.trim().isEmpty())
+        if (cliente.getNombre()== null || cliente.getNombre().trim().isEmpty())
             throw new RuntimeException("Usuario vacío.");
 
-        if (password == null || password.trim().isEmpty())
+        if (cliente.getPassword() == null || cliente.getPassword().trim().isEmpty())
             throw new RuntimeException("Contraseña vacía.");
 
-        if (nombreMostrado == null || nombreMostrado.trim().isEmpty())
+        if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty())
             throw new RuntimeException("Nombre vacío.");
 
-        String key = usuario.trim();
+        String key = cliente.getNombre().trim();
 
         if (usuarios.containsKey(key)) {
             throw new RuntimeException("Ese usuario ya existe.");
         }
 
         String id = generarNuevoIdCliente();
-        usuarios.put(key, new UsuarioRecord(password, "CLIENTE", id, nombreMostrado));
+        usuarios.put(key, new UsuarioRecord(cliente.getPassword(), "CLIENTE", id, cliente.getNombre()));
     }
 
     /**
@@ -186,5 +188,99 @@ public class RepositorioUsuarios {
         usuarios.remove(username);
     }
     
+    /**
+    * Registra un nuevo farmacéutico en el sistema.
+    *
+    * Valida que no falten datos y que no exista ya el usuario.
+    * Genera automáticamente un ID secuencial del tipo "F-###".
+    *
+    * @param farmaceutico Farmaceutico construido por Builder.
+    */
+   public void registrarFarmaceutico(Farmaceutico farmaceutico) {
+
+       if (farmaceutico == null)
+           throw new RuntimeException("Farmacéutico nulo.");
+
+       // En tu repo estás usando getNombre() como "username"
+       if (farmaceutico.getNombre() == null || farmaceutico.getNombre().trim().isEmpty())
+           throw new RuntimeException("Usuario vacío.");
+
+       if (farmaceutico.getPassword() == null || farmaceutico.getPassword().trim().isEmpty())
+           throw new RuntimeException("Contraseña vacía.");
+
+       if (farmaceutico.getEmail() == null || farmaceutico.getEmail().trim().isEmpty())
+           throw new RuntimeException("Email vacío.");
+
+       if (farmaceutico.getIdFarmacia() == null || farmaceutico.getIdFarmacia().trim().isEmpty())
+           throw new RuntimeException("El farmacéutico debe estar asociado a una farmacia.");
+
+       String key = farmaceutico.getNombre().trim();
+
+       if (usuarios.containsKey(key)) {
+           throw new RuntimeException("Ese usuario ya existe.");
+       }
+
+       String id = generarNuevoIdFarmaceutico();
+
+       // En tu UsuarioRecord guardas: password, rol, id, nombreMostrado
+       usuarios.put(key, new UsuarioRecord(
+           farmaceutico.getPassword(),
+           "FARMACEUTICO",
+           id,
+           farmaceutico.getNombre()
+       ));
+   }
+
+   /**
+    * Genera un nuevo ID secuencial para farmacéuticos del formato "F-###".
+    */
+   private String generarNuevoIdFarmaceutico() {
+       int max = 0;
+       for (UsuarioRecord r : usuarios.values()) {
+           if ("FARMACEUTICO".equalsIgnoreCase(r.getRol()) && r.getId().startsWith("F-")) {
+               try {
+                   int n = Integer.parseInt(r.getId().substring(2));
+                   if (n > max) max = n;
+               } catch (NumberFormatException ignored) {}
+           }
+       }
+       return String.format("F-%03d", max + 1);
+   }
+   
+   /**
+     * Recogemos el nombre de todos los usuarios.
+     * 
+     * Nos devuelve una lista de todos los farmaceuticos.
+     *
+     * @return Lista de clientes.
+     */
+   public List<String> getUsernamesFarmaceuticos() {
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, UsuarioRecord> e : usuarios.entrySet()) {
+            if ("FARMACEUTICO".equalsIgnoreCase(e.getValue().getRol())) {
+                res.add(e.getKey());
+            }
+        }
+        res.sort(String::compareToIgnoreCase);
+        return res;
+    }
+   
+    /**
+     * Eliminacion de un farmaceutico por su nombre.
+     * 
+     * @param username nombre de usuario que eliminar
+     *
+     */
+    public void eliminarFarmaceutico(String username) {
+        UsuarioRecord r = usuarios.get(username);
+
+        if (r == null)
+            throw new RuntimeException("El farmacéutico no existe.");
+
+        if (!"FARMACEUTICO".equalsIgnoreCase(r.getRol()))
+            throw new RuntimeException("Solo se pueden eliminar farmacéuticos.");
+
+        usuarios.remove(username);
+    }
 }
 

@@ -27,6 +27,8 @@ public class PantallaAdmin extends javax.swing.JPanel {
     private void configurarEventos() {
         btnLogout.addActionListener(e -> app.mostrarRol());
         btnAltaClientes.addActionListener(e -> app.mostrarAltaBajaClientes());
+        btnAltaFarmaceuticos.addActionListener(e -> app.mostrarAltaBajaFarmaceuticos());
+        btnConsultaStock.addActionListener(e -> app.mostrarConsultaStock());
     }
 
     public void setSesion(Sesion sesion) {

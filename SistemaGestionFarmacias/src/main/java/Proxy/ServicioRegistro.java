@@ -4,6 +4,8 @@
  */
 package Proxy;
 
+import Builder.Cliente;
+
 /**
  *
  * @author sete
@@ -18,10 +20,8 @@ public interface ServicioRegistro {
      *   Que el nombre de usuario no esté ya registrado
      *   Generar un ID único para el cliente
      *
-     * @param usuario  Nombre de usuario único para el nuevo cliente.
-     * @param password Contraseña para el nuevo cliente.
-     * @param nombre   Nombre completo del cliente (nombre mostrado).
+     * @param Cliente cliente
      * @throws RuntimeException Si faltan datos obligatorios o el usuario ya existe.
      */
-    void registrarCliente(String usuario, String password, String nombre);
+    void registrarCliente(Cliente cliente);
 }
