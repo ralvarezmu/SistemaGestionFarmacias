@@ -48,7 +48,6 @@ public class PantallaCliente extends javax.swing.JPanel {
         lblInfo = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnGestionarPedidos = new javax.swing.JButton();
         btnRealizarPedido1 = new javax.swing.JButton();
         btnBuscarFarmacos = new javax.swing.JButton();
 
@@ -63,15 +62,6 @@ public class PantallaCliente extends javax.swing.JPanel {
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogoutActionPerformed(evt);
-            }
-        });
-
-        btnGestionarPedidos.setBackground(new java.awt.Color(240, 245, 255));
-        btnGestionarPedidos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnGestionarPedidos.setText("Gestionar pedidos");
-        btnGestionarPedidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionarPedidosActionPerformed(evt);
             }
         });
 
@@ -111,11 +101,10 @@ public class PantallaCliente extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(218, 218, 218)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBuscarFarmacos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGestionarPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscarFarmacos, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                             .addComponent(btnRealizarPedido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
+                        .addGap(241, 241, 241)
                         .addComponent(btnLogout)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
@@ -130,23 +119,17 @@ public class PantallaCliente extends javax.swing.JPanel {
                 .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarFarmacos)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(btnRealizarPedido1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(btnGestionarPedidos)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogout)
-                .addGap(33, 33, 33))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
-
-    private void btnGestionarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarPedidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGestionarPedidosActionPerformed
 
     private void btnRealizarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedido1ActionPerformed
         
@@ -159,7 +142,6 @@ public class PantallaCliente extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarFarmacos;
-    private javax.swing.JButton btnGestionarPedidos;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnRealizarPedido1;
     private javax.swing.JSeparator jSeparator1;

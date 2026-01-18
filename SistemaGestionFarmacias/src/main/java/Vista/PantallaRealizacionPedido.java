@@ -45,12 +45,12 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
     /**
      * Creates new form PantallaRealizacionPedido
      */
-    public PantallaRealizacionPedido(PantallaApp app) {
+    public PantallaRealizacionPedido(PantallaApp app, PedidoService pedidoService) {
         initComponents();
         this.app = app;
         almacen = AlmacenMedicamentos.getInstancia();
         jList4.setModel(modeloCarrito);
-        
+        this.pedidoService = pedidoService;
         this.mostrador = new MostradorMedicamentosAbst();
         
     }
@@ -68,7 +68,6 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
         this.servicioPedido = new ServicioPedido();
         servicioPedido.crearPedido(cliente);
         this.pedido = servicioPedido.getPedido();
-        this.pedidoService = new PedidoService();
         this.invoker = new PedidoInvoker();
         this.realizarpedido = new RealizarPedidoCommand(pedidoService, pedido); 
 
@@ -510,16 +509,22 @@ public class PantallaRealizacionPedido extends javax.swing.JPanel {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int opcion = JOptionPane.showConfirmDialog(
             this,
-            "¿Quieres cancelar/deshacer el último pedido confirmado?",
+            "¿Quieres cancelar el pedido y volver atrás?",
             "Cancelar pedido",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
         );
 
-        if (opcion == JOptionPane.YES_OPTION) {
-            invoker.deshacerUltimo();           // ✅ undo (cancel del último command)
-            app.mostrarCliente(sesion);
+        if (opcion != JOptionPane.YES_OPTION) return;
+
+        // 1) Si se llegó a confirmar por Command, deshacer
+        // (si no hay "ultimo", no pasa nada; tu invoker ya lo controla)
+        if (invoker != null) {
+            invoker.deshacerUltimo();
         }
+
+        // 2) Volver a la pestaña anterior (elección de farmacia)
+        app.mostrarCard(PantallaApp.CARD_ELECCION_FARMACIA);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     

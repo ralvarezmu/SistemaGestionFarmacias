@@ -7,6 +7,7 @@ package Vista;
 import Proxy.*;
 import Bridge.AlmacenMedicamentos;
 import AbstractFactory.Medicamento;
+import Command.PedidoService;
 import java.awt.CardLayout;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class PantallaApp extends javax.swing.JFrame {
         RepositorioUsuarios repo = new RepositorioUsuarios();
         ServicioLogin real = new ServicioLoginReal(repo);
         loginService = new ServicioLoginProxy(real);
-
+        PedidoService pedidoService = new PedidoService();
         // 2) CardLayout
         cardLayout = (CardLayout) contentPanel.getLayout();
         
@@ -78,7 +79,7 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaAltaFarmacos = new PantallaAltaFarmacos(this);
         pantallaBajaFarmacos = new PantallaBajaFarmacos(this);
         pantallaEleccionFarmacia = new PantallaEleccionFarmacia(this);
-        pantallaRealizacionPedido = new PantallaRealizacionPedido(this);
+        pantallaRealizacionPedido = new PantallaRealizacionPedido(this,pedidoService);
         
 
         // 4) Añadir al CardLayout
