@@ -31,7 +31,7 @@ public class PantallaApp extends javax.swing.JFrame {
     private PantallaRegistroCliente pantallaRegistroCliente;
     private PantallaCliente pantallaCliente;
     private PantallaFarmaceutico pantallaFarmaceutico;
-    private PantallaAdmin pantallaAdmin;    
+    private PantallaAdmin pantallaAdmin;
     private PantallaBuscarFarmacos pantallaBuscarFarmacos;
     private PantallaAltaBajaFarmacos pantallaAltaBajaFarmacos;
     private PantallaAltaFarmacos pantallaAltaFarmacos;
@@ -61,7 +61,7 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_ALTABAJA_CLIENTES = "ALTABAJA_CLIENTES";
 
     private Dimension tamanoInicial;
-    
+
     public PantallaApp() {
         initComponents();
         this.getContentPane().setBackground(new Color(248, 250, 252));
@@ -69,44 +69,40 @@ public class PantallaApp extends javax.swing.JFrame {
         pack();
         tamanoInicial = getSize();
         setLocationRelativeTo(null);
-
     }
 
     private void initApp() {
-        // 1) Servicio real + proxy
+        // Servicio real + proxy
         RepositorioUsuarios repo = new RepositorioUsuarios();
         ServicioLogin real = new ServicioLoginReal(repo);
         loginService = new ServicioLoginProxy(real);
         PedidoService pedidoService = new PedidoService();
-        // 2) CardLayout
+        // CardLayout
         cardLayout = (CardLayout) contentPanel.getLayout();
-        
-        // 3) Crear pantallas
+
+        // Crear pantallas
         pantallaRol = new PantallaRol(this);
         pantallaInicioCliente = new PantallaInicioCliente(this);
         pantallaLogin = new PantallaLogin(this, loginService);
-        pantallaRegistroCliente = new PantallaRegistroCliente(this,repo);
+        pantallaRegistroCliente = new PantallaRegistroCliente(this, repo);
         pantallaCliente = new PantallaCliente(this);
         pantallaFarmaceutico = new PantallaFarmaceutico(this);
-        pantallaAdmin = new PantallaAdmin(this);   
+        pantallaAdmin = new PantallaAdmin(this);
         pantallaBuscarFarmacos = new PantallaBuscarFarmacos(this);
         pantallaAltaBajaFarmacos = new PantallaAltaBajaFarmacos(this);
         pantallaAltaFarmacos = new PantallaAltaFarmacos(this);
         pantallaBajaFarmacos = new PantallaBajaFarmacos(this);
         pantallaEleccionFarmacia = new PantallaEleccionFarmacia(this);
-        pantallaRealizacionPedido = new PantallaRealizacionPedido(this,pedidoService);
+        pantallaRealizacionPedido = new PantallaRealizacionPedido(this, pedidoService);
         pantallaListaFarmacos = new PantallaListaFarmacos(this);
         pantallaModificacionFarmacos = new PantallaModificacionFarmacos(this);
         pantallaAltaBajaClientes = new PantallaAltaBajaClientes(this, repo);
 
-        
-
-        // 4) Añadir al CardLayout
+        // Añadir al CardLayout
         contentPanel.add(wrap(pantallaRol), CARD_ROL);
         contentPanel.add(wrap(pantallaInicioCliente), CARD_INICIO_CLIENTE);
         contentPanel.add(wrap(pantallaLogin), CARD_LOGIN);
         contentPanel.add(wrap(pantallaRegistroCliente), CARD_REGISTRO_CLIENTE);
-
         contentPanel.add(wrap(pantallaCliente), CARD_CLIENTE);
         contentPanel.add(wrap(pantallaFarmaceutico), CARD_FARMA);
         contentPanel.add(wrap(pantallaAdmin), CARD_ADMIN);
@@ -114,24 +110,17 @@ public class PantallaApp extends javax.swing.JFrame {
         contentPanel.add(wrap(pantallaAltaBajaFarmacos), CARD_ALTA_BAJA);
         contentPanel.add(wrap(pantallaAltaFarmacos), CARD_ALTA_FARMACOS);
         contentPanel.add(wrap(pantallaBajaFarmacos), CARD_BAJA_FARMACOS);
-        
         contentPanel.add(wrap(pantallaEleccionFarmacia), CARD_ELECCION_FARMACIA);
         contentPanel.add(wrap(pantallaRealizacionPedido), CARD_REALIZACION_PEDIDO);
-        
         contentPanel.add(wrap(pantallaListaFarmacos), CARD_LISTA_FARMACOS);
         contentPanel.add(wrap(pantallaModificacionFarmacos), CARD_MODIFICACION_FARMACOS);
-        contentPanel.add(wrap(pantallaAltaBajaClientes),CARD_ALTABAJA_CLIENTES);
+        contentPanel.add(wrap(pantallaAltaBajaClientes), CARD_ALTABAJA_CLIENTES);
 
-        // 5) Mostrar primero la selección de rol
+        // Mostrar primero la selección de rol
         mostrarRol();
-        
     }
 
-    // ========= NAVEGACIÓN =========
-
     public void mostrarRol() {
-        // Si tienes método reset en rol, úsalo, si no no pasa nada
-        // pantallaRol.resetFields();
         cardLayout.show(contentPanel, CARD_ROL);
     }
 
@@ -139,26 +128,15 @@ public class PantallaApp extends javax.swing.JFrame {
         cardLayout.show(contentPanel, CARD_INICIO_CLIENTE);
     }
 
-    /**
-     * Muestra login ya con un rol seleccionado.
-     * Útil para: Admin/Farmacéutico (desde PantallaRol) y Cliente (desde PantallaInicioCliente)
-     */
     public void mostrarLoginConRol(String rol) {
         pantallaLogin.resetFields();
-
-        // Esto requiere que implementes este método en PantallaLogin (abajo te lo dejo)
         pantallaLogin.setRolSeleccionado(rol);
-
         cardLayout.show(contentPanel, CARD_LOGIN);
     }
 
     public void mostrarRegistroCliente() {
-        // Si tienes reset en registro, puedes llamarlo aquí
-        // pantallaRegistroCliente.resetFields();
         cardLayout.show(contentPanel, CARD_REGISTRO_CLIENTE);
     }
-
-    // ========= LO QUE YA TENÍAS PARA IR A LOS MENÚS PRINCIPALES =========
 
     public void mostrarCliente(Sesion sesion) {
         pantallaCliente.setSesion(sesion);
@@ -174,13 +152,13 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaAdmin.setSesion(sesion);
         cardLayout.show(contentPanel, CARD_ADMIN);
     }
-    
+
     public void mostrarBuscarFarmacos(String volverACard) {
-    List<Medicamento> meds = AlmacenMedicamentos.getInstancia().getTodosLosMedicamentos();
-    pantallaBuscarFarmacos.setContext(volverACard, meds);
-    cardLayout.show(contentPanel, CARD_BUSCAR_FARMACOS);
+        List<Medicamento> meds = AlmacenMedicamentos.getInstancia().getTodosLosMedicamentos();
+        pantallaBuscarFarmacos.setContext(volverACard, meds);
+        cardLayout.show(contentPanel, CARD_BUSCAR_FARMACOS);
     }
-    
+
     public void mostrarAltaBajaFarmacos() {
         cardLayout.show(contentPanel, CARD_ALTA_BAJA);
     }
@@ -193,21 +171,18 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaBajaFarmacos.cargarMedicamentos();
         cardLayout.show(contentPanel, CARD_BAJA_FARMACOS);
     }
-    
+
     public void mostrarEleccionFarmacia(Sesion sesion) {
         pantallaEleccionFarmacia.setSesion(sesion);
         cardLayout.show(contentPanel, CARD_ELECCION_FARMACIA);
     }
-    
-    public void mostrarRealizacionPedido(Sesion sesion, String farmacia) {
-        // 1. Preparar completamente el panel ANTES de mostrarlo
-        pantallaRealizacionPedido.prepararPantalla(sesion, farmacia);
 
-        // 2. Cambiar al card
+    public void mostrarRealizacionPedido(Sesion sesion, String farmacia) {
+        pantallaRealizacionPedido.prepararPantalla(sesion, farmacia);
         pack();
         cardLayout.show(contentPanel, CARD_REALIZACION_PEDIDO);
     }
-    
+
     public void mostrarListaFarmacos() {
         pantallaListaFarmacos.cargarMedicamentos(); // refresca lista al entrar
         cardLayout.show(contentPanel, CARD_LISTA_FARMACOS);
@@ -217,33 +192,30 @@ public class PantallaApp extends javax.swing.JFrame {
         pantallaModificacionFarmacos.preparar(seleccionado); // carga valores por defecto
         cardLayout.show(contentPanel, CARD_MODIFICACION_FARMACOS);
     }
-    public void mostrarAltaBajaClientes(){
+
+    public void mostrarAltaBajaClientes() {
         cardLayout.show(contentPanel, CARD_ALTABAJA_CLIENTES);
     }
 
-
-    
     public void mostrarCard(String card) {
         cardLayout.show(contentPanel, card);
     }
-    
+
     public Dimension getTamanoInicial() {
         return tamanoInicial;
     }
-    
+
     public void setTamanoInicial(Dimension tamanoInicial) {
         this.tamanoInicial = tamanoInicial;
     }
-    
+
     private javax.swing.JPanel wrap(javax.swing.JPanel p) {
         javax.swing.JPanel w = new javax.swing.JPanel(new java.awt.GridBagLayout());
-        w.setBackground(new Color(248, 250, 252));  // ← COLOR en lugar de transparente
+        w.setBackground(new Color(248, 250, 252));  // COLOR en lugar de transparente
         w.setOpaque(true);
         w.add(p);           // sin constraints: queda centrado
         return w;
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.

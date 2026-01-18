@@ -21,21 +21,16 @@ public class PantallaLogin extends javax.swing.JPanel {
         configurarEventos();
     }
 
-    // Constructor bueno (el que usará PantallaApp)
     public PantallaLogin(PantallaApp app, ServicioLogin loginService) {
         this.app = app;
         this.loginService = loginService;
         initComponents();
         configurarEventos();
     }
-    
-        private void configurarEventos() {
+
+    private void configurarEventos() {
         btnLogin.addActionListener(e -> doLogin());
-
-        // Si txtPass es JTextField, esto funciona.
-        // Si es JPasswordField, también (porque hereda de JTextField).
         txtPass.addActionListener(e -> doLogin());
-
         lblStatus.setText(" ");
     }
 
@@ -46,17 +41,21 @@ public class PantallaLogin extends javax.swing.JPanel {
         }
 
         String usuario = txtUser.getText().trim();
-        String password = txtPass.getText();  // si usas JPasswordField también vale así en NetBeans
+        String password = txtPass.getText();
         String rol = (String) cmbRol.getSelectedItem();
 
         try {
             Sesion sesion = loginService.iniciarSesion(usuario, password, rol);
 
             switch (sesion.getRol().toUpperCase()) {
-                    case "CLIENTE" -> app.mostrarCliente(sesion);
-                    case "FARMACEUTICO" -> app.mostrarFarmaceutico(sesion);
-                    case "ADMIN" -> app.mostrarAdmin(sesion);
-                    default -> lblStatus.setText("Rol desconocido: " + sesion.getRol());
+                case "CLIENTE" ->
+                    app.mostrarCliente(sesion);
+                case "FARMACEUTICO" ->
+                    app.mostrarFarmaceutico(sesion);
+                case "ADMIN" ->
+                    app.mostrarAdmin(sesion);
+                default ->
+                    lblStatus.setText("Rol desconocido: " + sesion.getRol());
             }
 
         } catch (RuntimeException ex) {
@@ -68,24 +67,22 @@ public class PantallaLogin extends javax.swing.JPanel {
         txtUser.setText("");
         txtPass.setText("");
         cmbRol.setSelectedIndex(0);
-        cmbRol.setEnabled(true); // <- clave
+        cmbRol.setEnabled(true);
         lblStatus.setText(" ");
     }
 
-    
     public void setRolSeleccionado(String rol) {
-        if (rol == null) return;
+        if (rol == null) {
+            return;
+        }
 
         String r = rol.trim().toUpperCase();
 
         cmbRol.setSelectedItem(r);
 
-        // Opcional (recomendado): si vienes desde PantallaRol, evita que lo cambien en Login
-        // Si quieres que el cliente pueda cambiarlo, puedes poner condición:
-        // cmbRol.setEnabled(r.equals("CLIENTE"));
+        // Desde PantallaRol evita que lo cambie en Login
         cmbRol.setEnabled(false);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.

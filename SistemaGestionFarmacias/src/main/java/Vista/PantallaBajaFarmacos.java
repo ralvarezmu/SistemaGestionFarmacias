@@ -21,7 +21,6 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
 
     private PantallaApp app;
 
-    // Modelo y array espejo para recuperar el Medicamento seleccionado
     private DefaultListModel<String> model = new DefaultListModel<>();
     private java.util.List<Medicamento> espejo = new java.util.ArrayList<>();
 
@@ -30,7 +29,7 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
         initComponents();
         configurarEventos();
 
-        // Vincular modelo al JList (CAMBIA jList1 por el nombre real de tu JList)
+        // Vincular modelo al JList
         listMedicamentos.setModel(model);
     }
 
@@ -39,7 +38,6 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
         btnBaja.addActionListener(e -> darDeBajaSeleccionado());
     }
 
-    /** Llamar cuando entras a esta pantalla */
     public void cargarMedicamentos() {
         model.clear();
         espejo.clear();
@@ -94,11 +92,6 @@ public class PantallaBajaFarmacos extends javax.swing.JPanel {
         // refrescar lista
         cargarMedicamentos();
     }
-
-    /*private String formatear(Medicamento m) {
-        if (m == null) return "(null)";
-        return m.getId() + " | " + m.getNombre() + " | " + m.getTipo() + " | " + m.getFarmacia();
-    }*/
     
     public static String formatearCompleto(Medicamento m) {
         if (m == null) return "(null)";

@@ -29,23 +29,17 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         configurarEventos();
     }
     
-      // Guarda el detalle específico elegido en el JDialog
+    // Guarda el detalle específico elegido en el JDialog
     // ANALGESICO -> nivelDolor: leve/moderado/intenso
     // ANTIINFLAMATORIO -> zona: articular/muscular/general
     // ANTIBIOTICO -> bacteria: texto
     private String detalleTipo = null;
 
     private void configurarEventos() {
-        // Atrás
         btnVolver.addActionListener(e -> app.mostrarAltaBajaFarmacos());
-
-        // Dar de alta
         btnAlta.addActionListener(e -> darDeAlta());
-
-        // Abrir diálogo de detalles
         btnDetalles.addActionListener(e -> abrirDetalles());
-
-        // Si cambias el tipo, el detalle anterior ya no vale
+        // Si cambia el tipo el detalle anterior ya no vale
         cmbTipo.addActionListener(e -> detalleTipo = null);
     }
 
@@ -59,17 +53,15 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         dlg.preparar(tipo, detalleTipo);
         dlg.setVisible(true); // bloquea hasta pulsar Aceptar
 
-        // Recuperamos el detalle (si aceptó)
+        // Recuperamos el detalle si aceptó
         String nuevo = dlg.getDetalle();
         if (nuevo != null && !nuevo.isBlank()) {
             detalleTipo = nuevo;
-            // Si tienes un label para mostrarlo, aquí:
-            // lblDetalle.setText("Detalle: " + detalleTipo);
         }
     }
 
     private void darDeAlta() {
-        // 1) Leer campos
+        // Leer campos
         String id = txtId.getText().trim();
         String nombre = txtNombre.getText().trim();
         String tipo = String.valueOf(cmbTipo.getSelectedItem()).trim().toUpperCase();
@@ -81,38 +73,37 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
         String stockTxt = txtStock.getText().trim();
         String fechaTxt = txtFecha.getText().trim();
 
-        // Farmacia (lo guardamos como texto “usable” por búsqueda)
+        // Farmacia
         String farmacia = RadioButtonMadrid.isSelected()
                 ? "farmacia de madrid"
                 : (RadioButtonBarcelona.isSelected() ? "farmacia de barcelona" : "");
 
-        // 2) Validar generales
+        // Validaciones
         String error = validarCampos(id, nombre, descripcion, precioTxt, stockTxt, fechaTxt, farmacia, tipo);
         if (error != null) {
             JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // 3) Validar detalle específico (obligatorio)
+        // Validar detalle específico (obligatorio)
         String errorDetalle = validarDetalle(tipo, detalleTipo);
         if (errorDetalle != null) {
             JOptionPane.showMessageDialog(this, errorDetalle, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // 4) Parseos
         double precio = Double.parseDouble(precioTxt);
         int stock = Integer.parseInt(stockTxt);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate caducidad = LocalDate.parse(fechaTxt, formatter);
 
 
-        // 5) Elegir factoría según farmacia
+        // Elegir factoría según farmacia
         MedicamentoFactory factory = RadioButtonMadrid.isSelected()
                 ? new FMMedicamentoFactory()
                 : new FBMedicamentoFactory();
 
-        // 6) Crear medicamento según tipo
+        // Crear medicamento según tipo
         Medicamento nuevo;
         switch (tipo) {
             case "ANALGESICO" -> nuevo = factory.crearAnalgesico(
@@ -139,10 +130,9 @@ public class PantallaAltaFarmacos extends javax.swing.JPanel {
             }
         }
 
-        // 7) Guardar en almacén
+        // Guardar en almacén
         AlmacenMedicamentos.getInstancia().anadirMedicamento(nuevo);
 
-        // 8) OK + limpiar
         JOptionPane.showMessageDialog(this, "Fármaco dado de alta correctamente.");
         limpiarCampos();
     }

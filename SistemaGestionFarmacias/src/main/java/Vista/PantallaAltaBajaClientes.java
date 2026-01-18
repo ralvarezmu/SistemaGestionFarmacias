@@ -22,9 +22,7 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
     private ServicioLogin loginService;
     private final RepositorioUsuarios repoUsuarios;
     private DefaultListModel<String> modeloClientes;
-    /**
-     * Creates new form AltaBajaClientes
-     */
+
     public PantallaAltaBajaClientes(PantallaApp app,RepositorioUsuarios repoUsuarios) {
         initComponents();              
         this.app = app;
@@ -33,21 +31,17 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         director = new UsuarioDirector();
         clienteBuilder = new ClienteBuilder();
 
-        
         modeloClientes = new DefaultListModel<>();
         jClientes.setModel(modeloClientes);
-
-       
+      
         cargarClientes();
-
-        
+       
         jBaja.addActionListener(e -> darDeBajaCliente());
     }
     
     private void cargarClientes() {
         modeloClientes.clear();
 
-        // ✅ Ajusta este método según tu repo (te explico abajo)
         List<String> clientes = repoUsuarios.getUsernamesClientes();
 
         for (String c : clientes) {
@@ -79,7 +73,6 @@ public class PantallaAltaBajaClientes extends javax.swing.JPanel {
         if (opcion != JOptionPane.YES_OPTION) return;
 
         try {
-            // ✅ Ajusta este método según tu repo
             repoUsuarios.eliminarCliente(seleccionado);
 
             JOptionPane.showMessageDialog(

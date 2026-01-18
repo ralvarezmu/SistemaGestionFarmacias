@@ -11,9 +11,8 @@ package Vista;
 import javax.swing.JOptionPane;
 public class PantallaDetallesTipo extends javax.swing.JDialog {
 
-
-    private String tipo;      // "ANALGESICO" / "ANTIBIOTICO" / "ANTIINFLAMATORIO"
-    private String detalle;   // nivelDolor / bacteria / zonaInflamacion
+    private String tipo;      // "ANALGESICO"/"ANTIBIOTICO"/"ANTIINFLAMATORIO"
+    private String detalle;   // nivelDolor/bacteria/zonaInflamacion
 
     public PantallaDetallesTipo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,12 +23,7 @@ public class PantallaDetallesTipo extends javax.swing.JDialog {
     private void configurarEventos() {
         btnAceptar.addActionListener(e -> onAceptar());
     }
-
-    /**
-     * Configura el dialog según el tipo.
-     * @param tipo "ANALGESICO", "ANTIBIOTICO" o "ANTIINFLAMATORIO"
-     * @param valorActual si ya había un detalle guardado, para precargarlo
-     */
+    
     public void preparar(String tipo, String valorActual) {
         this.tipo = (tipo == null) ? "" : tipo.trim().toUpperCase();
         this.detalle = null;
@@ -38,7 +32,7 @@ public class PantallaDetallesTipo extends javax.swing.JDialog {
         txtBacteria.setText("");
         cmbOpciones.removeAllItems();
 
-        // Según tipo, mostramos un control u otro
+        // Según tipo mostramos un control u otro
         switch (this.tipo) {
             case "ANALGESICO" -> {
                 lblTitle.setText("Nivel de dolor:");
@@ -84,7 +78,7 @@ public class PantallaDetallesTipo extends javax.swing.JDialog {
             }
         }
 
-        // Forzar refresco visual si hace falta
+        // Refrescar
         revalidate();
         repaint();
         pack();

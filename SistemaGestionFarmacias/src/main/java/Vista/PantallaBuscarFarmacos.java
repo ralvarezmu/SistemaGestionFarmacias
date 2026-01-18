@@ -42,12 +42,8 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
     }
 
     private void configurarEventos() {
-        // Botones según tu pantalla
         btnVolver.addActionListener(e -> app.mostrarCard(volverACard));
-
-        // Tu botón Buscar en el navigator sale como jButton1
         jButton1.addActionListener(e -> doBuscar());
-
         lblStatus.setText(" ");
     }
 
@@ -64,7 +60,7 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
             return;
         }
 
-        // Elegir estrategia (tu patrón Strategy)
+        // Elegir estrategia
         switch (modo) {
             case "TIPO" -> consultor.setEstrategia(new ConsultaPorTipo());
             case "NOMBRE" -> consultor.setEstrategia(new ConsultaPorNombre());
@@ -102,20 +98,6 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
         listBusqueda.setModel(new DefaultListModel<>());
     }
 
-    /*private String formatearMedicamento(Medicamento m) {
-        if (m == null) return "(null)";
-
-        // Con tus Strategy sabemos que existen:
-        // getNombre(), getTipo(), getFarmacia()
-        return "Nombre: " + safe(m.getNombre())
-                + " | Tipo: " + safe(m.getTipo())
-                + " | Farmacia: " + safe(m.getFarmacia());
-    }
-
-    private String safe(String s) {
-        return (s == null) ? "-" : s;
-    }*/
-
     private String validarEntrada(String modo, String criterioRaw) {
         if (criterioRaw == null || criterioRaw.trim().isEmpty()) {
             return "Introduce un criterio de búsqueda.";
@@ -124,12 +106,10 @@ public class PantallaBuscarFarmacos extends javax.swing.JPanel {
         String criterio = normalizar(criterioRaw);
 
         if (modo.equals("FARMACIA")) {
-            // SOLO estas 2
             if (!criterio.equals("madrid") && !criterio.equals("barcelona")) {
                 return "Farmacia inválida. Solo: 'farmacia de madrid' o 'farmacia de barcelona'.";
             }
         } else if (modo.equals("TIPO")) {
-            // SOLO estos 3 (sin tilde por normalizar)
             Set<String> permitidos = Set.of("analgesico", "antibiotico", "antiinflamatorio");
             if (!permitidos.contains(criterio)) {
                 return "Tipo inválido. Solo: analgesico, antibiotico o antiinflamatorio.";

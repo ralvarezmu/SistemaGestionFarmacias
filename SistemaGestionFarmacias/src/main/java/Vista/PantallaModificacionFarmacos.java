@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class PantallaModificacionFarmacos extends javax.swing.JPanel {
 
     private PantallaApp app;
-    private Medicamento seleccionado; // el que se va a modificar
+    private Medicamento seleccionado; // El que se va a modificar
 
     public PantallaModificacionFarmacos(PantallaApp app) {
         this.app = app;
@@ -23,12 +23,10 @@ public class PantallaModificacionFarmacos extends javax.swing.JPanel {
     }
 
     private void configurarEventos() {
-        btnVolver.addActionListener(e -> app.mostrarListaFarmacos()); // vuelve a lista (y refresca)
-
+        btnVolver.addActionListener(e -> app.mostrarListaFarmacos()); // Volver a la lista y refrescar
         btnModificar.addActionListener(e -> modificar());
     }
-
-    /** Llamado desde PantallaApp antes de mostrar el panel */
+    
     public void preparar(Medicamento m) {
         this.seleccionado = m;
 
@@ -78,14 +76,13 @@ public class PantallaModificacionFarmacos extends javax.swing.JPanel {
             return;
         }
 
-        // ✅ Modificar el objeto (como está en las listas del almacén, queda modificado)
         seleccionado.setDescripcion(desc);
         seleccionado.setPrecio(precio);
         seleccionado.setStock(stock);
 
         JOptionPane.showMessageDialog(this, "Medicamento modificado correctamente.");
 
-        // Volver a la lista (y refrescar)
+        // Volver a la lista y refrescar
         app.mostrarListaFarmacos();
     }
 

@@ -27,7 +27,7 @@ public class PantallaRol extends javax.swing.JPanel {
         } else if (rol.equalsIgnoreCase("FARMACEUTICO") || rol.equalsIgnoreCase("ADMIN")) {
             app.mostrarLoginConRol(rol);
         } else {
-            // si hubiese otro valor raro
+            // si hubiese otro valor 
             app.mostrarRol();
         }
     }

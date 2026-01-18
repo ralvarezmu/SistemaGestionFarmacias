@@ -70,13 +70,11 @@ public class PantallaListaFarmacos extends javax.swing.JPanel {
         }
     }
 
-    /*private String formatear(Medicamento m) {
-        return m.getId() + " | " + m.getNombre() + " | " + m.getTipo() + " | " + m.getFarmacia();
-    }*/
-    
-        public static String formatearCompleto(Medicamento m) {
-        if (m == null) return "(null)";
-        
+    public static String formatearCompleto(Medicamento m) {
+        if (m == null) {
+            return "(null)";
+        }
+
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // Detalle específico según tipo
@@ -95,17 +93,17 @@ public class PantallaListaFarmacos extends javax.swing.JPanel {
         String fecha = (m.getFechaCaducidad() != null) ? m.getFechaCaducidad().format(f) : "(sin fecha)";
 
         return String.format(
-            "ID=%s | Nombre=%s | Tipo=%s | %s | Desc=%s | Receta=%s | Precio=%.2f | Stock=%d | Cad=%s | Farmacia=%s",
-            m.getId(),
-            m.getNombre(),
-            m.getTipo(),
-            detalle,
-            m.getDescripcion(),
-            receta,
-            m.getPrecio(),
-            m.getStock(),
-            fecha,
-            m.getFarmacia()
+                "ID=%s | Nombre=%s | Tipo=%s | %s | Desc=%s | Receta=%s | Precio=%.2f | Stock=%d | Cad=%s | Farmacia=%s",
+                m.getId(),
+                m.getNombre(),
+                m.getTipo(),
+                detalle,
+                m.getDescripcion(),
+                receta,
+                m.getPrecio(),
+                m.getStock(),
+                fecha,
+                m.getFarmacia()
         );
     }
 
