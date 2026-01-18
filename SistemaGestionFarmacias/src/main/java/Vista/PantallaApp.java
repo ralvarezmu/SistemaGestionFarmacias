@@ -56,10 +56,13 @@ public class PantallaApp extends javax.swing.JFrame {
     public static final String CARD_LISTA_FARMACOS = "LISTA_FARMACOS";
     public static final String CARD_MODIFICACION_FARMACOS = "MODIFICACION_FARMACOS";
 
-
+    
     public PantallaApp() {
         initComponents();
         initApp();
+        pack();
+        setLocationRelativeTo(null);
+
     }
 
     private void initApp() {
@@ -91,24 +94,24 @@ public class PantallaApp extends javax.swing.JFrame {
         
 
         // 4) Añadir al CardLayout
-        contentPanel.add(pantallaRol, CARD_ROL);
-        contentPanel.add(pantallaInicioCliente, CARD_INICIO_CLIENTE);
-        contentPanel.add(pantallaLogin, CARD_LOGIN);
-        contentPanel.add(pantallaRegistroCliente, CARD_REGISTRO_CLIENTE);
+        contentPanel.add(wrap(pantallaRol), CARD_ROL);
+        contentPanel.add(wrap(pantallaInicioCliente), CARD_INICIO_CLIENTE);
+        contentPanel.add(wrap(pantallaLogin), CARD_LOGIN);
+        contentPanel.add(wrap(pantallaRegistroCliente), CARD_REGISTRO_CLIENTE);
 
-        contentPanel.add(pantallaCliente, CARD_CLIENTE);
-        contentPanel.add(pantallaFarmaceutico, CARD_FARMA);
-        contentPanel.add(pantallaAdmin, CARD_ADMIN);
-        contentPanel.add(pantallaBuscarFarmacos, CARD_BUSCAR_FARMACOS);
-        contentPanel.add(pantallaAltaBajaFarmacos, CARD_ALTA_BAJA);
-        contentPanel.add(pantallaAltaFarmacos, CARD_ALTA_FARMACOS);
-        contentPanel.add(pantallaBajaFarmacos, CARD_BAJA_FARMACOS);
+        contentPanel.add(wrap(pantallaCliente), CARD_CLIENTE);
+        contentPanel.add(wrap(pantallaFarmaceutico), CARD_FARMA);
+        contentPanel.add(wrap(pantallaAdmin), CARD_ADMIN);
+        contentPanel.add(wrap(pantallaBuscarFarmacos), CARD_BUSCAR_FARMACOS);
+        contentPanel.add(wrap(pantallaAltaBajaFarmacos), CARD_ALTA_BAJA);
+        contentPanel.add(wrap(pantallaAltaFarmacos), CARD_ALTA_FARMACOS);
+        contentPanel.add(wrap(pantallaBajaFarmacos), CARD_BAJA_FARMACOS);
         
-        contentPanel.add(pantallaEleccionFarmacia, CARD_ELECCION_FARMACIA);
-        contentPanel.add(pantallaRealizacionPedido, CARD_REALIZACION_PEDIDO);
+        contentPanel.add(wrap(pantallaEleccionFarmacia), CARD_ELECCION_FARMACIA);
+        contentPanel.add(wrap(pantallaRealizacionPedido), CARD_REALIZACION_PEDIDO);
         
-        contentPanel.add(pantallaListaFarmacos, CARD_LISTA_FARMACOS);
-        contentPanel.add(pantallaModificacionFarmacos, CARD_MODIFICACION_FARMACOS);
+        contentPanel.add(wrap(pantallaListaFarmacos), CARD_LISTA_FARMACOS);
+        contentPanel.add(wrap(pantallaModificacionFarmacos), CARD_MODIFICACION_FARMACOS);
 
         // 5) Mostrar primero la selección de rol
         mostrarRol();
@@ -211,7 +214,13 @@ public class PantallaApp extends javax.swing.JFrame {
         cardLayout.show(contentPanel, card);
     }
     
-    
+    private javax.swing.JPanel wrap(javax.swing.JPanel p) {
+        javax.swing.JPanel w = new javax.swing.JPanel(new java.awt.GridBagLayout());
+        w.setOpaque(false); // opcional, si quieres que herede el color de fondo
+        w.add(p);           // sin constraints: queda centrado
+        return w;
+    }
+
 
 
     /**
